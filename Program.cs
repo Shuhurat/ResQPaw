@@ -1,11 +1,11 @@
-using Microsoft.AspNetCore.Identity;
+     using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ResQPaw.Data;
 using ResQPaw.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Configure Database (SQLite for now) - Use configuration instead of hardcoding
+// 1. Configure Database (SQLite)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
@@ -15,15 +15,16 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
     options.SignIn.RequireConfirmedAccount = false;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
-.AddDefaultTokenProviders();
+.AddDefaultTokenProviders()
+.AddDefaultUI(); // <-- adds Razor Pages for Identity
 
-// 3. Add MVC Controllers + Views
+// 3. Add MVC + Razor Pages
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();  // for Identity UI
+builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Middleware pipeline
+// Middleware
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -34,14 +35,14 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-// 🔑 Enable authentication + authorization
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Map routes
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages();  // enable Identity UI endpoints
+app.MapRazorPages(); // enable Identity Razor Pages
 
 app.Run();

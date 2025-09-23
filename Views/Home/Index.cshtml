@@ -3,6 +3,35 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to ResQPaw</h1>
+    <p>Animal rescue and management system</p>
+    
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="alert alert-success">
+            <h4>Welcome, @User.Identity.Name!</h4>
+            <p>You are successfully logged in.</p>
+            <a class="btn btn-success" asp-controller="Home" asp-action="Dashboard">Go to Dashboard</a>
+        </div>
+    }
+    else
+    {
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="alert alert-info">
+                    <h4>Please log in to continue</h4>
+                    <p>Access the animal rescue management system</p>
+                    <div class="mt-3">
+                    <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                    <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">Register</a>
+
+
+                   
+                   
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </div>

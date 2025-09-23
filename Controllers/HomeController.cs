@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ResQPaw.Models;
 
 namespace ResQPaw.Controllers;
@@ -19,6 +20,12 @@ public class HomeController : Controller
     }
 
     public IActionResult Privacy()
+    {
+        return View();
+    }
+
+    [Authorize] // This protects the Dashboard - requires login
+    public IActionResult Dashboard()
     {
         return View();
     }

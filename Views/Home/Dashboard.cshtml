@@ -1,0 +1,45 @@
+@page
+@model ResQPaw.Pages.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="text-center">
+    <h1 class="display-4">ResQPaw Dashboard</h1>
+    
+    <div class="alert alert-success mt-4">
+        <h4>Welcome, @User.Identity.Name!</h4>
+        <p>You are successfully logged in to the rescue management system.</p>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Animal Management</h5>
+                    <p class="card-text">Manage rescued animals and their records.</p>
+                    <a href="#" class="btn btn-primary">View Animals</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Rescue Operations</h5>
+                    <p class="card-text">Coordinate rescue missions and teams.</p>
+                    <a href="#" class="btn btn-primary">View Operations</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Reports</h5>
+                    <p class="card-text">View reports and analytics.</p>
+                    <a href="#" class="btn btn-primary">View Reports</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
