@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZMZ+0/xuTWw=",
+  "dgSpecHash": "hFPC0ADhSSw=",
   "success": true,
-  "projectFilePath": "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
+  "projectFilePath": "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\shuru\\.nuget\\packages\\azure.core\\1.35.0\\azure.core.1.35.0.nupkg.sha512",
     "C:\\Users\\shuru\\.nuget\\packages\\azure.identity\\1.10.3\\azure.identity.1.10.3.nupkg.sha512",
@@ -186,9 +186,9 @@
       "code": "NU1603",
       "level": "Warning",
       "message": "ResQPaw depends on Microsoft.VisualStudio.Web.CodeGeneration.Design (>= 8.0.10) but Microsoft.VisualStudio.Web.CodeGeneration.Design 8.0.10 was not found. Microsoft.VisualStudio.Web.CodeGeneration.Design 9.0.0 was resolved instead.",
-      "projectPath": "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
+      "projectPath": "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
       "warningLevel": 1,
-      "filePath": "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
+      "filePath": "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
       "libraryId": "Microsoft.VisualStudio.Web.CodeGeneration.Design",
       "targetGraphs": [
         "net8.0"

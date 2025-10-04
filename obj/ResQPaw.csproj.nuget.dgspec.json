@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj": {}
+    "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj": {}
   },
   "projects": {
-    "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj": {
+    "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
+        "projectUniqueName": "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
         "projectName": "ResQPaw",
-        "projectPath": "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
+        "projectPath": "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
         "packagesPath": "C:\\Users\\shuru\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\obj\\",
+        "outputPath": "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
