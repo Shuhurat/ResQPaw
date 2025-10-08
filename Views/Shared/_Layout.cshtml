@@ -75,7 +75,7 @@
                             @if (SignInManager.IsSignedIn(User))
                             {
                                 <span class="navbar-text mx-2">Hello, @User.Identity.Name!</span>
-                                <form method="post" asp-area="Identity" asp-page="/Account/Logout" style="display:inline;">
+                                <form method="post" asp-area="Identity" asp-page="/Account/Login" style="display:inline;">
                                     <button type="submit" class="btn btn-danger btn-sm">Logout</button>
                                 </form>
                             }

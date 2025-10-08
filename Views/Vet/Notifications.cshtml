@@ -1,8 +1,12 @@
-@model IEnumerable<ResQPaw.Models.SOSViewModel>
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
     ViewData["Title"] = "SOS Notifications";
 }
 
+
+
+@model List<ResQPaw.Models.SOSViewModel>
 <h2 class="mb-3">Live SOS Alerts</h2>
 
 <div id="alert-container"></div> <!-- 🔔 Real-time alert area -->

@@ -2,12 +2,49 @@
 <table class="table">
     <tr><th>Address</th><th>Message</th><th>Status</th><th>Time</th></tr>
     @foreach (var sos in Model)
-    {
-        <tr>
-            <td>@sos.Address</td>
-            <td>@sos.Message</td>
-            <td>@sos.Status</td>
-            <td>@sos.CreatedAt.ToString("g")</td>
-        </tr>
-    }
+{
+    <tr>
+        <td>@sos.Address</td>
+        <td>@sos.Message</td>
+        <td>
+            @switch(sos.Status)
+            {
+                case "Pending":
+                    <span class="text-warning">Pending ⏳</span>;
+                    break;
+                case "Accepted":
+                    <span class="text-info">Accepted ✅</span>;
+                    break;
+                case "Contacted":
+                    <span class="text-success">Contacted ✔️</span>;
+                    break;
+                default:
+                    <span>@sos.Status</span>;
+                    break;
+            }
+        </td>
+    </tr>
+}
+
 </table>
+
+<script>
+    const connection = new signalR.HubConnectionBuilder().withUrl("/soshub").build();
+
+    connection.on("SOSUpdated", (id, status) => {
+        const row = document.querySelector(`#sos-${id} .status`);
+        if (row) row.innerText = status;
+
+        if(status === "Contacted"){
+            const toast = document.createElement("div");
+            toast.className = "toast align-items-center text-bg-success border-0 position-fixed top-0 end-0 m-3";
+            toast.innerHTML = `<div class="d-flex"><div class="toast-body">✅ Your SOS has been contacted by the vet!</div></div>`;
+            document.body.appendChild(toast);
+            const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
+            bsToast.show();
+            setTimeout(() => toast.remove(), 5000);
+        }
+    });
+
+    connection.start();
+</script>

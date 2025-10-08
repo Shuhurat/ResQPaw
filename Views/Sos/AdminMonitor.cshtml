@@ -12,15 +12,22 @@
         </tr>
     </thead>
     <tbody>
-        @foreach(var sos in Model)
-        {
-            <tr>
-                <td>@sos.CustomerName</td>
-                <td>@sos.Address</td>
-                <td>@sos.Message</td>
-                <td>@sos.Status</td>
-                <td>@sos.AssignedVetName</td>
-            </tr>
-        }
+       @foreach (var sos in Model)
+{
+    <tr>
+        <td>@sos.CustomerName</td>
+        <td>@sos.Address</td>
+        <td>@sos.Message</td>
+        <td>@sos.Status</td>
+        <td>
+            <form method="post" asp-action="DeleteSOS" asp-controller="Admin">
+                <input type="hidden" name="id" value="@sos.Id" />
+                <button class="btn btn-danger btn-sm">Delete</button>
+            </form>
+        </td>
+    </tr>
+}
+
     </tbody>
 </table>
+

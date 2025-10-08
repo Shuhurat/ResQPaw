@@ -1,17 +1,89 @@
-<h2>🚑 Vet SOS Dashboard</h2>
+@model List<ResQPaw.Models.SOSViewModel>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Address</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody  id="sosTableBody">
+        @foreach (var sos in Model)
+        {
+            <tr id="sos-@sos.Id">
+                <td>@sos.CustomerName</td>
+                <td>@sos.Address</td>
+                <td>@sos.Message</td>
+                <td class="status">@sos.Status</td>
+                <td>
+                    @if (sos.Status != "Contacted")
+                    {
+                        <form method="post" asp-action="MarkContacted" asp-controller="Vet">
+                            <input type="hidden" name="id" value="@sos.Id" />
+                            <button class="btn btn-success btn-sm">Mark as Contacted</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-success">Contacted</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
 <div id="alerts"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
 <script>
     const connection = new signalR.HubConnectionBuilder().withUrl("/soshub").build();
 
-    connection.on("ReceiveSOS", (userName, address, message) => {
+    // --- Live new SOS alerts ---
+    connection.on("ReceiveSOS", (userName, address, message, sosId) => {
+        // Alert toast
         const div = document.createElement("div");
         div.classList = "alert alert-danger mt-3";
         div.innerHTML = `<strong>New SOS from ${userName}</strong><br>📍 ${address}<br>${message}`;
         document.getElementById("alerts").prepend(div);
         new Audio("/sounds/alert.mp3").play();
+
+        // Add to table dynamically if not exists
+        if (!document.getElementById(`sos-${sosId}`)) {
+            const tbody = document.getElementById("sosTableBody");
+            const tr = document.createElement("tr");
+            tr.id = `sos-${sosId}`;
+            tr.innerHTML = `
+                <td>${userName}</td>
+                <td>${address}</td>
+                <td>${message}</td>
+                <td class="status">Pending</td>
+                <td>
+                    <form method="post" action="/Vet/MarkContacted">
+                        <input type="hidden" name="id" value="${sosId}" />
+                        <button class="btn btn-success btn-sm">Mark as Contacted</button>
+                    </form>
+                </td>
+            `;
+            tbody.prepend(tr);
+        }
     });
 
-    connection.start();
+    // --- Live status updates ---
+    connection.on("SOSUpdated", (sosId, newStatus) => {
+        const row = document.getElementById(`sos-${sosId}`);
+        if (row) {
+            row.querySelector(".status").innerText = newStatus;
+
+            if (newStatus === "Contacted") {
+                row.querySelector("td:last-child").innerHTML = '<span class="text-success">Contacted</span>';
+            }
+        }
+    });
+
+    connection.start().catch(err => console.error(err));
 </script>

@@ -26,31 +26,35 @@ namespace ResQPaw.Controllers
         public IActionResult Send() => View();
 
         [HttpPost]
-        [Authorize(Roles = "Customer")]
-        public async Task<IActionResult> Send(string address, string message)
-        {
-            var user = await _userManager.GetUserAsync(User);
+[Authorize(Roles = "Customer")]
+public async Task<IActionResult> Send(string address, string message)
+{
+    var user = await _userManager.GetUserAsync(User);
 
-            var sos = new SOSRequest
-            {
-                CustomerId = user.Id,
-                Address = address,
-                Message = message
-            };
-            _context.SOSRequests.Add(sos);
-            await _context.SaveChangesAsync();
+    var sos = new SOSRequest
+    {
+        CustomerId = user.Id,
+        Address = address,
+        Message = message,
+        IsSeen = false,          // <- mark unseen
+        CreatedAt = DateTime.UtcNow
+    };
 
-            // ✅ Properly trigger SignalR group message
-            await _hubContext.Clients.Group("Vets").SendAsync(
-                "ReceiveSOS",
-                user.UserName ?? "Unknown Customer",
-                address ?? "No address provided",
-                message ?? "No message provided"
-            );
+    _context.SOSRequests.Add(sos);
+    await _context.SaveChangesAsync();
 
-            TempData["Success"] = "SOS alert sent!";
-            return RedirectToAction("Status");
-        }
+    // Notify connected vets (real-time)
+    await _hubContext.Clients.Group("Vets").SendAsync(
+        "ReceiveSOS",
+        user.UserName ?? user.Email ?? "Unknown",
+        address ?? "No address provided",
+        message ?? "No message provided"
+    );
+
+    TempData["Success"] = "SOS alert sent!";
+    return RedirectToAction("Status");
+}
+
 
         [Authorize(Roles = "Customer")]
         public IActionResult Status()
@@ -65,12 +69,25 @@ namespace ResQPaw.Controllers
 
         [Authorize(Roles = "ServiceProvider")]
         public IActionResult VetDashboard()
+{
+    // Fetch SOSRequests from database
+    var sosList = _context.SOSRequests
+        .OrderByDescending(s => s.CreatedAt)
+        .AsEnumerable() // move to memory so we can use ?. safely
+        .Select(s => new SOSViewModel
         {
-            var sosList = _context.SOSRequests
-                .Where(r => r.Status == "Pending")
-                .OrderByDescending(r => r.CreatedAt)
-                .ToList();
-            return View(sosList);
-        }
+            Id = s.Id,
+            Address = s.Address,
+            Message = s.Message,
+            Status = s.Status,
+            CreatedAt = s.CreatedAt,
+            CustomerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.FullName
+                           ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
+                           ?? "Unknown"
+        })
+        .ToList();
+
+    return View(sosList); // ✅ now returns List<SOSViewModel>
+}
     }
 }
