@@ -1,0 +1,200 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Tailwind Config */
+@layer utilities {
+    .gradient-border {
+        position: relative;
+        background: linear-gradient(white, white) padding-box,
+                    linear-gradient(45deg, #f59e0b, #dc2626) border-box;
+        border: 3px solid transparent;
+    }
+    
+    .hover-lift {
+        transition: all 0.3s ease;
+    }
+    
+    .hover-lift:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .glass-effect {
+        backdrop-filter: blur(10px);
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .particle {
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(245, 158, 11, 0.1);
+        animation: float 15s infinite linear;
+    }
+    
+    .input-focus-effect:focus {
+        box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+    }
+    
+    .btn-glow:hover {
+        box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+    }
+    
+    .auth-background {
+        background: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)), url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+}
+
+/* Animations */
+@keyframes float {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(-10px) rotate(2deg); 
+    }
+}
+
+@keyframes float-reverse {
+    0%, 100% { 
+        transform: translateY(0) rotate(0deg); 
+    }
+    50% { 
+        transform: translateY(8px) rotate(-2deg); 
+    }
+}
+
+@keyframes bounce-gentle {
+    0%, 100% { 
+        transform: translateY(0); 
+    }
+    50% { 
+        transform: translateY(-5px); 
+    }
+}
+
+@keyframes sparkle {
+    0%, 100% { 
+        opacity: 0; 
+        transform: scale(0) rotate(0deg); 
+    }
+    50% { 
+        opacity: 1; 
+        transform: scale(1) rotate(180deg); 
+    }
+}
+
+.sparkle {
+    animation: sparkle 2s infinite;
+}
+
+.floating-element {
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-element-2 {
+    animation: float-reverse 8s ease-in-out infinite;
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+    animation: float-reverse 8s ease-in-out infinite;
+}
+
+.animate-pulse-slow {
+    animation: pulse 3s infinite;
+}
+
+.animate-bounce-gentle {
+    animation: bounce-gentle 2s infinite;
+}
+
+/* Form specific styles */
+.form-group {
+    position: relative;
+}
+
+.form-group label {
+    transition: all 0.3s ease;
+}
+
+.form-group:focus-within label {
+    color: #f59e0b;
+    transform: translateY(-2px);
+}
+
+/* Notification styles */
+.notification {
+    transition: all 0.3s ease-in-out;
+}
+
+/* Input validation styles */
+.input-valid {
+    border-color: #10b981 !important;
+    background-color: #f0fdf4 !important;
+}
+
+.input-invalid {
+    border-color: #ef4444 !important;
+    background-color: #fef2f2 !important;
+}
+
+/* Loading states */
+.btn-loading {
+    position: relative;
+    color: transparent !important;
+}
+
+.btn-loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid currentColor;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+    .auth-background {
+        background-attachment: scroll;
+    }
+    
+    .gradient-border {
+        margin: 0 1rem;
+    }
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #f59e0b;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #d97706;
+}

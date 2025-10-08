@@ -1,0 +1,231 @@
+/* SOS Confirmation Page Styles */
+.success-icon {
+    position: relative;
+    display: inline-block;
+}
+
+@keyframes pulse-slow {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.05);
+        opacity: 0.8;
+    }
+}
+
+@keyframes ping-slow {
+    0% {
+        transform: scale(1);
+        opacity: 0.75;
+    }
+    75%, 100% {
+        transform: scale(2);
+        opacity: 0;
+    }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 2s ease-in-out infinite;
+}
+
+.animate-ping-slow {
+    animation: ping-slow 3s ease-in-out infinite;
+}
+
+/* Progress Bar Animation */
+@keyframes progress-grow {
+    0% {
+        width: 25%;
+    }
+    50% {
+        width: 35%;
+    }
+    100% {
+        width: 25%;
+    }
+}
+
+.progress-bar-animation {
+    animation: progress-grow 2s ease-in-out infinite;
+}
+
+/* Glass Effect Enhancements */
+.backdrop-blur-lg {
+    backdrop-filter: blur(20px);
+}
+
+/* Hover Effects */
+.hover-lift:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.detail-item:hover,
+.step-item:hover,
+.contact-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient Border */
+.gradient-border {
+    position: relative;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(45deg, #10B981, #059669, #10B981) border-box;
+    border: 2px solid transparent;
+    background-size: 200% 200%;
+    animation: gradientShift 3s ease infinite;
+}
+
+@keyframes gradientShift {
+    0%, 100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Floating Animations */
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes float2 {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+    }
+    33% {
+        transform: translateY(-15px) rotate(5deg);
+    }
+    66% {
+        transform: translateY(-10px) rotate(-5deg);
+    }
+}
+
+.floating-element {
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-element-2 {
+    animation: float2 8s ease-in-out infinite;
+}
+
+/* Particle Animations */
+@keyframes particleFloat {
+    0%, 100% {
+        transform: translateY(0px) translateX(0px);
+    }
+    25% {
+        transform: translateY(-40px) translateX(10px);
+    }
+    50% {
+        transform: translateY(-20px) translateX(20px);
+    }
+    75% {
+        transform: translateY(-30px) translateX(-10px);
+    }
+}
+
+.particle {
+    position: absolute;
+    background: linear-gradient(45deg, #F59E0B, #D97706);
+    border-radius: 50%;
+    animation: particleFloat 8s ease-in-out infinite;
+    opacity: 0.3;
+}
+
+/* Button Glow Effects */
+.btn-glow {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-glow::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+}
+
+.btn-glow:hover::before {
+    left: 100%;
+}
+
+/* Text Selection Effects */
+.confirmation-details,
+.next-steps,
+.emergency-contact {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .action-buttons {
+        flex-direction: column;
+    }
+    
+    .confirmation-details .grid,
+    .emergency-contact .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Loading Animation for Future Enhancements */
+.loading-dots {
+    display: inline-block;
+}
+
+.loading-dots::after {
+    content: '';
+    animation: dots 1.5s steps(4, end) infinite;
+}
+
+@keyframes dots {
+    0%, 20% {
+        content: '.';
+    }
+    40% {
+        content: '..';
+    }
+    60%, 100% {
+        content: '...';
+    }
+}
+
+/* Success Checkmark Animation */
+@keyframes checkmark {
+    0% {
+        stroke-dashoffset: 100;
+        opacity: 0;
+    }
+    100% {
+        stroke-dashoffset: 0;
+        opacity: 1;
+    }
+}
+
+.success-checkmark {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: checkmark 0.6s ease-in-out 0.4s forwards;
+}
+
+/* Background Pattern */
+.confirmation-background {
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(239, 68, 68, 0.05) 0%, transparent 50%);
+}

@@ -5,100 +5,327 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@title - ResQPaw</title>
 
-    <!-- Font Awesome -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="~/js/SOS.js" asp-append-version="true"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🐾</text></svg>">
 
     <!-- Site CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    <!-- Render additional styles from pages -->
+    @RenderSection("Styles", required: false)
+
+    <style>
+        .profile-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .profile-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    </style>
 </head>
-<body>
+
+<body class="min-h-screen overflow-x-hidden">
+    <!-- Animated Background Elements -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+        <!-- Background particles -->
+        <div class="particle w-6 h-6" style="top: 20%; left: 20%; animation-delay: 0s;"></div>
+        <div class="particle w-4 h-4" style="top: 60%; left: 40%; animation-delay: 1s;"></div>
+        <div class="particle w-8 h-8" style="top: 30%; left: 70%; animation-delay: 2s;"></div>
+        <div class="particle w-5 h-5" style="top: 80%; left: 60%; animation-delay: 3s;"></div>
+        <div class="particle w-7 h-7" style="top: 50%; left: 10%; animation-delay: 4s;"></div>
+    </div>
+
     <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="~/images/ResQPawLogo.png" alt="ResQPaw Logo" />
-                    <h1>ResQPaw</h1>
+    <header class="bg-white/80 backdrop-blur-md shadow-lg sticky top-0 z-50 border-b border-amber-200">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center py-4">
+                <div class="logo flex items-center mb-4 md:mb-0">
+                    <div class="relative">
+                        <div
+                            class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center mr-3 shadow-lg">
+                            <i class="fas fa-paw text-white text-xl"></i>
+                        </div>
+                        <div class="sparkle absolute -top-1 -right-1 w-4 h-4 bg-yellow-300 rounded-full"></div>
+                    </div>
+                    <h1 class="text-amber-600 text-2xl font-bold">ResQPaw</h1>
                 </div>
-                <nav>
-                    <ul>
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-controller="Pets" asp-action="Index">Find Pets</a></li>
-                        <li><a asp-controller="LostFound" asp-action="Index">Lost & Found</a></li>
-                        <li><a asp-controller="Vets" asp-action="Index">Veterinarians</a></li>
-                        <li><a asp-controller="Resources" asp-action="Index">Resources</a></li>
-                        <li><a asp-controller="Home" asp-action="About">About Us</a></li>
+                <nav class="mb-4 md:mb-0">
+                    <ul class="flex flex-wrap justify-center gap-4 md:gap-6">
+                        <li><a asp-controller="Home" asp-action="Index"
+                                class="text-gray-800 font-semibold hover:text-amber-600 transition-colors duration-300 relative group">
+                                Home
+                                <span
+                                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
+                            </a></li>
+                        <li><a asp-controller="Pets" asp-action="Index"
+                                class="text-gray-800 font-semibold hover:text-amber-600 transition-colors duration-300 relative group">
+                                Find Pets
+                                <span
+                                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
+                            </a></li>
+                        <li><a asp-controller="LostFound" asp-action="Index"
+                                class="text-gray-800 font-semibold hover:text-amber-600 transition-colors duration-300 relative group">
+                                Lost & Found
+                                <span
+                                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
+                            </a></li>
+                        <li>
+                            <a asp-controller="Veterinarians" asp-action="Vet"
+                                class="text-gray-800 font-semibold hover:text-amber-600 transition-colors duration-300 relative group">
+                                Veterinarians
+                                <span
+                                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
+                            </a>
+                        </li>
+                        <li><a asp-controller="Resources" asp-action="Index"
+                                class="text-gray-800 font-semibold hover:text-amber-600 transition-colors duration-300 relative group">
+                                Resources
+                                <span
+                                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
+                            </a></li>
+                        <li><a asp-controller="Home" asp-action="About"
+                                class="text-gray-800 font-semibold hover:text-amber-600 transition-colors duration-300 relative group">
+                                About Us
+                                <span
+                                    class="absolute bottom-0 left-0 w-0 h-0.5 bg-amber-500 transition-all duration-300 group-hover:w-full"></span>
+                            </a></li>
                     </ul>
                 </nav>
-                <div class="auth-buttons">
-                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>     <!--login link!!!!!!-->
+                <div class="auth-buttons flex gap-3">
+                    <!-- Guest Buttons (shown when not logged in) -->
+                    <div id="guest-buttons">
+                        <a asp-controller="Account" asp-action="Login"
+                            class="px-6 py-2 border-2 border-amber-600 text-amber-600 rounded-full font-semibold hover:bg-amber-600 hover:text-white transition-all duration-300 hover-lift">Log
+                            In</a>
+                        <a asp-controller="Account" asp-action="Register"
+                            class="px-6 py-2 bg-amber-600 text-white rounded-full font-semibold hover:bg-amber-700 transition-all duration-300 hover-lift shadow-lg">Sign
+                            Up</a>
+                    </div>
 
-                 <!--   <a asp-controller="Account" asp-action="Login" class="btn btn-outline">Log In</a> -->
+                    <!-- User Profile (shown when logged in) -->
+                    <div id="user-profile" class="hidden relative">
+                        <button id="profile-toggle"
+                            class="flex items-center space-x-2 bg-amber-100 hover:bg-amber-200 rounded-full p-2 transition-colors hover-lift">
+                            <div class="w-8 h-8 bg-amber-600 rounded-full flex items-center justify-center shadow-lg">
+                                <i class="fas fa-user text-white text-sm"></i>
+                            </div>
+                        </button>
 
-                  <!--  <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Sign Up</a> -->
-                
-                   <a  asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        <!-- Profile Dropdown Menu -->
+                        <div id="profile-dropdown"
+                            class="profile-dropdown absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-amber-200 py-2 backdrop-blur-md">
+                            <a href="@Url.Action("UserProfile", "Account")"
+                                class="block px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-300">
+                                <i class="fas fa-user-circle mr-2"></i>My Profile
+                            </a>
+                            <a href="@Url.Action("UserProfile", "Account", new { tab = "saved-pets" })"
+                                class="block px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-300">
+                                <i class="fas fa-heart mr-2"></i>My Favorites
+                            </a>
+                            <a href="@Url.Action("UserProfile", "Account", new { tab = "account-settings" })"
+                                class="block px-4 py-2 text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors duration-300">
+                                <i class="fas fa-cog mr-2"></i>Settings
+                            </a>
+                            <div class="border-t border-amber-200 my-1"></div>
+                            <a href="#" id="logout-btn"
+                                class="block px-4 py-2 text-red-600 hover:bg-red-50 transition-colors duration-300">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Page Content -->
-    <main role="main">
+    <main role="main" class="relative z-10">
         @RenderBody()
     </main>
 
+
+    <!-- SOS Button -->
+    <a asp-controller="Emergency" asp-action="SOS"
+        class="fixed bottom-8 right-8 w-20 h-20 bg-gradient-to-br from-red-600 to-red-700 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-2xl sos-pulse hover-lift z-50">
+        <i class="fas fa-exclamation-triangle mr-1"></i> SOS
+    </a>
+
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
+    <footer class="bg-gray-900 text-white py-12 relative z-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
                 <div class="footer-column">
-                    <h3>About ResQPaw</h3>
-                    <p>ResQPaw is a non-profit organization dedicated to rescuing, rehabilitating, and rehoming pets in need.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    <h3 class="text-amber-400 text-xl font-bold mb-4">About ResQPaw</h3>
+                    <p class="text-gray-300 mb-4">ResQPaw is a non-profit organization dedicated to rescuing,
+                        rehabilitating, and rehoming pets in need across Bangladesh.</p>
+                    <div class="social-icons flex gap-4">
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition-all duration-300 hover-lift">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition-all duration-300 hover-lift">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition-all duration-300 hover-lift">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition-all duration-300 hover-lift">
+                            <i class="fab fa-youtube"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-controller="Pets" asp-action="Index">Adopt a Pet</a></li>
-                        <li><a asp-controller="LostFound" asp-action="Index">Lost & Found</a></li>
-                        <li><a asp-controller="Vets" asp-action="Index">Find a Vet</a></li>
-                        <li><a asp-controller="Resources" asp-action="Index">Resources</a></li>
+                    <h3 class="text-amber-400 text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a asp-controller="Home" asp-action="Index"
+                                class="text-gray-300 hover:text-amber-400 transition-colors duration-300">Home</a></li>
+                        <li><a asp-controller="Pets" asp-action="Index"
+                                class="text-gray-300 hover:text-amber-400 transition-colors duration-300">Adopt a
+                                Pet</a></li>
+                        <li><a asp-controller="LostFound" asp-action="Index"
+                                class="text-gray-300 hover:text-amber-400 transition-colors duration-300">Lost &
+                                Found</a></li>
+                        <li><a asp-controller="Veterinarians" asp-action="Vet"
+                                class="text-gray-300 hover:text-amber-400 transition-colors duration-300">Veterinarians</a>
+                        </li>
+                        <li><a asp-controller="Resources" asp-action="Index"
+                                class="text-gray-300 hover:text-amber-400 transition-colors duration-300">Resources</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Pet Rescue Ave, City, State</p>
-                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
-                    <p><i class="fas fa-envelope"></i> info@resqpaw.org</p>
+                    <h3 class="text-amber-400 text-xl font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="text-gray-300"><i class="fas fa-map-marker-alt text-amber-400 mr-2"></i> Dhaka,
+                            Bangladesh</li>
+                        <li class="text-gray-300"><i class="fas fa-phone text-amber-400 mr-2"></i> +880 1234-567890</li>
+                        <li class="text-gray-300"><i class="fas fa-envelope text-amber-400 mr-2"></i> info@resqpaw.org
+                        </li>
+                    </ul>
                 </div>
                 <div class="footer-column">
-                    <h3>Newsletter</h3>
-                    <form>
-                        <input type="email" placeholder="Your Email" class="form-control mb-2" />
-                        <button type="submit" class="btn btn-primary w-100">Subscribe</button>
+                    <h3 class="text-amber-400 text-xl font-bold mb-4">Newsletter</h3>
+                    <p class="text-gray-300 mb-4">Subscribe to our newsletter for updates on pets available for adoption
+                        and rescue stories.</p>
+                    <form class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email"
+                            class="px-4 py-2 rounded-lg bg-gray-800 text-white border border-gray-700 focus:outline-none focus:border-amber-500 input-focus-effect">
+                        <button type="submit"
+                            class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white font-semibold rounded-lg transition-all duration-300">Subscribe</button>
                     </form>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; @DateTime.Now.Year ResQPaw. All rights reserved.</p>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; @DateTime.Now.Year ResQPaw. All rights reserved. Made with <i
+                        class="fas fa-heart text-red-500"></i> for animals in Bangladesh.</p>
             </div>
         </div>
     </footer>
 
     <!-- Scripts -->
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Auth System Script -->
+    <script>
+        // Authentication Manager
+        class AuthManager {
+            constructor() {
+                this.isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                this.init();
+            }
+
+            init() {
+                this.updateUI();
+                this.setupEventListeners();
+            }
+
+            login() {
+                this.isLoggedIn = true;
+                localStorage.setItem('isLoggedIn', 'true');
+                this.updateUI();
+                // Redirect to home page after login
+                window.location.href = '/';
+            }
+
+            logout() {
+                this.isLoggedIn = false;
+                localStorage.setItem('isLoggedIn', 'false');
+                this.updateUI();
+                window.location.href = '/';
+            }
+
+            updateUI() {
+                const guestButtons = document.getElementById('guest-buttons');
+                const userProfile = document.getElementById('user-profile');
+
+                if (this.isLoggedIn) {
+                    guestButtons.classList.add('hidden');
+                    userProfile.classList.remove('hidden');
+                } else {
+                    guestButtons.classList.remove('hidden');
+                    userProfile.classList.add('hidden');
+                }
+            }
+
+            setupEventListeners() {
+                // Profile dropdown toggle
+                const profileToggle = document.getElementById('profile-toggle');
+                const profileDropdown = document.getElementById('profile-dropdown');
+
+                if (profileToggle) {
+                    profileToggle.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        profileDropdown.classList.toggle('show');
+                    });
+
+                    // Close dropdown when clicking outside
+                    document.addEventListener('click', () => {
+                        profileDropdown.classList.remove('show');
+                    });
+
+                    // Prevent dropdown from closing when clicking inside
+                    profileDropdown.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                }
+
+                // Logout button
+                const logoutBtn = document.getElementById('logout-btn');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        this.logout();
+                    });
+                }
+            }
+        }
+
+        // Initialize auth manager when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            window.authManager = new AuthManager();
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

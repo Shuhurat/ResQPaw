@@ -1,0 +1,163 @@
+@{
+    ViewData["Title"] = "Sign Up - ResQPaw";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Register.css" asp-append-version="true" />
+}
+
+<!-- Auth Container with Original Background -->
+<div class="auth-background flex-grow flex justify-center items-center py-12 px-4">
+    <div class="relative w-full max-w-md">
+        <!-- Background decoration -->
+        <div class="absolute -top-10 -left-10 w-20 h-20 bg-amber-200 rounded-full opacity-50 floating-element"></div>
+        <div class="absolute -bottom-8 -right-8 w-16 h-16 bg-orange-200 rounded-full opacity-50 floating-element-2"></div>
+        
+        <!-- Signup Box -->
+        <div class="gradient-border rounded-2xl shadow-2xl overflow-hidden hover-lift transition-all duration-500">
+            <div class="bg-gradient-to-r from-amber-500 to-red-600 h-2 w-full"></div>
+            
+            <div class="p-8 bg-white">
+                <div class="text-center mb-8">
+                    <div class="w-16 h-16 bg-amber-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <i class="fas fa-user-plus text-white text-2xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-2">Join ResQPaw</h2>
+                    <p class="text-gray-600">Create your account</p>
+                </div>
+
+                <form id="signupForm" class="space-y-6" method="post">
+                    <div class="form-group">
+                        <label for="fullName" class="block text-gray-700 font-semibold mb-2">Full Name</label>
+                        <div class="relative">
+                            <input type="text" id="fullName" name="fullName" class="w-full px-4 py-3 pl-12 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white input-focus-effect" placeholder="Enter your full name" required>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-user text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email" class="block text-gray-700 font-semibold mb-2">Email Address</label>
+                        <div class="relative">
+                            <input type="email" id="email" name="email" class="w-full px-4 py-3 pl-12 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white input-focus-effect" placeholder="Enter your email" required>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-envelope text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="block text-gray-700 font-semibold mb-2">Password</label>
+                        <div class="relative">
+                            <input type="password" id="password" name="password" class="w-full px-4 py-3 pl-12 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white input-focus-effect" placeholder="Create a password" required>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                        </div>
+                        <div class="password-strength mt-2">
+                            <div class="password-strength-bar" id="passwordStrengthBar"></div>
+                        </div>
+                        <div class="password-strength-text" id="passwordStrengthText">Password strength</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword" class="block text-gray-700 font-semibold mb-2">Confirm Password</label>
+                        <div class="relative">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="w-full px-4 py-3 pl-12 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white input-focus-effect" placeholder="Confirm your password" required>
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-lock text-gray-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userType" class="block text-gray-700 font-semibold mb-2">I am a:</label>
+                        <select class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white" id="userType" name="userType" required>
+                            <option value="">Select an option</option>
+                            <option value="adopt">Pet Owner</option>
+                            <option value="foster">Veterinarian</option>
+                            <option value="volunteer">Rescuer</option>
+                            <option value="donate">Donator to support and help pets</option>
+                            <option value="all">All of the above</option>
+                        </select>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <input type="checkbox" id="termsAgree" name="agreeToTerms" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500 mt-1" required>
+                            <label for="termsAgree" class="ml-2 text-gray-700 text-sm">
+                                I agree to the <a asp-controller="Home" asp-action="Terms" class="text-amber-600 hover:text-amber-700 font-medium">Terms of Service</a> and <a asp-controller="Home" asp-action="Privacy" class="text-amber-600 hover:text-amber-700 font-medium">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <input type="checkbox" id="newsletter" name="subscribeToNewsletter" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500 mt-1">
+                            <label for="newsletter" class="ml-2 text-gray-700 text-sm">
+                                Send me updates about pets in need and ResQPaw events
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg btn-glow flex items-center justify-center">
+                        <i class="fas fa-user-plus mr-2"></i> Create Account
+                    </button>
+                </form>
+
+                <div class="relative my-6">
+                    <div class="absolute inset-0 flex items-center">
+                        <div class="w-full border-t border-gray-300"></div>
+                    </div>
+                    <div class="relative flex justify-center text-sm">
+                        <span class="px-2 bg-white text-gray-500">Or sign up with</span>
+                    </div>
+                </div>
+
+                <div class="flex justify-center gap-4 mb-6">
+                    <button type="button" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-amber-500 hover:text-white transition-all duration-300 hover-lift">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button type="button" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition-all duration-300 hover-lift">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                    <button type="button" class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-400 hover:text-white transition-all duration-300 hover-lift">
+                        <i class="fab fa-twitter"></i>
+                    </button>
+                </div>
+
+                <div class="text-center text-gray-600">
+                    Already have an account? <a asp-controller="Account" asp-action="Login" class="text-amber-600 hover:text-amber-700 font-semibold transition-colors duration-300">Log in here</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Register.js" asp-append-version="true"></script>
+    
+    <script>
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate registration process
+            const firstName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (firstName && email && password && confirmPassword) {
+                if (password !== confirmPassword) {
+                    alert('Passwords do not match!');
+                    return;
+                }
+                
+                // For demo purposes, we'll just log the user in
+                if (window.authManager) {
+                    window.authManager.login();
+                }
+            }
+        });
+    </script>
+}

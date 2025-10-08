@@ -1,0 +1,292 @@
+@model ResQPaw.Models.Vet
+@{
+    ViewData["Title"] = $"{Model.Name} - ResQPaw";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/vet-profile.css">
+}
+
+<!-- Professional Background -->
+<div class="fixed inset-0 z-0">
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10" 
+         style="background-image: url('https://images.unsplash.com/photo-1577720649910-2c6d8d7f0d6a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80');">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-br from-amber-50/80 to-amber-100/60 backdrop-blur-sm"></div>
+    <div class="particles-container absolute inset-0"></div>
+</div>
+
+<!-- Profile Section -->
+<section class="py-12 relative z-10">
+    <div class="container mx-auto px-4">
+        <!-- Profile Header -->
+        <div class="profile-card rounded-2xl p-8 mb-8 shadow-xl">
+            <div class="flex flex-col lg:flex-row items-center lg:items-start gap-8">
+                <div class="profile-avatar w-40 h-40 rounded-full overflow-hidden flex-shrink-0">
+                    <img src="@Model.ImageUrl" alt="@Model.Name" class="w-full h-full object-cover">
+                </div>
+                
+                <div class="profile-info flex-1 text-center lg:text-left">
+                    <h2 class="text-4xl font-bold text-gray-800 mb-2 hover-text-amber">@Model.Name</h2>
+                    <span class="text-amber-600 font-semibold text-xl mb-4 block">@Model.Specialty</span>
+
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-6 mb-4">
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-map-marker-alt text-amber-500 mr-2"></i>
+                            <span>@Model.Clinic, @Model.Location</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-graduation-cap text-amber-500 mr-2"></i>
+                            <span>@Model.Experience experience</span>
+                        </div>
+                        <div class="flex items-center text-gray-600">
+                            <i class="fas fa-star text-amber-500 mr-2"></i>
+                            <span>@Model.Rating rating (@Model.Reviews reviews)</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center justify-center lg:justify-start mb-6">
+                        <div class="rating-stars mr-3">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= Math.Floor(Model.Rating))
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                                else if (i == Math.Ceiling(Model.Rating) && Model.Rating % 1 != 0)
+                                {
+                                    <i class="fas fa-star-half-alt"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-star"></i>
+                                }
+                            }
+                        </div>
+                        <span class="text-amber-600 font-bold text-lg">@Model.Rating</span>
+                        <span class="text-gray-500 ml-1">(@Model.Reviews reviews)</span>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <button class="px-8 py-4 bg-amber-600 text-white rounded-xl font-bold hover:bg-amber-700 transition-all duration-300 btn-primary glow-effect text-lg book-appointment-btn"
+                                data-vet-id="@Model.Id">
+                            <i class="fas fa-calendar-check mr-2"></i>Book Appointment
+                        </button>
+                        <a href="/Veterinarians/Vet" class="px-8 py-4 border-2 border-amber-600 text-amber-600 rounded-xl font-bold hover:bg-amber-600 hover:text-white transition-all duration-300 btn-outline text-lg text-center">
+                            <i class="fas fa-arrow-left mr-2"></i>Back to Vets
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Content -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Content -->
+            <div class="lg:col-span-2">
+                <div class="profile-card rounded-2xl p-8 shadow-xl">
+                    <div class="tab-container">
+                        <div class="flex flex-wrap border-b-2 border-gray-200 mb-8">
+                            <button class="tab-button active px-6 py-3 font-semibold text-gray-600 hover:text-amber-600 transition-colors duration-300" data-tab="about">
+                                About
+                            </button>
+                            <button class="tab-button px-6 py-3 font-semibold text-gray-600 hover:text-amber-600 transition-colors duration-300" data-tab="services">
+                                Services & Pricing
+                            </button>
+                            <button class="tab-button px-6 py-3 font-semibold text-gray-600 hover:text-amber-600 transition-colors duration-300" data-tab="reviews">
+                                Reviews
+                            </button>
+                        </div>
+
+                        <!-- About Tab -->
+                        <div class="tab-content active" id="about">
+                            <h3 class="section-title text-2xl font-bold text-gray-800 mb-6 hover-text-amber">About Dr. @Model.Name.Split(' ').Last()</h3>
+                            <div class="space-y-4 text-gray-600 leading-relaxed">
+                                <p>@Model.Description</p>
+                                <p>Dr. @Model.Name.Split(' ').Last() is dedicated to providing exceptional veterinary care with a focus on patient comfort and owner education. With extensive experience in the field, they stay current with the latest advancements in veterinary medicine.</p>
+                            </div>
+
+                            <h3 class="section-title text-2xl font-bold text-gray-800 mt-12 mb-6 hover-text-amber">Education & Qualifications</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="specialty-item rounded-xl p-4 flex items-center">
+                                    <i class="fas fa-graduation-cap text-amber-500 text-xl mr-3"></i>
+                                    <span class="font-semibold">@Model.Education</span>
+                                </div>
+                                <div class="specialty-item rounded-xl p-4 flex items-center">
+                                    <i class="fas fa-certificate text-amber-500 text-xl mr-3"></i>
+                                    <span class="font-semibold">@Model.Experience Experience</span>
+                                </div>
+                                <div class="specialty-item rounded-xl p-4 flex items-center">
+                                    <i class="fas fa-comments text-amber-500 text-xl mr-3"></i>
+                                    <span class="font-semibold">Languages: @string.Join(", ", Model.Languages)</span>
+                                </div>
+                                <div class="specialty-item rounded-xl p-4 flex items-center">
+                                    <i class="fas fa-star text-amber-500 text-xl mr-3"></i>
+                                    <span class="font-semibold">@Model.Rating Rating</span>
+                                </div>
+                            </div>
+
+                            <h3 class="section-title text-2xl font-bold text-gray-800 mt-12 mb-6 hover-text-amber">Specialties</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                                @foreach (var specialty in Model.Specialty.Split("&").Select(s => s.Trim()))
+                                {
+                                    <div class="specialty-item rounded-xl p-4 flex items-center">
+                                        <i class="fas fa-stethoscope text-amber-500 text-xl mr-3"></i>
+                                        <span class="font-semibold">@specialty</span>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Services Tab -->
+                        <div class="tab-content" id="services">
+                            <h3 class="section-title text-2xl font-bold text-gray-800 mb-6 hover-text-amber">Services & Pricing</h3>
+                            <p class="text-gray-600 mb-8 leading-relaxed">Dr. @Model.Name.Split(' ').Last() offers a comprehensive range of veterinary services tailored to your pet's needs.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="service-item rounded-xl p-6">
+                                    <div class="service-icon text-amber-500 text-2xl mb-4">
+                                        <i class="fas fa-stethoscope"></i>
+                                    </div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-3">General Consultation</h4>
+                                    <p class="text-gray-600 mb-4">Comprehensive health examination and consultation for your pet.</p>
+                                    <div class="service-price text-amber-600 font-bold text-xl">@Model.ConsultationFee</div>
+                                </div>
+                                
+                                <div class="service-item rounded-xl p-6">
+                                    <div class="service-icon text-amber-500 text-2xl mb-4">
+                                        <i class="fas fa-bone"></i>
+                                    </div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-3">Specialized Procedures</h4>
+                                    <p class="text-gray-600 mb-4">Advanced medical and surgical procedures based on specialty.</p>
+                                    <div class="service-price text-amber-600 font-bold text-xl">৳ 5,000 - ৳ 40,000</div>
+                                </div>
+                                
+                                <div class="service-item rounded-xl p-6">
+                                    <div class="service-icon text-amber-500 text-2xl mb-4">
+                                        <i class="fas fa-heartbeat"></i>
+                                    </div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-3">Emergency Care</h4>
+                                    <p class="text-gray-600 mb-4">Immediate medical attention for critical conditions.</p>
+                                    <div class="service-price text-amber-600 font-bold text-xl">৳ 3,000 - ৳ 8,000</div>
+                                </div>
+                                
+                                <div class="service-item rounded-xl p-6">
+                                    <div class="service-icon text-amber-500 text-2xl mb-4">
+                                        <i class="fas fa-teeth"></i>
+                                    </div>
+                                    <h4 class="text-xl font-bold text-gray-800 mb-3">Diagnostic Services</h4>
+                                    <p class="text-gray-600 mb-4">Laboratory tests, imaging, and diagnostic procedures.</p>
+                                    <div class="service-price text-amber-600 font-bold text-xl">৳ 1,500 - ৳ 10,000</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-8 p-4 bg-amber-50 rounded-xl border border-amber-200">
+                                <div class="flex items-start">
+                                    <i class="fas fa-info-circle text-amber-500 text-xl mr-3 mt-1"></i>
+                                    <p class="text-amber-800">Prices may vary based on the complexity of the procedure and specific needs of your pet. Contact us for a detailed estimate.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Reviews Tab -->
+                        <div class="tab-content" id="reviews">
+                            <h3 class="section-title text-2xl font-bold text-gray-800 mb-6 hover-text-amber">Patient Reviews</h3>
+                            <p class="text-gray-600 mb-8 leading-relaxed">What pet owners are saying about Dr. @Model.Name.Split(' ').Last()'s care and expertise.</p>
+                            
+                            <div class="space-y-6">
+                                <!-- Sample reviews - in real app, these would come from database -->
+                                <div class="review-item rounded-xl p-6">
+                                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4">
+                                        <span class="reviewer font-bold text-gray-800 text-lg">Satisfied Pet Owner</span>
+                                        <span class="review-date text-gray-500 text-sm mt-1 sm:mt-0">Recently</span>
+                                    </div>
+                                    <div class="review-rating text-amber-500 mb-3">
+                                        @for (int i = 1; i <= 5; i++)
+                                        {
+                                            <i class="fas fa-star"></i>
+                                        }
+                                    </div>
+                                    <div class="review-text text-gray-600 leading-relaxed">
+                                        <p>Excellent care and professional service. Dr. @Model.Name.Split(' ').Last() provided thorough explanations and showed genuine concern for my pet's well-being.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-8">
+                <!-- Clinic Information -->
+                <div class="profile-card rounded-2xl p-6 shadow-xl">
+                    <h3 class="section-title text-xl font-bold text-gray-800 mb-4 hover-text-amber">Clinic Information</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-amber-500 mt-1 mr-3"></i>
+                            <span class="text-gray-600">@Model.Clinic<br>@Model.Address</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-amber-500 mr-3"></i>
+                            <span class="text-gray-600">@Model.ContactNumber</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-globe text-amber-500 mr-3"></i>
+                            <span class="text-gray-600">Contact for website</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Availability -->
+                <div class="profile-card rounded-2xl p-6 shadow-xl">
+                    <h3 class="section-title text-xl font-bold text-gray-800 mb-4 hover-text-amber">Availability</h3>
+                    <div class="space-y-3">
+                        @{
+                            var availabilitySchedule = new[]
+                            {
+                                new { Day = "Monday", Time = "9:00 AM - 5:00 PM" },
+                                new { Day = "Tuesday", Time = "9:00 AM - 5:00 PM" },
+                                new { Day = "Wednesday", Time = "9:00 AM - 5:00 PM" },
+                                new { Day = "Thursday", Time = "9:00 AM - 5:00 PM" },
+                                new { Day = "Friday", Time = "9:00 AM - 3:00 PM" },
+                                new { Day = "Saturday", Time = "10:00 AM - 2:00 PM" },
+                                new { Day = "Sunday", Time = "Closed" }
+                            };
+                        }
+                        @foreach (var day in availabilitySchedule)
+                        {
+                            <div class="availability-item flex justify-between items-center p-2 rounded-lg">
+                                <span class="availability-day font-semibold text-gray-700">@day.Day</span>
+                                <span class="availability-time @(day.Day == "Sunday" ? "text-red-500" : "text-gray-600")">@day.Time</span>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Emergency Contact -->
+                <div class="emergency-contact rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-red-600 mb-3 flex items-center">
+                        <i class="fas fa-exclamation-circle mr-2"></i>
+                        After-Hours Emergency
+                    </h3>
+                    <p class="text-gray-700 mb-3">For emergencies outside regular hours, please call:</p>
+                    <p class="font-bold text-xl text-red-600 mb-3">@Model.ContactNumber</p>
+                    <p class="text-gray-700">Dr. @Model.Name.Split(' ').Last() is available for true emergencies 24/7.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/vet-profile.js"></script>
+    <script>
+        // Add booking functionality
+        document.querySelector('.book-appointment-btn').addEventListener('click', function() {
+            const vetId = this.getAttribute('data-vet-id');
+            vetProfilePage.handleBookAppointment(vetId);
+        });
+    </script>
+}

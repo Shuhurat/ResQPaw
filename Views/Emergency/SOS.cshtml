@@ -1,0 +1,191 @@
+@{
+    ViewData["Title"] = "Emergency SOS - ResQPaw";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/SOS.css" asp-append-version="true" />
+}
+
+<!-- Animated Background Elements -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <!-- Floating animal images -->
+    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=150&h=150&fit=crop&crop=center" 
+         class="absolute w-32 h-32 rounded-full opacity-20 floating-element" 
+         style="top: 10%; left: 5%;" alt="Dog">
+    
+    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=150&h=150&fit=crop&crop=center" 
+         class="absolute w-28 h-28 rounded-full opacity-20 floating-element-2" 
+         style="top: 70%; left: 85%;" alt="Cat">
+    
+    <img src="https://images.unsplash.com/photo-1555169062-013468b47731?w=150&h=150&fit=crop&crop=center" 
+         class="absolute w-24 h-24 rounded-full opacity-20 floating-element" 
+         style="top: 40%; left: 90%;" alt="Bird">
+    
+    <img src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=150&h=150&fit=crop&crop=center" 
+         class="absolute w-30 h-30 rounded-full opacity-20 floating-element-2" 
+         style="top: 80%; left: 10%;" alt="Rabbit">
+    
+    <!-- Animated paw prints -->
+    <div class="absolute w-16 h-16 opacity-10 floating-element" style="top: 15%; left: 80%;">
+        <svg viewBox="0 0 100 100" fill="currentColor" class="text-amber-500">
+            <circle cx="50" cy="35" r="15"></circle>
+            <circle cx="30" cy="60" r="12"></circle>
+            <circle cx="70" cy="60" r="12"></circle>
+            <circle cx="40" cy="80" r="10"></circle>
+            <circle cx="60" cy="80" r="10"></circle>
+        </svg>
+    </div>
+    
+    <div class="absolute w-16 h-16 opacity-10 floating-element-2" style="top: 65%; left: 15%;">
+        <svg viewBox="0 0 100 100" fill="currentColor" class="text-amber-500">
+            <circle cx="50" cy="35" r="15"></circle>
+            <circle cx="30" cy="60" r="12"></circle>
+            <circle cx="70" cy="60" r="12"></circle>
+            <circle cx="40" cy="80" r="10"></circle>
+            <circle cx="60" cy="80" r="10"></circle>
+        </svg>
+    </div>
+    
+    <!-- Background particles -->
+    <div class="particle w-6 h-6" style="top: 20%; left: 20%; animation-delay: 0s;"></div>
+    <div class="particle w-4 h-4" style="top: 60%; left: 40%; animation-delay: 1s;"></div>
+    <div class="particle w-8 h-8" style="top: 30%; left: 70%; animation-delay: 2s;"></div>
+    <div class="particle w-5 h-5" style="top: 80%; left: 60%; animation-delay: 3s;"></div>
+    <div class="particle w-7 h-7" style="top: 50%; left: 10%; animation-delay: 4s;"></div>
+</div>
+
+<!-- Hero Section -->
+<section class="relative py-20 overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-r from-amber-400 to-orange-500 opacity-10 z-0"></div>
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-amber-600 to-red-600 bg-clip-text text-transparent">
+                Emergency Animal Rescue
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-700 mb-8">
+                Report injured, lost, or distressed animals to get them the help they need immediately
+            </p>
+            <div class="animate-bounce-slow mt-10">
+                <i class="fas fa-arrow-down text-amber-500 text-3xl"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SOS Form Section -->
+<section class="py-16 relative z-10">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto">
+            <div class="gradient-border rounded-2xl shadow-2xl overflow-hidden hover-lift transition-all duration-500">
+                <div class="bg-gradient-to-r from-amber-500 to-red-600 h-2 w-full"></div>
+                
+                <div class="p-8 md:p-10 bg-white">
+                    <div class="sos-header text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold text-red-600 mb-4 flex items-center justify-center">
+                            <i class="fas fa-exclamation-triangle mr-4 animate-pulse"></i> Emergency Report
+                        </h2>
+                        <p class="text-gray-600 text-lg">Please provide as much detail as possible to help us respond quickly</p>
+                    </div>
+
+                    <div class="sos-alert bg-red-50 border-l-4 border-red-600 p-4 mb-6 rounded-r-lg transition-all duration-300 hover:translate-x-2 hover:shadow-lg">
+                        <h4 class="text-red-700 font-bold mb-2 flex items-center">
+                            <i class="fas fa-info-circle mr-2"></i> For immediate assistance
+                        </h4>
+                        <p class="text-red-600">If this is a critical emergency with an injured animal, please call your local animal control or emergency veterinary service first.</p>
+                    </div>
+
+                    <form id="sosForm" method="post" asp-action="SOS" asp-controller="Emergency">
+                        <div class="form-group mb-6">
+                            <label for="emergencyType" class="block text-gray-700 font-semibold mb-2">Type of Emergency *</label>
+                            <select class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white" id="emergencyType" name="emergencyType" required>
+                                <option value="">Select emergency type</option>
+                                <option value="injured">Injured Animal</option>
+                                <option value="lost">Lost Pet</option>
+                                <option value="found">Found Animal</option>
+                                <option value="abuse">Animal Abuse/Neglect</option>
+                                <option value="trapped">Trapped Animal</option>
+                                <option value="other">Other Emergency</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="form-group">
+                                <label for="animalType" class="block text-gray-700 font-semibold mb-2">Animal Type *</label>
+                                <select class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white" id="animalType" name="animalType" required>
+                                    <option value="">Select animal type</option>
+                                    <option value="dog">Dog</option>
+                                    <option value="cat">Cat</option>
+                                    <option value="bird">Bird</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="animalCondition" class="block text-gray-700 font-semibold mb-2">Animal Condition *</label>
+                                <select class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white" id="animalCondition" name="animalCondition" required>
+                                    <option value="">Select condition</option>
+                                    <option value="good">Good - appears healthy</option>
+                                    <option value="injured">Injured - needs medical attention</option>
+                                    <option value="critical">Critical - severely injured</option>
+                                    <option value="unknown">Unknown</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-6">
+                            <label for="emergencyDescription" class="block text-gray-700 font-semibold mb-2">Emergency Description *</label>
+                            <textarea class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white min-h-32" id="emergencyDescription" name="emergencyDescription" placeholder="Please describe the situation in detail..." required></textarea>
+                        </div>
+
+                        <div class="form-group mb-6">
+                            <label for="location" class="block text-gray-700 font-semibold mb-2">Location Where Found *</label>
+                            <input type="text" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white" id="location" name="location" placeholder="Enter the address or location" required>
+                        </div>
+
+                        <div class="form-group mb-6">
+                            <label class="block text-gray-700 font-semibold mb-2">Upload Photos or Videos</label>
+                            <div class="upload-area border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer transition-all duration-300 hover:border-amber-500 hover:bg-amber-50" id="uploadArea">
+                                <i class="fas fa-cloud-upload-alt text-amber-500 text-5xl mb-4 transition-transform duration-300"></i>
+                                <h4 class="text-xl font-semibold text-gray-800 mb-2">Drag & Drop or Click to Upload</h4>
+                                <p class="text-gray-600 mb-2">Upload clear photos or videos of the animal and location</p>
+                                <p class="text-sm text-gray-500">Maximum file size: 10MB per file</p>
+                                <input type="file" id="fileInput" name="files" multiple accept="image/*,video/*" class="hidden">
+                            </div>
+                            <div class="upload-preview flex flex-wrap gap-4 mt-4" id="uploadPreview"></div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                            <div class="form-group">
+                                <label for="reporterName" class="block text-gray-700 font-semibold mb-2">Your Name *</label>
+                                <input type="text" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white" id="reporterName" name="reporterName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reporterPhone" class="block text-gray-700 font-semibold mb-2">Your Phone Number *</label>
+                                <input type="tel" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white" id="reporterPhone" name="reporterPhone" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group mb-6">
+                            <label for="reporterEmail" class="block text-gray-700 font-semibold mb-2">Your Email</label>
+                            <input type="email" class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-amber-500 focus:ring-2 focus:ring-amber-200 transition-all duration-300 bg-gray-50 hover:bg-white" id="reporterEmail" name="reporterEmail">
+                        </div>
+
+                        <div class="form-group mb-8">
+                            <div class="flex items-center">
+                                <input type="checkbox" class="w-5 h-5 text-amber-600 rounded focus:ring-amber-500" id="canAssist" name="canAssist">
+                                <label for="canAssist" class="ml-2 text-gray-700 font-medium cursor-pointer hover:text-amber-600 transition-colors duration-300">I can assist or stay with the animal until help arrives</label>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center">
+                            <i class="fas fa-paper-plane mr-3"></i> Send Emergency Report
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/SOS.js" asp-append-version="true"></script>
+}

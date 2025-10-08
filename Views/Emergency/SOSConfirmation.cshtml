@@ -1,0 +1,150 @@
+@{
+    ViewData["Title"] = "Emergency Report Submitted - ResQPaw";
+    var animalType = ViewBag.AnimalType as string ?? "the animal";
+    var location = ViewBag.Location as string ?? "the location";
+    var reporterName = ViewBag.ReporterName as string ?? "";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/SOSConfirmation.css" asp-append-version="true" />
+}
+
+<!-- Animated Background Elements -->
+<div class="fixed inset-0 overflow-hidden pointer-events-none z-0">
+    <!-- Floating animal images -->
+    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?w=150&h=150&fit=crop&crop=center" 
+         class="absolute w-32 h-32 rounded-full opacity-20 floating-element" 
+         style="top: 10%; left: 5%;" alt="Dog">
+    
+    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=150&h=150&fit=crop&crop=center" 
+         class="absolute w-28 h-28 rounded-full opacity-20 floating-element-2" 
+         style="top: 70%; left: 85%;" alt="Cat">
+    
+    <img src="https://images.unsplash.com/photo-1555169062-013468b47731?w=150&h=150&fit=crop&crop=center" 
+         class="absolute w-24 h-24 rounded-full opacity-20 floating-element" 
+         style="top: 40%; left: 90%;" alt="Bird">
+    
+    <img src="https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?w=150&h=150&fit=crop&crop=center" 
+         class="absolute w-30 h-30 rounded-full opacity-20 floating-element-2" 
+         style="top: 80%; left: 10%;" alt="Rabbit">
+    
+    <!-- Animated paw prints -->
+    <div class="absolute w-16 h-16 opacity-10 floating-element" style="top: 15%; left: 80%;">
+        <svg viewBox="0 0 100 100" fill="currentColor" class="text-amber-500">
+            <circle cx="50" cy="35" r="15"></circle>
+            <circle cx="30" cy="60" r="12"></circle>
+            <circle cx="70" cy="60" r="12"></circle>
+            <circle cx="40" cy="80" r="10"></circle>
+            <circle cx="60" cy="80" r="10"></circle>
+        </svg>
+    </div>
+    
+    <div class="absolute w-16 h-16 opacity-10 floating-element-2" style="top: 65%; left: 15%;">
+        <svg viewBox="0 0 100 100" fill="currentColor" class="text-amber-500">
+            <circle cx="50" cy="35" r="15"></circle>
+            <circle cx="30" cy="60" r="12"></circle>
+            <circle cx="70" cy="60" r="12"></circle>
+            <circle cx="40" cy="80" r="10"></circle>
+            <circle cx="60" cy="80" r="10"></circle>
+        </svg>
+    </div>
+    
+    <!-- Background particles -->
+    <div class="particle w-6 h-6" style="top: 20%; left: 20%; animation-delay: 0s;"></div>
+    <div class="particle w-4 h-4" style="top: 60%; left: 40%; animation-delay: 1s;"></div>
+    <div class="particle w-8 h-8" style="top: 30%; left: 70%; animation-delay: 2s;"></div>
+    <div class="particle w-5 h-5" style="top: 80%; left: 60%; animation-delay: 3s;"></div>
+    <div class="particle w-7 h-7" style="top: 50%; left: 10%; animation-delay: 4s;"></div>
+</div>
+
+<!-- Main Content -->
+<section class="min-h-screen flex items-center justify-center py-12 px-4 relative z-10">
+    <div class="container mx-auto max-w-4xl">
+        <!-- Success Card -->
+        <div class="gradient-border rounded-2xl shadow-2xl overflow-hidden hover-lift transition-all duration-500" id="confirmationCard">
+            <div class="bg-gradient-to-r from-green-500 to-emerald-600 h-2 w-full"></div>
+            
+            <div class="p-8 md:p-12 bg-white/90 backdrop-blur-lg border border-white/20">
+                <!-- Success Icon -->
+                <div class="text-center mb-8">
+                    <div class="success-icon mx-auto mb-6 relative">
+                        <div class="w-24 h-24 bg-gradient-to-r from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto shadow-2xl animate-pulse-slow">
+                            <i class="fas fa-check text-white text-3xl"></i>
+                        </div>
+                        <div class="absolute inset-0 rounded-full border-4 border-green-200 animate-ping-slow opacity-75"></div>
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 bg-gradient-to-r from-green-600 to-emerald-700 bg-clip-text text-transparent">
+                        Thank You, @reporterName!
+                    </h1>
+                    <div class="bg-green-50 border-l-4 border-green-600 p-4 rounded-r-lg mb-4">
+                        <p class="text-lg text-gray-700">
+                            <strong>Thank you for your report!</strong> Our rescue team has been notified and will
+                            respond as quickly as possible. Please stay safe and keep an eye on
+                            the animal if it is safe to do so.
+                        </p>
+                    </div>
+                    <p class="text-gray-600">We're handling the <strong>@animalType</strong> emergency at <strong>@location</strong></p>
+                </div>
+
+                <!-- Confirmation Details -->
+                <div class="confirmation-details bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 mb-8 border border-green-200/50 hover-lift transition-all duration-300">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-info-circle text-green-600 mr-3"></i> What Happens Next?
+                    </h3>
+                    
+                    <div class="space-y-4">
+                        <div class="step-item flex items-start p-4 bg-white rounded-lg hover:shadow-md transition-all duration-300 group">
+                            <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-white font-bold text-sm">1</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-1">Team Dispatch</h4>
+                                <p class="text-gray-600">Our nearest rescue team has been alerted and is on their way to the location</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item flex items-start p-4 bg-white rounded-lg hover:shadow-md transition-all duration-300 group">
+                            <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-white font-bold text-sm">2</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-1">Veterinary Coordination</h4>
+                                <p class="text-gray-600">Local veterinary services have been notified and are prepared for arrival</p>
+                            </div>
+                        </div>
+                        
+                        <div class="step-item flex items-start p-4 bg-white rounded-lg hover:shadow-md transition-all duration-300 group">
+                            <div class="w-8 h-8 bg-amber-500 rounded-full flex items-center justify-center mr-4 mt-1 flex-shrink-0 group-hover:scale-110 transition-transform duration-300">
+                                <span class="text-white font-bold text-sm">3</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800 mb-1">Follow-up Communication</h4>
+                                <p class="text-gray-600">You will receive updates via SMS and email about the rescue progress</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons flex flex-col sm:flex-row gap-4 justify-center">
+                    <a asp-controller="Emergency" asp-action="SOS" 
+                       class="px-8 py-4 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center group">
+                        <i class="fas fa-plus-circle mr-3 group-hover:rotate-90 transition-transform duration-300"></i>
+                        Report Another Emergency
+                    </a>
+                    
+                    <a asp-controller="Home" asp-action="Index" 
+                       class="px-8 py-4 border-2 border-amber-500 text-amber-600 hover:bg-amber-500 hover:text-white font-bold rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center justify-center group">
+                        <i class="fas fa-home mr-3 group-hover:scale-110 transition-transform duration-300"></i>
+                        Return to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/SOSConfirmation.js" asp-append-version="true"></script>
+}

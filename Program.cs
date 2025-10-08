@@ -1,4 +1,4 @@
-     using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ResQPaw.Data;
 using ResQPaw.Models;
@@ -18,9 +18,17 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultTokenProviders()
 .AddDefaultUI(); // <-- adds Razor Pages for Identity
 
-// 3. Add MVC + Razor Pages
+// 3. Configure Application Cookie (MOVE THIS BEFORE builder.Build())
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/Account/Login"; // Make sure this points to your custom login
+    options.LogoutPath = "/Account/Logout";
+    options.AccessDeniedPath = "/Home/AccessDenied";
+});
+
+// 4. Add MVC + Razor Pages
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+//builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
@@ -43,6 +51,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapRazorPages(); // enable Identity Razor Pages
+//app.MapRazorPages(); // enable Identity Razor Pages
 
 app.Run();
+// NOTHING SHOULD BE AFTER app.Run() - IT WILL NEVER EXECUTE

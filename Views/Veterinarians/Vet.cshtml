@@ -1,0 +1,206 @@
+@{
+    ViewData["Title"] = "Find Veterinarians - ResQPaw";
+    Layout = "_Layout";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/vet.css">
+}
+
+<!-- Professional Background -->
+<div class="fixed inset-0 z-0">
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-8" 
+         style="background-image: url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80');">
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-br from-amber-50/85 to-amber-100/55 backdrop-blur-sm"></div>
+    <div class="particles-container absolute inset-0"></div>
+</div>
+
+<!-- Hero Section -->
+<section class="relative py-20 md:py-28 overflow-hidden">
+    <div class="absolute inset-0 bg-cover bg-center bg-no-repeat z-0" style="background-image: url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');"></div>
+    <div class="absolute inset-0 bg-black opacity-50 z-0"></div>
+    
+    <div class="container mx-auto px-4 relative z-10 text-center text-white">
+        <h2 class="text-4xl md:text-6xl font-bold mb-6 typewriter hero-title">Find Expert Veterinary Care</h2>
+        <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto leading-relaxed hover-text-amber">Connect with verified veterinarians for consultations, emergencies, and pet health advice across Bangladesh</p>
+        <a href="#search" class="inline-block px-8 py-4 bg-amber-600 text-white rounded-full font-bold text-lg hover:bg-amber-700 transition-all duration-300 transform hover:scale-105 shadow-lg btn-primary glow-effect">
+            Find a Vet Now
+        </a>
+    </div>
+</section>
+
+<!-- Search Section -->
+<section class="py-12 relative z-10" id="search">
+    <div class="container mx-auto px-4">
+        <div class="search-section rounded-2xl p-8 mb-8">
+            <div class="text-center mb-8">
+                <h3 class="text-3xl font-bold text-gray-800 section-title hover-text-amber">Find the Right Veterinarian</h3>
+                <p class="text-gray-600 mt-2 hover-text-amber">Search by name, clinic, or use our advanced filters</p>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="mb-8">
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <label for="vet-name" class="block text-gray-700 font-medium mb-2 hover-text-amber">Vet Name</label>
+                        <div class="relative">
+                            <input type="text" id="vet-name" placeholder="Search by veterinarian name" 
+                                   class="w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-300 search-input">
+                            <i class="fas fa-search absolute right-4 top-4 text-gray-400"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <label for="clinic-name" class="block text-gray-700 font-medium mb-2 hover-text-amber">Vet Clinic</label>
+                        <div class="relative">
+                            <input type="text" id="clinic-name" placeholder="Search by clinic name" 
+                                   class="w-full px-5 py-4 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-300 search-input">
+                            <i class="fas fa-clinic-medical absolute right-4 top-4 text-gray-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filter Options -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div>
+                    <label for="specialization" class="block text-gray-700 font-medium mb-2 hover-text-amber">Specialization</label>
+                    <select id="specialization" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-300 filter-select">
+                        <option value="">Any Specialization</option>
+                        <option value="surgery">Surgery</option>
+                        <option value="dermatology">Dermatology</option>
+                        <option value="dentistry">Dentistry</option>
+                        <option value="ophthalmology">Ophthalmology</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="emergency">Emergency Care</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="species" class="block text-gray-700 font-medium mb-2 hover-text-amber">Species</label>
+                    <select id="species" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-300 filter-select">
+                        <option value="">Any Species</option>
+                        <option value="dog">Dogs</option>
+                        <option value="cat">Cats</option>
+                        <option value="bird">Birds</option>
+                        <option value="reptile">Reptiles</option>
+                        <option value="small">Small Animals</option>
+                        <option value="exotic">Exotic Pets</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="location" class="block text-gray-700 font-medium mb-2 hover-text-amber">Location</label>
+                    <select id="location" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-300 filter-select">
+                        <option value="">Any Location</option>
+                        <option value="dhaka">Dhaka</option>
+                        <option value="chittagong">Chittagong</option>
+                        <option value="sylhet">Sylhet</option>
+                        <option value="khulna">Khulna</option>
+                        <option value="rajshahi">Rajshahi</option>
+                        <option value="barisal">Barisal</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="availability" class="block text-gray-700 font-medium mb-2 hover-text-amber">Availability</label>
+                    <select id="availability" class="w-full px-4 py-3 border-2 border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all duration-300 filter-select">
+                        <option value="">Any Time</option>
+                        <option value="now">Available Now</option>
+                        <option value="today">Today</option>
+                        <option value="weekend">This Weekend</option>
+                        <option value="emergency">24/7 Emergency</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="search-button-container">
+                <button id="search-button" class="px-8 py-4 bg-amber-600 text-white rounded-xl font-bold hover:bg-amber-700 transition-all duration-300 btn-primary glow-effect text-lg">
+                    <i class="fas fa-search mr-2"></i>Search Vets
+                </button>
+                <button id="reset-filters" class="px-8 py-4 bg-gray-600 text-white rounded-xl font-bold hover:bg-gray-700 transition-all duration-300 btn-secondary text-lg">
+                    <i class="fas fa-redo mr-2"></i>Reset Filters
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Vets Section -->
+<section class="py-16 relative z-10">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 relative inline-block section-title hover-text-amber">
+                Featured Veterinarians
+            </h2>
+            <p class="text-gray-600 text-xl max-w-2xl mx-auto hover-text-amber">Verified professionals ready to help your pets across Bangladesh</p>
+        </div>
+        
+        <!-- Vet Cards Container -->
+        <div id="vet-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-h-[800px] overflow-y-auto scroll-container p-4">
+            <!-- Vet cards will be dynamically added here -->
+        </div>
+        
+        <div class="text-center mt-12">
+            <p class="text-gray-600 mb-4 hover-text-amber">Can't find what you're looking for?</p>
+            <a href="#" class="inline-block px-6 py-3 border-2 border-amber-600 text-amber-600 rounded-xl font-bold hover:bg-amber-600 hover:text-white transition-all duration-300 btn-outline glow-effect">
+                View All Veterinarians
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section class="py-16 bg-gradient-to-br from-white to-amber-50 rounded-t-3xl mt-12">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4 relative inline-block section-title hover-text-amber">
+                How It Works
+            </h2>
+            <p class="text-gray-600 text-xl max-w-2xl mx-auto hover-text-amber">Easy steps to connect with veterinary professionals</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="feature-card rounded-2xl p-8 text-center group">
+                <div class="w-20 h-20 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-search text-white text-3xl feature-icon"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4 group-hover:text-amber-600 transition-colors duration-300">Find a Vet</h3>
+                <p class="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">Search by specialty, location, availability, or read reviews to find the perfect veterinarian for your pet's needs.</p>
+            </div>
+            <div class="feature-card rounded-2xl p-8 text-center group">
+                <div class="w-20 h-20 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-calendar-check text-white text-3xl feature-icon"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4 group-hover:text-amber-600 transition-colors duration-300">Book Appointment</h3>
+                <p class="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">Schedule in-clinic visits or virtual consultations based on real-time availability of vets.</p>
+            </div>
+            <div class="feature-card rounded-2xl p-8 text-center group">
+                <div class="w-20 h-20 bg-gradient-to-br from-amber-500 to-amber-600 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <i class="fas fa-video text-white text-3xl feature-icon"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-800 mb-4 group-hover:text-amber-600 transition-colors duration-300">Consult Online</h3>
+                <p class="text-gray-600 group-hover:text-gray-700 transition-colors duration-300">Connect instantly through secure chat or video calls for quick advice or follow-up consultations.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section py-20 text-white rounded-3xl my-16">
+    <div class="container mx-auto px-4 text-center cta-content">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6 hover-text-amber">Need Immediate Help?</h2>
+        <p class="text-xl mb-10 max-w-2xl mx-auto leading-relaxed hover-text-amber">
+            If your pet is experiencing an emergency, use our SOS feature to get immediate assistance from nearby veterinarians and rescuers.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+            <a href="/Emergency/SOS" class="px-8 py-4 bg-white text-amber-600 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 cta-button-primary glow-effect">
+                <i class="fas fa-exclamation-triangle mr-2"></i>Emergency SOS
+            </a>
+            <a href="tel:+8801555567890" class="px-8 py-4 border-2 border-white text-white rounded-xl font-bold text-lg hover:bg-white hover:text-amber-600 transition-all duration-300 cta-button-outline">
+                <i class="fas fa-phone mr-2"></i>Call Emergency Line
+            </a>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="~/js/vet.js"></script>
+}
