@@ -13,13 +13,12 @@
 
 @if (User.IsInRole("ServiceProvider"))
 {
-    <li class="nav-item">
-        <a class="nav-link text-danger" asp-controller="Vet" asp-action="Notifications">🚨 SOS Alerts</a>
-    </li>
+   
+        <a class="nav-link " asp-controller="Vet" asp-action="Notifications">SOS status</a>
+    
 }
 
 
-<a asp-controller="SOS" asp-action="VetDashboard">SOS Alert</a>
 
 @if (User.IsInRole("Vet"))
 {
@@ -32,5 +31,6 @@
 
 
 <p><a asp-controller="SOS" asp-action="VetDashboard" class="btn btn-primary">Go to SOS Dashboard</a></p>
+
             <p>&copy; 2024 PetCare Connect. All rights reserved.</p>
             

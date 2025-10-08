@@ -38,7 +38,7 @@
                         <li class="nav-item"><a class="nav-link" asp-controller="Vets" asp-action="Index">Veterinarians</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Resources" asp-action="Index">Resources</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About Us</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="SOS" asp-action="Send">SOS Alert</a></li>
+                       <!-- <li class="nav-item"><a class="nav-link" asp-controller="SOS" asp-action="Send">SOS Alert</a></li> -->
                     </ul>
 
                     <!-- Role-based dashboard -->
@@ -71,20 +71,22 @@
                         </li>
 
                         <!-- Auth buttons -->
-                        <li class="nav-item">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <span class="navbar-text mx-2">Hello, @User.Identity.Name!</span>
-                                <form method="post" asp-area="Identity" asp-page="/Account/Login" style="display:inline;">
-                                    <button type="submit" class="btn btn-danger btn-sm">Logout</button>
-                                </form>
-                            }
-                            else
-                            {
-                                <a class="btn btn-primary btn-sm mx-1" asp-area="Identity" asp-page="/Account/Login">Login</a>
-                                <a class="btn btn-outline-light btn-sm mx-1" asp-area="Identity" asp-page="/Account/Register">Register</a>
-                            }
-                        </li>
+                        
+                       
+<li class="nav-item">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <!--  <span class="navbar-text mx-2">Hello, @User.Identity.Name!</span>  -->
+        <form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" style="display:inline;">
+            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+        </form>
+    }
+    else
+    {
+        <a class="btn btn-primary btn-sm mx-1" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="btn btn-outline-light btn-sm mx-1" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    }
+</li>
                     </ul>
                 </div>
             </div>
@@ -94,6 +96,7 @@
     <!-- Main content -->
     <main class="container my-4">
         @RenderBody()
+        
     </main>
 
     <!-- Toast container -->
@@ -106,9 +109,12 @@
         </div>
     </footer>
 
+    
+
     <!-- Scripts (single SignalR include, handlers registered before start) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    
 
     <script>
         const isVet = '@User.IsInRole("ServiceProvider")';
@@ -169,8 +175,151 @@
                 })
                 .then(() => console.log("Joined Vets group"))
                 .catch(err => console.error("SignalR error:", err));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // safer boolean output from Razor
+    const isVet = '@(User.IsInRole("ServiceProvider") ? "true" : "false")';
+
+    (function () {
+        if (isVet !== 'true') return; // only run for vets
+
+        // show bell area (in case it's hidden)
+        const notificationArea = document.getElementById("vetNotificationArea");
+        if (notificationArea) notificationArea.style.display = "block";
+
+        // prepare connection (exact hub path must match Program.cs)
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/sosHub")
+            .withAutomaticReconnect()
+            .build();
+
+        // ensure badge starts with existing value (if server rendered any)
+        let notificationCount = parseInt(document.getElementById('notificationCount')?.innerText || '0', 10);
+
+        // handler - register BEFORE starting connection
+        connection.on("ReceiveSOS", (customerName, address, message) => {
+            try {
+                console.log("SOS received:", customerName, address, message);
+
+                // increment badge
+                notificationCount += 1;
+                const badge = document.getElementById("notificationCount");
+                if (badge) badge.innerText = notificationCount;
+
+                // prepend to dropdown
+                const list = document.getElementById("notificationList");
+                if (list) {
+                    if (list.children.length === 1 && list.children[0].classList.contains("text-muted")) {
+                        list.innerHTML = "";
+                    }
+                    const newItem = document.createElement("li");
+                    newItem.classList.add("dropdown-item");
+                    newItem.innerHTML = `<strong>🚨 ${customerName}</strong><br>${address}<br>${message}`;
+                    list.prepend(newItem);
+                }
+
+                // show toast
+                const toast = document.createElement("div");
+                toast.className = "toast align-items-center text-bg-danger border-0 position-fixed top-0 end-0 m-3";
+                toast.style.zIndex = "3000";
+                toast.innerHTML = `
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            🚨 <b>${customerName}</b> sent an SOS!<br>${address}: ${message}
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                const bsToast = new bootstrap.Toast(toast, { delay: 4500 });
+                bsToast.show();
+                setTimeout(() => toast.remove(), 5000);
+            } catch (ex) {
+                console.error("Error in ReceiveSOS handler:", ex);
+            }
+        });
+
+        // start connection, join group, then load unseen items
+        connection.start()
+            .then(async () => {
+                console.log("Connected to SOSHub");
+                try {
+                    await connection.invoke("JoinVetGroup");
+                    console.log("Joined 'Vets' group");
+                } catch (e) {
+                    console.warn("JoinVetGroup failed:", e);
+                }
+
+                // fetch unseen alerts that arrived while vet was offline
+                try {
+                    const res = await fetch('/Vet/UnseenSOS', { method: 'GET', headers: { 'Accept': 'application/json' } });
+                    if (res.ok) {
+                        const arr = await res.json();
+                        if (Array.isArray(arr) && arr.length > 0) {
+                            const list = document.getElementById("notificationList");
+                            if (list) list.innerHTML = ""; // clear placeholder
+                            arr.forEach(item => {
+                                // add each unseen alert to dropdown
+                                const li = document.createElement("li");
+                                li.classList.add("dropdown-item");
+                                li.innerHTML = `<strong>🚨 ${item.customerName}</strong><br>${item.address}<br>${item.message}`;
+                                list.prepend(li);
+                            });
+
+                            // increase badge by count of unseen
+                            notificationCount += arr.length;
+                            const badge = document.getElementById("notificationCount");
+                            if (badge) badge.innerText = notificationCount;
+                        }
+                    } else {
+                        // likely 401 if vet not authorized — safe to ignore, but log
+                        console.warn("UnseenSOS fetch returned", res.status);
+                    }
+                } catch (err) {
+                    console.error("Failed to load unseen SOS:", err);
+                }
+            })
+            .catch(err => console.error("SignalR start error:", err));
+    })();
+
+
+
+
+
+
+
+
+
+
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+
+
+
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

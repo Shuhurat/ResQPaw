@@ -90,28 +90,37 @@ public IActionResult Dashboard()
 
         // Optional: fetch unseen SOS
         [HttpGet]
-        public async Task<IActionResult> UnseenSOS()
-        {
-            var unseen = await _context.SOSRequests
-                .Where(s => s.Status == "Pending")
-                .OrderByDescending(s => s.CreatedAt)
-                .AsNoTracking()
-                .ToListAsync();
+        [HttpGet]
+[Authorize(Roles = "ServiceProvider")]
+public async Task<IActionResult> UnseenSOS()
+{
+    var unseen = await _context.SOSRequests
+        .Where(s => !s.IsSeen)
+        .OrderByDescending(s => s.CreatedAt)
+        .ToListAsync();
 
-            var result = unseen.Select(s => new
-            {
-                id = s.Id,
-                customerId = s.CustomerId,
-                customerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.FullName
-                               ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
-                               ?? "Unknown",
-                address = s.Address,
-                message = s.Message,
-                createdAt = s.CreatedAt
-            }).ToList();
+    var result = unseen.Select(s => new
+    {
+        id = s.Id,
+        customerId = s.CustomerId,
+        customerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.FullName
+                       ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
+                       ?? "Unknown",
+        address = s.Address,
+        message = s.Message,
+        createdAt = s.CreatedAt
+    }).ToList();
 
-            return Json(result);
-        }
+    var vetId = _userManager.GetUserId(User);
+    foreach (var s in unseen)
+    {
+        s.IsSeen = true;
+        s.SeenByVetId = vetId;
+    }
+    await _context.SaveChangesAsync();
+
+    return Json(result);
+}
 
         public IActionResult Profile() => View();
     }

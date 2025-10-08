@@ -15,21 +15,24 @@
 </section>
 
 
-    <!-- SOS Button -->
-    <a href="#" class="sos-button" id="sosBtn">SOS</a>
+  <!-- SOS Button -->
+<a asp-controller="SOS" asp-action="Send" class="sos-button" id="sosBtn">SOS</a>
 
-    <!-- SOS Modal -->
-    <div class="modal" id="sosModal">
-        <div class="modal-content">
-            <h3><i class="fas fa-exclamation-triangle"></i> Emergency Assistance</h3>
-            <p>Help is on the way! We've notified nearby rescuers and veterinarians about your emergency.</p>
-            <p>Please stay on the line while we connect you with emergency services.</p>
-            <div class="modal-buttons">
-                <button class="btn btn-primary" id="cancelSos">Cancel</button>
-                <button class="btn" style="background: #cc0000; color: white;" id="callEmergency">Call Emergency Line</button>
-            </div>
+
+<!-- SOS Modal -->
+<div class="modal" id="sosModal">
+    <div class="modal-content">
+        <h3><i class="fas fa-exclamation-triangle"></i> Emergency Assistance</h3>
+        <p>Help is on the way! We've notified nearby rescuers and veterinarians about your emergency.</p>
+        <p>Please stay on the line while we connect you with emergency services.</p>
+        <div class="modal-buttons">
+            <button class="btn btn-primary" id="cancelSos">Cancel</button>
+            <a class="btn" style="background: #cc0000; color: white;" asp-controller="SOS" asp-action="Send" id="callEmergency">Send SOS Alert</a>
         </div>
     </div>
+</div>
+
+
 
     <!-- Features Section -->
     <section class="section">
@@ -139,3 +142,32 @@
             <a href="#" class="btn btn-primary" style="background: transparent; border: 2px solid white;">Donate</a>
         </div>
     </section>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sosBtn = document.getElementById('sosBtn');
+        const sosModal = document.getElementById('sosModal');
+        const cancelSos = document.getElementById('cancelSos');
+        
+        if (sosBtn && sosModal) {
+            // Show modal when SOS button is clicked
+            sosBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                sosModal.style.display = 'block';
+            });
+            
+            // Hide modal when cancel is clicked
+            if (cancelSos) {
+                cancelSos.addEventListener('click', function() {
+                    sosModal.style.display = 'none';
+                });
+            }
+            
+            // Hide modal when clicking outside
+            window.addEventListener('click', function(e) {
+                if (e.target === sosModal) {
+                    sosModal.style.display = 'none';
+                }
+            });
+        }
+    });
+</script>

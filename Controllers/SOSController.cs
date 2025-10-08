@@ -69,11 +69,32 @@ public async Task<IActionResult> Send(string address, string message)
 
         [Authorize(Roles = "ServiceProvider")]
         public IActionResult VetDashboard()
+        {
+            // Fetch SOSRequests from database
+            var sosList = _context.SOSRequests
+                .OrderByDescending(s => s.CreatedAt)
+                .AsEnumerable() // move to memory so we can use ?. safely
+                .Select(s => new SOSViewModel
+                {
+                    Id = s.Id,
+                    Address = s.Address,
+                    Message = s.Message,
+                    Status = s.Status,
+                    CreatedAt = s.CreatedAt,
+                    CustomerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.FullName
+                                   ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
+                                   ?? "Unknown"
+                })
+                .ToList();
+
+            return View(sosList); // ✅ now returns List<SOSViewModel>
+        }
+[Authorize(Roles = "Admin")]
+public IActionResult AdminMonitor()
 {
-    // Fetch SOSRequests from database
     var sosList = _context.SOSRequests
         .OrderByDescending(s => s.CreatedAt)
-        .AsEnumerable() // move to memory so we can use ?. safely
+        .AsEnumerable()
         .Select(s => new SOSViewModel
         {
             Id = s.Id,
@@ -87,7 +108,21 @@ public async Task<IActionResult> Send(string address, string message)
         })
         .ToList();
 
-    return View(sosList); // ✅ now returns List<SOSViewModel>
+    return View(sosList);
 }
+ [Authorize(Roles = "Admin")]
+        [HttpPost]
+        [IgnoreAntiforgeryToken]  // 🚨 Important for JS fetch()
+        public async Task<IActionResult> Delete(int id)
+        {
+            var sos = await _context.SOSRequests.FindAsync(id);
+            if (sos == null)
+                return NotFound(new { success = false, message = "Not found" });
+
+            _context.SOSRequests.Remove(sos);
+            await _context.SaveChangesAsync();
+
+            return Json(new { success = true });
+        }
     }
 }

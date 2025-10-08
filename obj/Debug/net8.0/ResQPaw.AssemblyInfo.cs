@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ResQPaw")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+60042216e654bff8acfed0726f867fcbd9e7c98d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a3b5eca2fb03bee500ee3c256ce4c0bbf485f9c5")]
 [assembly: System.Reflection.AssemblyProductAttribute("ResQPaw")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ResQPaw")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
