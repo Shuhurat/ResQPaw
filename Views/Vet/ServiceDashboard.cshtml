@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Vet Service Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mt-3">🐾 Vet Service Dashboard</h2>
+<p>Welcome, @User.Identity.Name!</p>
+
+<a class="btn btn-warning mt-2" asp-controller="SOS" asp-action="VetDashboard">
+    🔔 View Live SOS Alerts
+</a>
+<a class="btn btn-secondary mt-2" asp-controller="Vet" asp-action="Profile">
+    👤 View Profile
+</a>

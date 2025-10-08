@@ -1,0 +1,13 @@
+<h2>📍 My SOS Requests</h2>
+<table class="table">
+    <tr><th>Address</th><th>Message</th><th>Status</th><th>Time</th></tr>
+    @foreach (var sos in Model)
+    {
+        <tr>
+            <td>@sos.Address</td>
+            <td>@sos.Message</td>
+            <td>@sos.Status</td>
+            <td>@sos.CreatedAt.ToString("g")</td>
+        </tr>
+    }
+</table>

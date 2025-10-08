@@ -1,0 +1,37 @@
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+    ViewData["Title"] = "Vet Dashboard";
+}
+
+<h2>Vet Dashboard</h2>
+<p>Welcome, @User.Identity.Name!</p>
+
+<p>Here you can view SOS alerts, accept requests, and manage pet care reports.</p>
+
+
+@if (User.IsInRole("ServiceProvider"))
+{
+    <li class="nav-item">
+        <a class="nav-link text-danger" asp-controller="Vet" asp-action="Notifications">🚨 SOS Alerts</a>
+    </li>
+}
+
+
+<a asp-controller="SOS" asp-action="VetDashboard">SOS Alert</a>
+
+@if (User.IsInRole("Vet"))
+{
+    <li class="nav-item">
+        <a class="nav-link" asp-controller="Vet" asp-action="Notifications">
+            <i class="bi bi-bell"></i> SOS Alerts
+        </a>
+    </li>
+}
+
+
+
+<p><a asp-controller="SOS" asp-action="VetDashboard" class="btn btn-primary">Go to SOS Dashboard</a></p>
+            <p>&copy; 2024 PetCare Connect. All rights reserved.</p>
+            

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace ResQPaw.Pages
 {
-    [Authorize] // 🔑 Only authenticated users can access this page
+    [Authorize] //  Only authenticated users can access this page
     public class DashboardModel : PageModel
     {
         public void OnGet()

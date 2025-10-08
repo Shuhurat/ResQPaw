@@ -25,6 +25,7 @@ public class HomeController : Controller
     }
 
     [Authorize] // This protects the Dashboard - requires login
+    
     public IActionResult Dashboard()
     {
         return View();

@@ -1,0 +1,17 @@
+<h2>🚑 Vet SOS Dashboard</h2>
+<div id="alerts"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script>
+    const connection = new signalR.HubConnectionBuilder().withUrl("/soshub").build();
+
+    connection.on("ReceiveSOS", (userName, address, message) => {
+        const div = document.createElement("div");
+        div.classList = "alert alert-danger mt-3";
+        div.innerHTML = `<strong>New SOS from ${userName}</strong><br>📍 ${address}<br>${message}`;
+        document.getElementById("alerts").prepend(div);
+        new Audio("/sounds/alert.mp3").play();
+    });
+
+    connection.start();
+</script>

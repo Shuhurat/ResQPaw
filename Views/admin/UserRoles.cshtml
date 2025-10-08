@@ -1,0 +1,25 @@
+@model List<(string Email, System.Collections.Generic.IList<string> Roles)>
+
+@{
+    ViewData["Title"] = "User Roles";
+}
+
+<h2>User Roles</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Roles</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Email</td>
+            <td>@string.Join(", ", user.Roles)</td>
+        </tr>
+    }
+    </tbody>
+</table>

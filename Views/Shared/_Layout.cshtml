@@ -1,104 +1,177 @@
-﻿@{
-    Layout = null;
-    var title = ViewData["Title"] ?? "ResQPaw";
-}
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ResQPaw.Models.ApplicationUser> SignInManager
+@inject UserManager<ResQPaw.Models.ApplicationUser> UserManager
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@title - ResQPaw</title>
+    <title>@ViewData["Title"] - ResQPaw</title>
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Font Awesome & Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Site CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <!-- Header -->
+    <!-- Header / Navbar -->
     <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <img src="~/images/ResQPawLogo.png" alt="ResQPaw Logo" />
-                    <h1>ResQPaw</h1>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-controller="Pets" asp-action="Index">Find Pets</a></li>
-                        <li><a asp-controller="LostFound" asp-action="Index">Lost & Found</a></li>
-                        <li><a asp-controller="Vets" asp-action="Index">Veterinarians</a></li>
-                        <li><a asp-controller="Resources" asp-action="Index">Resources</a></li>
-                        <li><a asp-controller="Home" asp-action="About">About Us</a></li>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/ResQPawLogo.png" alt="ResQPaw Logo" width="50" /> ResQPaw
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Pets" asp-action="Index">Find Pets</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="LostFound" asp-action="Index">Lost & Found</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Vets" asp-action="Index">Veterinarians</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Resources" asp-action="Index">Resources</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="SOS" asp-action="Send">SOS Alert</a></li>
                     </ul>
-                </nav>
-                <div class="auth-buttons">
-                <a class="btn btn-primary" asp-area="Identity" asp-page="/Account/Login">Login</a>     <!--login link!!!!!!-->
 
-                 <!--   <a asp-controller="Account" asp-action="Login" class="btn btn-outline">Log In</a> -->
+                    <!-- Role-based dashboard -->
+                    <ul class="navbar-nav ms-auto">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
+                            }
+                            else if (User.IsInRole("ServiceProvider"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="Vet" asp-action="Dashboard">Service Dashboard</a></li>
+                            }
+                            else if (User.IsInRole("Customer"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="Customer" asp-action="Dashboard">My Dashboard</a></li>
+                            }
+                        }
 
-                  <!--  <a asp-controller="Account" asp-action="Register" class="btn btn-primary">Sign Up</a> -->
-                
-                   <a  asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        <!-- Vet Notification -->
+                        <li class="nav-item dropdown" id="vetNotificationArea" style="display:none;">
+                            <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-bell-fill fs-4"></i>
+                                <span id="notificationCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="notificationDropdown" id="notificationList">
+                                <li class="text-center text-muted">No new SOS alerts</li>
+                            </ul>
+                        </li>
+
+                        <!-- Auth buttons -->
+                        <li class="nav-item">
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <span class="navbar-text mx-2">Hello, @User.Identity.Name!</span>
+                                <form method="post" asp-area="Identity" asp-page="/Account/Logout" style="display:inline;">
+                                    <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <a class="btn btn-primary btn-sm mx-1" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                                <a class="btn btn-outline-light btn-sm mx-1" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                            }
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
+        </nav>
     </header>
 
-    <!-- Page Content -->
-    <main role="main">
+    <!-- Main content -->
+    <main class="container my-4">
         @RenderBody()
     </main>
 
+    <!-- Toast container -->
+    <div id="toastContainer" style="position: fixed; top: 1rem; right: 1rem; z-index: 3000;"></div>
+
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <h3>About ResQPaw</h3>
-                    <p>ResQPaw is a non-profit organization dedicated to rescuing, rehabilitating, and rehoming pets in need.</p>
-                    <div class="social-icons">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
-                </div>
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul>
-                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-controller="Pets" asp-action="Index">Adopt a Pet</a></li>
-                        <li><a asp-controller="LostFound" asp-action="Index">Lost & Found</a></li>
-                        <li><a asp-controller="Vets" asp-action="Index">Find a Vet</a></li>
-                        <li><a asp-controller="Resources" asp-action="Index">Resources</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact Us</h3>
-                    <p><i class="fas fa-map-marker-alt"></i> 123 Pet Rescue Ave, City, State</p>
-                    <p><i class="fas fa-phone"></i> (555) 123-4567</p>
-                    <p><i class="fas fa-envelope"></i> info@resqpaw.org</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Newsletter</h3>
-                    <form>
-                        <input type="email" placeholder="Your Email" class="form-control mb-2" />
-                        <button type="submit" class="btn btn-primary w-100">Subscribe</button>
-                    </form>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; @DateTime.Now.Year ResQPaw. All rights reserved.</p>
-            </div>
+    <footer class="bg-light py-4 mt-auto">
+        <div class="container text-center">
+            <p>&copy; @DateTime.Now.Year ResQPaw. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Scripts -->
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- Scripts (single SignalR include, handlers registered before start) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+
+    <script>
+        const isVet = '@User.IsInRole("ServiceProvider")';
+        if (isVet === 'True') {
+            const notificationArea = document.getElementById("vetNotificationArea");
+            if (notificationArea) notificationArea.style.display = "block";
+
+            // build connection
+            const connection = new signalR.HubConnectionBuilder()
+                .withUrl("/sosHub")
+                .withAutomaticReconnect()
+                .build();
+
+            // register handler BEFORE connection start
+            let notificationCount = 0;
+            connection.on("ReceiveSOS", (customerName, address, message) => {
+                console.log("SOS received:", customerName, address, message);
+
+                // Update badge
+                notificationCount++;
+                const badge = document.getElementById("notificationCount");
+                if (badge) badge.innerText = notificationCount;
+
+                // Add to dropdown list
+                const list = document.getElementById("notificationList");
+                if (list) {
+                    if (list.children.length === 1 && list.children[0].classList.contains("text-muted")) {
+                        list.innerHTML = "";
+                    }
+                    const newItem = document.createElement("li");
+                    newItem.classList.add("dropdown-item");
+                    newItem.innerHTML = `<strong>🚨 ${customerName}</strong><br>${address}<br>${message}`;
+                    list.prepend(newItem);
+                }
+
+                // toast
+                const toast = document.createElement("div");
+                toast.className = "toast align-items-center text-bg-danger border-0 position-fixed top-0 end-0 m-3";
+                toast.style.zIndex = "2000";
+                toast.innerHTML = `
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            🚨 <b>${customerName}</b> sent an SOS!<br>${address}: ${message}
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(toast);
+                const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
+                bsToast.show();
+                setTimeout(() => toast.remove(), 5000);
+            });
+
+            // start and join group
+            connection.start()
+                .then(() => {
+                    console.log("Connected to SOSHub");
+                    return connection.invoke("JoinVetGroup");
+                })
+                .then(() => console.log("Joined Vets group"))
+                .catch(err => console.error("SignalR error:", err));
+        }
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

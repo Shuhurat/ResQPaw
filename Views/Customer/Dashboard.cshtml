@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "My Dashboard";
+}
+
+<h2>My Dashboard</h2>
+<p>Welcome, @User.Identity.Name!</p>
+
+<p>Here you can view your SOS request status, manage your pets, or request emergency help.</p>
+
+
+<a asp-controller="SOS" asp-action="Status">SOS Alert</a>
+

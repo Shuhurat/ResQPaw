@@ -86,7 +86,7 @@ namespace ResQPaw.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
 
             // Populate role dropdown
-            RoleList = new SelectList(new List<string> { "Customer", "ServiceProvider", "Admin" });
+            RoleList = new SelectList(new List<string> { "Customer", "ServiceProvider" });
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)

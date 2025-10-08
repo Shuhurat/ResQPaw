@@ -1,0 +1,66 @@
+@model IEnumerable<ResQPaw.Models.SOSViewModel>
+@{
+    ViewData["Title"] = "SOS Notifications";
+}
+
+<h2 class="mb-3">Live SOS Alerts</h2>
+
+<div id="alert-container"></div> <!-- 🔔 Real-time alert area -->
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Customer</th>
+            <th>Address</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody id="sosTableBody">
+        @foreach (var sos in Model)
+        {
+            <tr>
+                <td>@sos.CustomerName</td>
+                <td>@sos.Address</td>
+                <td>@sos.Message</td>
+                <td>@sos.Status</td>
+                <td>@sos.CreatedAt</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script>
+        // ✅ Connect to the SOSHub
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/sosHub")
+            .build();
+
+        // ✅ When a new SOS is received
+        connection.on("ReceiveSOS", function (customerName, address, message) {
+            // Show alert banner
+            const alertBox = document.createElement("div");
+            alertBox.className = "alert alert-danger mt-2";
+            alertBox.innerHTML = `<strong>🚨 New SOS Alert!</strong> <br>
+                                  From: ${customerName}<br>
+                                  Address: ${address}<br>
+                                  Message: ${message}`;
+            document.getElementById("alert-container").prepend(alertBox);
+
+            // Also append to the table
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `<td>${customerName}</td>
+                                <td>${address}</td>
+                                <td>${message}</td>
+                                <td>Pending</td>
+                                <td>${new Date().toLocaleTimeString()}</td>`;
+            document.getElementById("sosTableBody").prepend(newRow);
+        });
+
+        // ✅ Start connection
+        connection.start().catch(err => console.error(err));
+    </script>
+}

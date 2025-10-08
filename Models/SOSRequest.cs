@@ -7,16 +7,26 @@ namespace ResQPaw.Models
     {
         public int Id { get; set; }
 
-        public string UserId { get; set; }   // Who made the request
+        // 🧍 Customer info
+        public string CustomerId { get; set; }
 
-        [Required] public string PetName { get; set; }
-        [Required] public string PetType { get; set; } // Dog, Cat, etc.
-        [Required] public string ProblemDescription { get; set; }
-        [Required] public string ContactNumber { get; set; }
+        [Required]
+        public string Address { get; set; }
 
-        public string Location { get; set; }
-        public DateTime RequestTime { get; set; } = DateTime.UtcNow;
+        [Required]
+        public string Message { get; set; }
 
-        public string Status { get; set; } = "Pending";
+        // 🩺 Status tracking
+        public string Status { get; set; } = "Pending"; // Pending, Accepted, Completed
+
+        // 🧑‍⚕️ Assigned Vet info
+        public string? AssignedVetId { get; set; }
+
+        // 🕒 Created time
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        // ✅ NEW: Notification tracking
+        public bool IsSeen { get; set; } = false; // For offline notification handling
+        public string? SeenByVetId { get; set; } // Which vet has seen it
     }
 }

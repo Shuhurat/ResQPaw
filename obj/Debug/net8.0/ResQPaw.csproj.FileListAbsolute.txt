@@ -289,3 +289,16 @@ C:\Users\shuru\OneDrive\Desktop\project1\obj\Debug\net8.0\refint\ResQPaw.dll
 C:\Users\shuru\OneDrive\Desktop\project1\obj\Debug\net8.0\ResQPaw.pdb
 C:\Users\shuru\OneDrive\Desktop\project1\obj\Debug\net8.0\ResQPaw.genruntimeconfig.cache
 C:\Users\shuru\OneDrive\Desktop\project1\obj\Debug\net8.0\ref\ResQPaw.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.AspNetCore.Connections.Abstractions.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.AspNetCore.Http.Connections.Client.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.AspNetCore.Http.Connections.Common.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Client.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Client.Core.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Common.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.AspNetCore.SignalR.Protocols.Json.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.Bcl.TimeProvider.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.Extensions.Features.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\System.Diagnostics.DiagnosticSource.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\System.Net.ServerSentEvents.dll
+C:\Users\shuru\OneDrive\Desktop\project1\bin\Debug\net8.0\System.Threading.Channels.dll

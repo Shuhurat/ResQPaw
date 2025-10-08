@@ -1,0 +1,26 @@
+@model List<ResQPaw.Models.AdminSOSViewModel>
+
+<h2>Admin SOS Monitor</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Customer</th>
+            <th>Address</th>
+            <th>Message</th>
+            <th>Status</th>
+            <th>Assigned Vet</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var sos in Model)
+        {
+            <tr>
+                <td>@sos.CustomerName</td>
+                <td>@sos.Address</td>
+                <td>@sos.Message</td>
+                <td>@sos.Status</td>
+                <td>@sos.AssignedVetName</td>
+            </tr>
+        }
+    </tbody>
+</table>

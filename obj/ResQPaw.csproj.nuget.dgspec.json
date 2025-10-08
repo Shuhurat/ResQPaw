@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj": {}
+    "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj": {}
   },
   "projects": {
-    "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj": {
+    "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
+        "projectUniqueName": "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
         "projectName": "ResQPaw",
-        "projectPath": "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
+        "projectPath": "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\ResQPaw.csproj",
         "packagesPath": "C:\\Users\\shuru\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\shuru\\OneDrive\\Desktop\\project1\\obj\\",
+        "outputPath": "C:\\Users\\shuru\\OneDrive\\Desktop\\project1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -57,6 +57,10 @@
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
               "version": "[8.0.10, )"
+            },
+            "Microsoft.AspNetCore.SignalR.Client": {
+              "target": "Package",
+              "version": "[9.0.9, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",

@@ -11,6 +11,7 @@ namespace ResQPaw.Data
         {
         }
 
+        public DbSet<SOSRequest> SOSRequests { get; set; }
         // Add your DbSets here
         // public DbSet<YourModel> YourModels { get; set; }
     }
