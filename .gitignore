@@ -1,0 +1,8 @@
+# Ignore build outputs
+bin/
+obj/
+
+# Ignore database files
+*.db
+*.db-shm
+*.db-wal
