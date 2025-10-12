@@ -9,8 +9,12 @@
     <thead class="table-dark">
         <tr>
             <th>Customer</th>
-            <th>Address</th>
-            <th>Message</th>
+            <th>Emergency Type</th>
+            <th>Animal Type</th>
+            <th>Condition</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Reporter</th>
             <th>Status</th>
             <th>Time</th>
             <th>Action</th>
@@ -21,19 +25,37 @@
         {
             <tr id="sos-@sos.Id">
                 <td>@sos.CustomerName</td>
-                <td>@sos.Address</td>
-                <td>@sos.Message</td>
+                <td>@sos.EmergencyType</td>
+                <td>@sos.AnimalType</td>
+                <td>@sos.AnimalCondition</td>
+                <td>@sos.Description</td>
+                <td>@sos.Location</td>
+                <td>@sos.ReporterName<br>@sos.ReporterPhone<br>@sos.ReporterEmail</td>
                 <td class="status">@sos.Status</td>
                 <td>@sos.CreatedAt.ToLocalTime().ToString("g")</td>
                 <td>
-                    <button class="btn btn-sm btn-danger delete-btn" data-id="@sos.Id">
-                        🗑 Delete
-                    </button>
-                </td>
+    @if (sos.Status == "Contacted")
+    {
+        <form method="post" asp-action="MarkDone" asp-controller="SOS">
+            <input type="hidden" name="id" value="@sos.Id" />
+            <button class="btn btn-success btn-sm">Mark as Done</button>
+        </form>
+    }
+    else if (sos.Status == "Pending")
+    {
+        <span class="text-muted">Waiting</span>
+    }
+    else
+    {
+        <span class="text-success">Completed</span>
+    }
+</td>
+
             </tr>
         }
     </tbody>
 </table>
+
 
 <!-- Alerts Section -->
 <div id="alerts" class="mt-4"></div>

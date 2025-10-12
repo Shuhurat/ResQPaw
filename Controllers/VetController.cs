@@ -28,45 +28,60 @@ namespace ResQPaw.Controllers
         public IActionResult Notifications()
         {
             var sosList = _context.SOSRequests
-                .OrderByDescending(s => s.CreatedAt)
-                .Select(s => new SOSViewModel
-                {
-                    Id = s.Id,
-                    Address = s.Address,
-                    Message = s.Message,
-                    Status = s.Status,
-                    CreatedAt = s.CreatedAt,
-                    CustomerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId).FullName
-                                   ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId).UserName
-                                   ?? "Unknown"
-                })
-                .ToList();
+    .OrderByDescending(s => s.CreatedAt)
+    .AsEnumerable()
+    .Select(s => new SOSViewModel
+    {
+        Id = s.Id,
+        CustomerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.FullName
+                       ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
+                       ?? "Unknown",
+        EmergencyType = s.EmergencyType,
+        AnimalType = s.AnimalType,
+        AnimalCondition = s.AnimalCondition,
+        
+        MediaPaths = s.MediaPaths,
+        ReporterName = s.ReporterName,
+        ReporterPhone = s.ReporterPhone,
+        ReporterEmail = s.ReporterEmail,
+        Status = s.Status,
+        CreatedAt = s.CreatedAt
+    })
+    .ToList();
+
 
             return View(sosList);
         }
 
         // GET: Vet Dashboard
     
+[Authorize(Roles = "ServiceProvider")]
 public IActionResult Dashboard()
 {
-    // Fetch SOSRequests from database
     var sosList = _context.SOSRequests
         .OrderByDescending(s => s.CreatedAt)
-        .AsEnumerable() // move to memory so we can use ?. safely
+        .AsEnumerable()
         .Select(s => new SOSViewModel
         {
             Id = s.Id,
-            Address = s.Address,
-            Message = s.Message,
-            Status = s.Status,
-            CreatedAt = s.CreatedAt,
             CustomerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.FullName
-                           ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
-                           ?? "Unknown"
+                            ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
+                            ?? "Unknown",
+            EmergencyType = s.EmergencyType,
+            AnimalType = s.AnimalType,
+            AnimalCondition = s.AnimalCondition,
+            Description = s.Description,
+            Location = s.Location,
+            MediaPaths = s.MediaPaths,
+            ReporterName = s.ReporterName,
+            ReporterPhone = s.ReporterPhone,
+            ReporterEmail = s.ReporterEmail,
+            Status = s.Status,
+            CreatedAt = s.CreatedAt
         })
         .ToList();
 
-    return View(sosList); // ✅ now returns List<SOSViewModel>
+    return View(sosList);
 }
 
 
@@ -91,14 +106,17 @@ public IActionResult Dashboard()
         // Optional: fetch unseen SOS
         [HttpGet]
         [HttpGet]
+[HttpGet]
 [Authorize(Roles = "ServiceProvider")]
 public async Task<IActionResult> UnseenSOS()
 {
+    // Fetch unseen SOS requests
     var unseen = await _context.SOSRequests
         .Where(s => !s.IsSeen)
         .OrderByDescending(s => s.CreatedAt)
         .ToListAsync();
 
+    // Map to a simple JSON-friendly structure
     var result = unseen.Select(s => new
     {
         id = s.Id,
@@ -106,11 +124,15 @@ public async Task<IActionResult> UnseenSOS()
         customerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.FullName
                        ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
                        ?? "Unknown",
-        address = s.Address,
-        message = s.Message,
+        location = s.Location ?? "Unknown",        // ✅ Updated
+        description = s.Description ?? "No details", // ✅ Updated
+        emergencyType = s.EmergencyType,
+        animalType = s.AnimalType,
+        animalCondition = s.AnimalCondition,
         createdAt = s.CreatedAt
     }).ToList();
 
+    // Mark as seen
     var vetId = _userManager.GetUserId(User);
     foreach (var s in unseen)
     {

@@ -1,12 +1,10 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-
     ViewData["Title"] = "SOS Notifications";
 }
 
-
-
 @model List<ResQPaw.Models.SOSViewModel>
+
 <h2 class="mb-3">Live SOS Alerts</h2>
 
 <div id="alert-container"></div> <!-- 🔔 Real-time alert area -->
@@ -15,7 +13,13 @@
     <thead class="table-dark">
         <tr>
             <th>Customer</th>
-            <th>Address</th>
+            <th>Reporter Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Animal Type</th>
+            <th>Condition</th>
+            <th>Emergency</th>
+            <th>Location</th>
             <th>Message</th>
             <th>Status</th>
             <th>Time</th>
@@ -26,10 +30,16 @@
         {
             <tr>
                 <td>@sos.CustomerName</td>
-                <td>@sos.Address</td>
-                <td>@sos.Message</td>
+                <td>@sos.ReporterName</td>
+                <td>@sos.ReporterPhone</td>
+                <td>@sos.ReporterEmail</td>
+                <td>@sos.AnimalType</td>
+                <td>@sos.AnimalCondition</td>
+                <td>@sos.EmergencyType</td>
+                <td>@sos.Location</td>
+                <td>@sos.Description</td>
                 <td>@sos.Status</td>
-                <td>@sos.CreatedAt</td>
+                <td>@sos.CreatedAt.ToString("g")</td>
             </tr>
         }
     </tbody>
@@ -38,33 +48,41 @@
 @section Scripts {
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
     <script>
-        // ✅ Connect to the SOSHub
+        // Connect to the SOSHub
         const connection = new signalR.HubConnectionBuilder()
             .withUrl("/sosHub")
             .build();
 
-        // ✅ When a new SOS is received
-        connection.on("ReceiveSOS", function (customerName, address, message) {
-            // Show alert banner
+        // When a new SOS is received
+        connection.on("ReceiveSOS", function (customerName, location, description, sosId, reporterName, reporterPhone, reporterEmail, animalType, animalCondition, emergencyType) {
+            // Alert banner
             const alertBox = document.createElement("div");
             alertBox.className = "alert alert-danger mt-2";
             alertBox.innerHTML = `<strong>🚨 New SOS Alert!</strong> <br>
                                   From: ${customerName}<br>
-                                  Address: ${address}<br>
-                                  Message: ${message}`;
+                                  Location: ${location}<br>
+                                  Message: ${description}`;
             document.getElementById("alert-container").prepend(alertBox);
 
-            // Also append to the table
+            // Append row to table
             const newRow = document.createElement("tr");
-            newRow.innerHTML = `<td>${customerName}</td>
-                                <td>${address}</td>
-                                <td>${message}</td>
-                                <td>Pending</td>
-                                <td>${new Date().toLocaleTimeString()}</td>`;
+            newRow.id = `sos-${sosId}`;
+            newRow.innerHTML = `
+                <td>${customerName}</td>
+                <td>${reporterName}</td>
+                <td>${reporterPhone}</td>
+                <td>${reporterEmail}</td>
+                <td>${animalType}</td>
+                <td>${animalCondition}</td>
+                <td>${emergencyType}</td>
+                <td>${location}</td>
+                <td>${description}</td>
+                <td>Pending</td>
+                <td>${new Date().toLocaleString()}</td>
+            `;
             document.getElementById("sosTableBody").prepend(newRow);
         });
 
-        // ✅ Start connection
         connection.start().catch(err => console.error(err));
     </script>
 }

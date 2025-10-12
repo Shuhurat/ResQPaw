@@ -1,8 +1,61 @@
-<h2> Send SOS Alert</h2>
-<form method="post">
-    <label>Address:</label>
-    <input name="address" class="form-control" required />
-    <label class="mt-2">Describe emergency:</label>
-    <textarea name="message" class="form-control" required></textarea>
+@{
+    ViewData["Title"] = "Send SOS Alert";
+}
+
+<h2>🚨 Send SOS Alert</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <div class="form-group">
+        <label>Type of Emergency:</label>
+        <input name="EmergencyType" class="form-control" placeholder="e.g. Injured, Lost, Trapped" required />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Animal Type:</label>
+        <input name="AnimalType" class="form-control" placeholder="e.g. Dog, Cat, Bird" required />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Animal Condition:</label>
+        <input name="AnimalCondition" class="form-control" placeholder="e.g. Bleeding, Weak, Cannot move" required />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Emergency Description:</label>
+        <textarea name="Description" class="form-control" rows="3" placeholder="Describe what happened..." required></textarea>
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Location Found:</label>
+        <input name="Address" class="form-control" placeholder="Exact or nearby address" required />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Upload Photos/Videos:</label>
+        <input type="file" name="MediaFiles" class="form-control" multiple />
+    </div>
+
+    <hr />
+
+    <div class="form-group mt-2">
+        <label>Your Name:</label>
+        <input name="ReporterName" class="form-control" required />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Your Phone:</label>
+        <input name="ReporterPhone" class="form-control" required />
+    </div>
+
+    <div class="form-group mt-2">
+        <label>Your Email:</label>
+        <input name="ReporterEmail" type="email" class="form-control" required />
+    </div>
+
     <button type="submit" class="btn btn-danger mt-3">Send SOS</button>
 </form>
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success mt-3">@TempData["Success"]</div>
+}

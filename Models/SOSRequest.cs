@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http; // for file uploads
 
 namespace ResQPaw.Models
 {
@@ -7,26 +8,61 @@ namespace ResQPaw.Models
     {
         public int Id { get; set; }
 
-        // 🧍 Customer info
+        // 👤 Customer Info
         public string CustomerId { get; set; }
 
         [Required]
-        public string Address { get; set; }
+        [Display(Name = "Your Name")]
+        public string ReporterName { get; set; }
 
         [Required]
-        public string Message { get; set; }
+        [Phone]
+        [Display(Name = "Your Phone")]
+        public string ReporterPhone { get; set; }
 
-        // 🩺 Status tracking
-        public string Status { get; set; } = "Pending"; // Pending, Accepted, Completed
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Your Email")]
+        public string ReporterEmail { get; set; }
 
-        // 🧑‍⚕️ Assigned Vet info
+        // 🐶 Animal Information
+        [Required]
+        [Display(Name = "Animal Type")]
+        public string AnimalType { get; set; } // Dog, Cat, Bird, etc.
+
+        [Required]
+        [Display(Name = "Animal Condition")]
+        public string AnimalCondition { get; set; } // Injured, Sick, Trapped, etc.
+
+        [Required]
+        [Display(Name = "Type of Emergency")]
+        public string EmergencyType { get; set; } // Accident, Abandonment, etc.
+
+        [Required]
+        [Display(Name = "Emergency Description")]
+        public string Description { get; set; }
+
+        [Required]
+        [Display(Name = "Location Found")]
+        public string Location { get; set; }
+
+        // 📸 Photos/Videos (store file paths)
+        [Display(Name = "Uploaded Media")]
+        public string? MediaFilePath { get; set; }
+
+        public string? MediaPaths { get; set; } // comma-separated file URLs
+
+        // ⚙️ Status tracking
+        public string Status { get; set; } = "Pending"; // Pending, Contacted, Completed
+
+        // 🧑‍⚕️ Assigned rescuer/vet
         public string? AssignedVetId { get; set; }
 
         // 🕒 Created time
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        // ✅ NEW: Notification tracking
-        public bool IsSeen { get; set; } = false; // For offline notification handling
-        public string? SeenByVetId { get; set; } // Which vet has seen it
+        // 🔔 Seen tracking
+        public bool IsSeen { get; set; } = false;
+        public string? SeenByVetId { get; set; }
     }
 }

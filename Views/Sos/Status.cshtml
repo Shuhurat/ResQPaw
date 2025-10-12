@@ -1,51 +1,130 @@
-<h2> My SOS Requests</h2>
-<table class="table">
-    <tr><th>Address</th><th>Message</th><th>Status</th><th>Time</th></tr>
+@model List<ResQPaw.Models.SOSViewModel>
+
+<h2 class="mb-3">My SOS Requests</h2>
+
+<div id="sosContainer" class="row g-3">
     @foreach (var sos in Model)
-{
-    <tr>
-        <td>@sos.Address</td>
-        <td>@sos.Message</td>
-        <td>
-            @switch(sos.Status)
-            {
-                case "Pending":
-                    <span class="text-warning">Pending ⏳</span>;
-                    break;
-                case "Accepted":
-                    <span class="text-info">Accepted ✅</span>;
-                    break;
-                case "Contacted":
-                    <span class="text-success">Contacted ✔️</span>;
-                    break;
-                default:
-                    <span>@sos.Status</span>;
-                    break;
+    {
+        <div class="col-md-6" id="sos-@sos.Id">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @sos.AnimalType - @sos.EmergencyType
+                    </h5>
+                    <h6 class="card-subtitle mb-2 text-muted">
+                        Reported by: @sos.ReporterName | Phone: @sos.ReporterPhone
+                    </h6>
+                    <p class="card-text">@sos.Description</p>
+                    <p class="card-text">
+                        <strong>Location:</strong> @sos.Location <br />
+                        <strong>Time:</strong> @sos.CreatedAt.ToLocalTime().ToString("g")
+                    </p>
+
+                    @if (!string.IsNullOrEmpty(sos.MediaPaths))
+                    {
+                        var mediaList = sos.MediaPaths.Split(',');
+                        <div class="mb-2">
+                            @foreach (var path in mediaList)
+                            {
+                                <img src="@path" width="60" class="me-1 rounded" />
+                            }
+                        </div>
+                    }
+
+                    <span class="badge 
+                        @(sos.Status == "Pending" ? "bg-warning" :
+                          sos.Status == "Accepted" ? "bg-info" :
+                          sos.Status == "Contacted" ? "bg-success" :
+                          sos.Status == "Completed" ? "bg-secondary" : "bg-dark")">
+                        @sos.Status
+                    </span>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div id="alerts"></div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder().withUrl("/soshub").build();
+
+        // --- Live new SOS alerts ---
+        connection.on("ReceiveSOS", (
+            userName, location, description, sosId,
+            reporterName, reporterPhone, reporterEmail,
+            animalType, animalCondition, emergencyType, mediaPaths
+        ) => {
+            const div = document.createElement("div");
+            div.classList = "alert alert-danger mt-3";
+            div.innerHTML = `<strong>New SOS from ${userName}</strong><br>📍 ${location}<br>${description}`;
+            document.getElementById("alerts").prepend(div);
+            new Audio("/sounds/alert.mp3").play();
+
+            if (!document.getElementById(`sos-${sosId}`)) {
+                const container = document.getElementById("sosContainer");
+                const col = document.createElement("div");
+                col.className = "col-md-6";
+                col.id = `sos-${sosId}`;
+
+                let mediaHtml = "";
+                if (mediaPaths) {
+                    mediaHtml = "<div class='mb-2'>";
+                    mediaPaths.split(',').forEach(path => {
+                        mediaHtml += `<img src='${path}' width='60' class='me-1 rounded' />`;
+                    });
+                    mediaHtml += "</div>";
+                }
+
+                col.innerHTML = `
+                    <div class="card shadow-sm">
+                        <div class="card-body">
+                            <h5 class="card-title">${animalType} - ${emergencyType}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                Reported by: ${reporterName} | Phone: ${reporterPhone}
+                            </h6>
+                            <p class="card-text">${description}</p>
+                            <p class="card-text">
+                                <strong>Location:</strong> ${location} <br />
+                                <strong>Time:</strong> ${new Date().toLocaleString()}
+                            </p>
+                            ${mediaHtml}
+                            <span class="badge bg-warning">Pending</span>
+                        </div>
+                    </div>
+                `;
+                container.prepend(col);
             }
-        </td>
-        <td>@sos.CreatedAt</td>
-    </tr>
+        });
+
+        // --- Live status updates ---
+        connection.on("SOSUpdated", (sosId, newStatus) => {
+            const card = document.getElementById(`sos-${sosId}`);
+            if (card) {
+                const badge = card.querySelector(".badge");
+                badge.innerText = newStatus;
+
+                badge.className = "badge " + (
+                    newStatus === "Pending" ? "bg-warning" :
+                    newStatus === "Accepted" ? "bg-info" :
+                    newStatus === "Contacted" ? "bg-success" :
+                    newStatus === "Completed" ? "bg-secondary" : "bg-dark"
+                );
+
+                if (newStatus === "Contacted") {
+                    const toast = document.createElement("div");
+                    toast.className = "toast align-items-center text-bg-success border-0 position-fixed top-0 end-0 m-3";
+                    toast.innerHTML = `<div class="d-flex"><div class="toast-body">✅ Your SOS has been contacted by a vet!</div></div>`;
+                    document.body.appendChild(toast);
+                    const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
+                    bsToast.show();
+                    setTimeout(() => toast.remove(), 5000);
+                }
+            }
+        });
+
+        connection.start().catch(err => console.error(err));
+    </script>
 }
-
-</table>
-
-<script>
-    const connection = new signalR.HubConnectionBuilder().withUrl("/soshub").build();
-
-    connection.on("SOSUpdated", (id, status) => {
-        const row = document.querySelector(`#sos-${id} .status`);
-        if (row) row.innerText = status;
-
-        if(status === "Contacted"){
-            const toast = document.createElement("div");
-            toast.className = "toast align-items-center text-bg-success border-0 position-fixed top-0 end-0 m-3";
-            toast.innerHTML = `<div class="d-flex"><div class="toast-body">✅ Your SOS has been contacted by the vet!</div></div>`;
-            document.body.appendChild(toast);
-            const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
-            bsToast.show();
-            setTimeout(() => toast.remove(), 5000);
-        }
-    });
-
-    connection.start();
-</script>

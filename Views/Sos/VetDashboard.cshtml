@@ -4,19 +4,31 @@
     <thead>
         <tr>
             <th>Customer</th>
-            <th>Address</th>
+            <th>Reporter Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Animal Type</th>
+            <th>Condition</th>
+            <th>Emergency</th>
+            <th>Location</th>
             <th>Message</th>
             <th>Status</th>
             <th>Action</th>
         </tr>
     </thead>
-    <tbody  id="sosTableBody">
+    <tbody id="sosTableBody">
         @foreach (var sos in Model)
         {
             <tr id="sos-@sos.Id">
                 <td>@sos.CustomerName</td>
-                <td>@sos.Address</td>
-                <td>@sos.Message</td>
+                <td>@sos.ReporterName</td>
+                <td>@sos.ReporterPhone</td>
+                <td>@sos.ReporterEmail</td>
+                <td>@sos.AnimalType</td>
+                <td>@sos.AnimalCondition</td>
+                <td>@sos.EmergencyType</td>
+                <td>@sos.Location</td>
+                <td>@sos.Description</td>
                 <td class="status">@sos.Status</td>
                 <td>
                     @if (sos.Status != "Contacted")
@@ -36,7 +48,6 @@
     </tbody>
 </table>
 
-
 <div id="alerts"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
@@ -44,11 +55,11 @@
     const connection = new signalR.HubConnectionBuilder().withUrl("/soshub").build();
 
     // --- Live new SOS alerts ---
-    connection.on("ReceiveSOS", (userName, address, message, sosId) => {
+    connection.on("ReceiveSOS", (userName, location, description, sosId, reporterName, reporterPhone, reporterEmail, animalType, animalCondition, emergencyType) => {
         // Alert toast
         const div = document.createElement("div");
         div.classList = "alert alert-danger mt-3";
-        div.innerHTML = `<strong>New SOS from ${userName}</strong><br>📍 ${address}<br>${message}`;
+        div.innerHTML = `<strong>New SOS from ${userName}</strong><br>📍 ${location}<br>${description}`;
         document.getElementById("alerts").prepend(div);
         new Audio("/sounds/alert.mp3").play();
 
@@ -59,8 +70,14 @@
             tr.id = `sos-${sosId}`;
             tr.innerHTML = `
                 <td>${userName}</td>
-                <td>${address}</td>
-                <td>${message}</td>
+                <td>${reporterName}</td>
+                <td>${reporterPhone}</td>
+                <td>${reporterEmail}</td>
+                <td>${animalType}</td>
+                <td>${animalCondition}</td>
+                <td>${emergencyType}</td>
+                <td>${location}</td>
+                <td>${description}</td>
                 <td class="status">Pending</td>
                 <td>
                     <form method="post" action="/Vet/MarkContacted">
