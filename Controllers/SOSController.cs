@@ -97,33 +97,37 @@ namespace ResQPaw.Controllers
             TempData["Success"] = "🚨 SOS alert sent successfully!";
             return RedirectToAction("Status");
         }
-        [Authorize(Roles = "Customer")]
-       public IActionResult Status()
+       [Authorize(Roles = "Customer")]
+public async Task<IActionResult> Status()
 {
-    var sosList = _context.SOSRequests
-        .OrderByDescending(s => s.CreatedAt)
-        .AsEnumerable()
-        .Select(s => new SOSViewModel
-        {
-            Id = s.Id,
-            CustomerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.FullName
-                           ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
-                           ?? "Unknown",
-            EmergencyType = s.EmergencyType,
-            AnimalType = s.AnimalType,
-            AnimalCondition = s.AnimalCondition,
-            Description = s.Description,
-            Location = s.Location,
-            MediaPaths = s.MediaPaths,
-            ReporterName = s.ReporterName,
-            ReporterPhone = s.ReporterPhone,
-            ReporterEmail = s.ReporterEmail,
-            Status = s.Status,
-            CreatedAt = s.CreatedAt
-        })
-        .ToList();
+    var userId = _userManager.GetUserId(User);
 
-    return View(sosList); // ✅ Now passes List<SOSViewModel>
+var sosList = _context.SOSRequests
+    .Where(s => s.CustomerId == userId) // only current user
+    .OrderByDescending(s => s.CreatedAt)
+    .AsEnumerable()  // bring into memory, EF stops translating to SQL
+    .Select(s => new SOSViewModel
+    {
+        Id = s.Id,
+        CustomerName = _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.FullName
+                       ?? _userManager.Users.FirstOrDefault(u => u.Id == s.CustomerId)?.UserName
+                       ?? "Unknown",
+        EmergencyType = s.EmergencyType,
+        AnimalType = s.AnimalType,
+        AnimalCondition = s.AnimalCondition,
+        Description = s.Description,
+        Location = s.Location,
+        MediaPaths = s.MediaPaths,
+        ReporterName = s.ReporterName,
+        ReporterPhone = s.ReporterPhone,
+        ReporterEmail = s.ReporterEmail,
+        Status = s.Status,
+        CreatedAt = s.CreatedAt
+    })
+    .ToList();
+
+
+    return View(sosList); // now only passes user's own SOS requests
 }
 
 
