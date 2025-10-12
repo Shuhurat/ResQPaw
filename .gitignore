@@ -6,3 +6,5 @@ obj/
 *.db
 *.db-shm
 *.db-wal
+ResQPaw.exe
+ResQPaw.dll
