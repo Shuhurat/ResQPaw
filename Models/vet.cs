@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace ResQPaw.Models
@@ -5,31 +6,25 @@ namespace ResQPaw.Models
     public class Vet
     {
         public int Id { get; set; }
+        public required string Name { get; set; }
+        public required string Specialty { get; set; }
+        public required string Location { get; set; }
+        public required string VetClinic { get; set; }
+        public required string Availability { get; set; }
+        public required string Species { get; set; }
 
-        [Required]
-         public string Name { get; set; } = null;
 
-        [Required]
-        public string Specialty { get; set; } = null;
+        // Additional info
+        public required string Phone { get; set; }
+        public required string Email { get; set; }
 
-        [Required]
-        public string Address { get; set; } = null;
-
-        private string contactNumber;
-
-        public Vet(string contactNumber)
-        {
-            this.contactNumber = contactNumber;
-        }
-
-        public string GetContactNumber()
-        {
-            return contactNumber;
-        }
-
-        public void SetContactNumber(string value)
-        {
-            contactNumber = value;
-        }
+        public int ?ExperienceYears { get; set; }
+        public string? Services { get; set; }      // Comma-separated list of services
+        public double? Rating { get; set; }                // Average rating
+        public string? ProfilePhotoUrl { get; set; }
+        public bool EmergencyService { get; set; }
+        public string? Website { get; set; }
+        public string? LanguagesSpoken { get; set; }
     }
+
 }

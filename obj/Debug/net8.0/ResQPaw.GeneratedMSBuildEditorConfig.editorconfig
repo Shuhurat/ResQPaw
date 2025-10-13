@@ -260,8 +260,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU29zXFZldERhc2hib2FyZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/shuru/OneDrive/Desktop/ResQPaw/Views/Vet/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmV0XENyZWF0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/shuru/OneDrive/Desktop/ResQPaw/Views/Vet/Dashboard.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmV0XERhc2hib2FyZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shuru/OneDrive/Desktop/ResQPaw/Views/Vet/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmV0XERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shuru/OneDrive/Desktop/ResQPaw/Views/Vet/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmV0XEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/shuru/OneDrive/Desktop/ResQPaw/Views/Vet/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmV0XEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/shuru/OneDrive/Desktop/ResQPaw/Views/Vet/Notifications.cshtml]

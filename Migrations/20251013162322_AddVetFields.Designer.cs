@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ResQPaw.Data;
 
@@ -10,9 +11,11 @@ using ResQPaw.Data;
 namespace ResQPaw.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251013162322_AddVetFields")]
+    partial class AddVetFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
@@ -285,70 +288,6 @@ namespace ResQPaw.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SOSRequests");
-                });
-
-            modelBuilder.Entity("ResQPaw.Models.Vet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Availability")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("EmergencyService")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ExperienceYears")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("LanguagesSpoken")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Phone")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("ProfilePhotoUrl")
-                        .HasColumnType("TEXT");
-
-                    b.Property<double?>("Rating")
-                        .HasColumnType("REAL");
-
-                    b.Property<string>("Services")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Specialty")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Species")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("VetClinic")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Website")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Vets");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

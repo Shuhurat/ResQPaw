@@ -1,12 +1,18 @@
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
+
 <h2>Welcome Admin!</h2>
 <p>This page is protected and only visible to users with the Admin role.</p>
 
-
+<!-- Existing SOS buttons -->
 <a asp-controller="SOS" asp-action="AdminMonitor" class="sos-button" id="sosBtn">SOS monitor</a>
 
 <a asp-controller="SOS" asp-action="AdminMonitor" class="btn btn-danger btn-lg mt-3">
     🚨 Open SOS Monitor
+</a>
+
+<!-- NEW: Vet CRUD / Vet Directory button -->
+<a asp-controller="Vet" asp-action="Index" class="btn btn-primary btn-lg mt-3">
+    🐾 Manage Vet Directory
 </a>

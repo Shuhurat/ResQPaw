@@ -1,0 +1,101 @@
+@model IEnumerable<ResQPaw.Models.Vet>
+
+@{
+    ViewData["Title"] = "Vet Directory";
+}
+
+<h2>Vet Directory</h2>
+
+<!-- Search & Filter Form -->
+<form asp-action="Index" method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <input type="text" name="searchName" value="@ViewContext.HttpContext.Request.Query["searchName"]" class="form-control" placeholder="Search by Name" required />
+    </div>
+    <div class="col-md-3">
+        <input type="text" name="searchClinic" value="@ViewContext.HttpContext.Request.Query["searchClinic"]" class="form-control" placeholder="Search by Clinic" required />
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="filterSpecialty" value="@ViewContext.HttpContext.Request.Query["filterSpecialty"]" class="form-control" placeholder="Filter by Specialty" required />
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="filterSpecies" value="@ViewContext.HttpContext.Request.Query["filterSpecies"]" class="form-control" placeholder="Filter by Species" required />
+    </div>
+    <div class="col-md-2">
+        <input type="text" name="filterLocation" value="@ViewContext.HttpContext.Request.Query["filterLocation"]" class="form-control" placeholder="Filter by Location" required />
+    </div>
+    <div class="col-md-12">
+        <button type="submit" class="btn btn-primary mt-2">Search / Filter</button>
+    </div>
+</form>
+
+<!-- Admin: Add New Vet -->
+@if (User.IsInRole("Admin"))
+{
+    <a asp-action="Create" class="btn btn-primary mb-3">Add New Vet</a>
+}
+
+<!-- Vet Table -->
+<table class="table table-bordered table-striped" id="vetTable">
+    <thead class="table-dark">
+        <tr>
+            <th>Name *</th>
+            <th>Specialty *</th>
+            <th>Species *</th>
+            <th>Clinic *</th>
+            <th>Location *</th>
+            <th>Availability *</th>
+            <th>Phone *</th>
+            <th>Email *</th>
+            <th>Experience (Years)</th>
+            <th>Services</th>
+            <th>Rating</th>
+            <th>Profile Photo</th>
+            <th>Emergency Service</th>
+            <th>Website</th>
+            <th>Languages Spoken</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var vet in Model)
+        {
+            <tr>
+                <td>@vet.Name</td>
+                <td>@vet.Specialty</td>
+                <td>@vet.Species</td>
+                <td>@vet.VetClinic</td>
+                <td>@vet.Location</td>
+                <td>@vet.Availability</td>
+                <td>@vet.Phone</td>
+                <td>@vet.Email</td>
+                <td>@vet.ExperienceYears</td>
+                <td>@vet.Services</td>
+                <td>@(vet.Rating?.ToString("0.0") ?? "N/A")</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(vet.ProfilePhotoUrl))
+                    {
+                        <img src="@vet.ProfilePhotoUrl" alt="Profile Photo" width="50" height="50" />
+                    }
+                </td>
+                <td>@(vet.EmergencyService ? "Yes" : "No")</td>
+                <td>
+                    @if (!string.IsNullOrEmpty(vet.Website))
+                    {
+                        <a href="@vet.Website" target="_blank">@vet.Website</a>
+                    }
+                </td>
+                <td>@vet.LanguagesSpoken</td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@vet.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@vet.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
