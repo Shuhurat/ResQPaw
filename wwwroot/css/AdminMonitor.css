@@ -1,0 +1,185 @@
+/* Admin Monitor Custom Styles with Background */
+.admin-bg {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)),
+        url('https://images.unsplash.com/photo-1579168765467-3b1f14b11fdd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+}
+
+.stats-card {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+}
+
+.stats-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.emergency-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-800;
+}
+
+.animal-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800;
+}
+
+.condition-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800;
+}
+
+.status-badge {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium;
+}
+
+.status-pending {
+    @apply bg-yellow-100 text-yellow-800;
+}
+
+.status-contacted {
+    @apply bg-blue-100 text-blue-800;
+}
+
+.status-done {
+    @apply bg-green-100 text-green-800;
+}
+
+.action-btn {
+    @apply inline-flex items-center px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+/* Table Styles */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+th {
+    @apply sticky top-0 bg-red-600;
+}
+
+td,
+th {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+/* Alert Styles */
+.alert {
+    @apply p-4 rounded-lg border-l-4 animate-pulse;
+}
+
+.alert-danger {
+    @apply bg-red-50 border-red-500 text-red-700;
+}
+
+/* Pulse Animation */
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Hover Effects */
+tr {
+    transition: all 0.2s ease;
+}
+
+tr:hover {
+    @apply bg-blue-50;
+}
+
+/* Connection Status */
+#connectionStatus {
+    transition: all 0.3s ease;
+}
+
+.connection-lost {
+    @apply bg-red-100 text-red-800;
+}
+
+.connection-lost .pulse {
+    @apply text-red-500;
+}
+
+/* Scrollbar Styling */
+.overflow-x-auto::-webkit-scrollbar {
+    height: 8px;
+}
+
+.overflow-x-auto::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded;
+}
+
+.overflow-x-auto::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 rounded hover:bg-gray-400;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        @apply px-2;
+    }
+
+    table {
+        @apply text-sm;
+    }
+
+    th,
+    td {
+        @apply px-2 py-3;
+    }
+}
+
+/* Loading Animation */
+.loading-skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+/* New SOS Highlight */
+.new-sos {
+    animation: highlight 3s ease-in-out;
+}
+
+@keyframes highlight {
+    0% {
+        background-color: rgba(239, 68, 68, 0.3);
+    }
+
+    100% {
+        background-color: transparent;
+    }
+}
+
+/* Status Transitions */
+.status-badge {
+    transition: all 0.3s ease;
+}
+
+.status-badge.updating {
+    @apply opacity-50;
+}

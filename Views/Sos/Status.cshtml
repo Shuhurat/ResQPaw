@@ -1,130 +1,124 @@
 @model List<ResQPaw.Models.SOSViewModel>
 
-<h2 class="mb-3">My SOS Requests</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SOS Status - ResQPaw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/Status.css" asp-append-version="true" />
+</head>
+<body class="min-h-screen status-bg">
+    <div class="min-h-screen py-8 px-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="main-title">My SOS Requests</h1>
+                <p class="section-subtitle">Track the status of your emergency animal rescue requests</p>
+            </div>
 
-<div id="sosContainer" class="row g-3">
-    @foreach (var sos in Model)
-    {
-        <div class="col-md-6" id="sos-@sos.Id">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title">
-                        @sos.AnimalType - @sos.EmergencyType
-                    </h5>
-                    <h6 class="card-subtitle mb-2 text-muted">
-                        Reported by: @sos.ReporterName | Phone: @sos.ReporterPhone
-                    </h6>
-                    <p class="card-text">@sos.Description</p>
-                    <p class="card-text">
-                        <strong>Location:</strong> @sos.Location <br />
-                        <strong>Time:</strong> @sos.CreatedAt.ToLocalTime().ToString("g")
-                    </p>
+            <!-- SOS Requests Container -->
+            <div id="sosContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                @foreach (var sos in Model)
+                {
+                    <div class="glass-card sos-card" id="sos-@sos.Id">
+                        <div class="card-content">
+                            <!-- Header Section -->
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    @sos.AnimalType - @sos.EmergencyType
+                                </h3>
+                                <div class="status-badge @GetStatusClass(sos.Status)">
+                                    @sos.Status
+                                </div>
+                            </div>
 
-                    @if (!string.IsNullOrEmpty(sos.MediaPaths))
-                    {
-                        var mediaList = sos.MediaPaths.Split(',');
-                        <div class="mb-2">
-                            @foreach (var path in mediaList)
+                            <!-- Reporter Info -->
+                            <div class="reporter-info">
+                                <div class="info-item">
+                                    <i class="fas fa-user mr-2"></i>
+                                    <span>@sos.ReporterName</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-phone mr-2"></i>
+                                    <span>@sos.ReporterPhone</span>
+                                </div>
+                            </div>
+
+                            <!-- Description -->
+                            <p class="card-description">@sos.Description</p>
+
+                            <!-- Location and Time -->
+                            <div class="details-grid">
+                                <div class="detail-item">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>
+                                    <span class="detail-label">Location:</span>
+                                    <span class="detail-value">@sos.Location</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-clock mr-2"></i>
+                                    <span class="detail-label">Time:</span>
+                                    <span class="detail-value">@sos.CreatedAt.ToLocalTime().ToString("g")</span>
+                                </div>
+                            </div>
+
+                            <!-- Media Files -->
+                            @if (!string.IsNullOrEmpty(sos.MediaPaths))
                             {
-                                <img src="@path" width="60" class="me-1 rounded" />
+                                var mediaList = sos.MediaPaths.Split(',');
+                                <div class="media-gallery">
+                                    <p class="media-label">Attached Media:</p>
+                                    <div class="media-grid">
+                                        @foreach (var path in mediaList)
+                                        {
+                                            <img src="@path" alt="SOS Media" class="media-image" />
+                                        }
+                                    </div>
+                                </div>
                             }
                         </div>
-                    }
-
-                    <span class="badge 
-                        @(sos.Status == "Pending" ? "bg-warning" :
-                          sos.Status == "Accepted" ? "bg-info" :
-                          sos.Status == "Contacted" ? "bg-success" :
-                          sos.Status == "Completed" ? "bg-secondary" : "bg-dark")">
-                        @sos.Status
-                    </span>
-                </div>
-            </div>
-        </div>
-    }
-</div>
-
-<div id="alerts"></div>
-
-@section Scripts {
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-    <script>
-        const connection = new signalR.HubConnectionBuilder().withUrl("/soshub").build();
-
-        // --- Live new SOS alerts ---
-        connection.on("ReceiveSOS", (
-            userName, location, description, sosId,
-            reporterName, reporterPhone, reporterEmail,
-            animalType, animalCondition, emergencyType, mediaPaths
-        ) => {
-            const div = document.createElement("div");
-            div.classList = "alert alert-danger mt-3";
-            div.innerHTML = `<strong>New SOS from ${userName}</strong><br>📍 ${location}<br>${description}`;
-            document.getElementById("alerts").prepend(div);
-            new Audio("/sounds/alert.mp3").play();
-
-            if (!document.getElementById(`sos-${sosId}`)) {
-                const container = document.getElementById("sosContainer");
-                const col = document.createElement("div");
-                col.className = "col-md-6";
-                col.id = `sos-${sosId}`;
-
-                let mediaHtml = "";
-                if (mediaPaths) {
-                    mediaHtml = "<div class='mb-2'>";
-                    mediaPaths.split(',').forEach(path => {
-                        mediaHtml += `<img src='${path}' width='60' class='me-1 rounded' />`;
-                    });
-                    mediaHtml += "</div>";
-                }
-
-                col.innerHTML = `
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title">${animalType} - ${emergencyType}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">
-                                Reported by: ${reporterName} | Phone: ${reporterPhone}
-                            </h6>
-                            <p class="card-text">${description}</p>
-                            <p class="card-text">
-                                <strong>Location:</strong> ${location} <br />
-                                <strong>Time:</strong> ${new Date().toLocaleString()}
-                            </p>
-                            ${mediaHtml}
-                            <span class="badge bg-warning">Pending</span>
-                        </div>
                     </div>
-                `;
-                container.prepend(col);
-            }
-        });
-
-        // --- Live status updates ---
-        connection.on("SOSUpdated", (sosId, newStatus) => {
-            const card = document.getElementById(`sos-${sosId}`);
-            if (card) {
-                const badge = card.querySelector(".badge");
-                badge.innerText = newStatus;
-
-                badge.className = "badge " + (
-                    newStatus === "Pending" ? "bg-warning" :
-                    newStatus === "Accepted" ? "bg-info" :
-                    newStatus === "Contacted" ? "bg-success" :
-                    newStatus === "Completed" ? "bg-secondary" : "bg-dark"
-                );
-
-                if (newStatus === "Contacted") {
-                    const toast = document.createElement("div");
-                    toast.className = "toast align-items-center text-bg-success border-0 position-fixed top-0 end-0 m-3";
-                    toast.innerHTML = `<div class="d-flex"><div class="toast-body">✅ Your SOS has been contacted by a vet!</div></div>`;
-                    document.body.appendChild(toast);
-                    const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
-                    bsToast.show();
-                    setTimeout(() => toast.remove(), 5000);
                 }
-            }
-        });
+            </div>
 
-        connection.start().catch(err => console.error(err));
-    </script>
+            <!-- Empty State -->
+            @if (!Model.Any())
+            {
+                <div class="glass-card empty-state">
+                    <div class="empty-content">
+                        <i class="fas fa-inbox empty-icon"></i>
+                        <h3 class="empty-title">No SOS Requests Found</h3>
+                        <p class="empty-text">You haven't submitted any emergency rescue requests yet.</p>
+                        <a href="/SOS/Send" class="action-btn">
+                            <i class="fas fa-plus mr-2"></i>
+                            Submit New SOS
+                        </a>
+                    </div>
+                </div>
+            }
+
+            <!-- Live Alerts Container -->
+            <div id="alerts" class="fixed top-4 right-4 z-50 space-y-3 max-w-sm"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script src="~/js/Status.js" asp-append-version="true"></script>
+</body>
+</html>
+
+@functions {
+    public string GetStatusClass(string status)
+    {
+        return status?.ToLower() switch
+        {
+            "pending" => "status-pending",
+            "accepted" => "status-accepted", 
+            "contacted" => "status-contacted",
+            "completed" => "status-completed",
+            _ => "status-default"
+        };
+    }
 }

@@ -1,61 +1,165 @@
-@{
-    ViewData["Title"] = "Send SOS Alert";
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ResQPaw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/Send.css" asp-append-version="true" />
+</head>
+<body class="min-h-screen emergency-bg">
+    <div class="min-h-screen flex items-center justify-center py-8 px-4">
+        <div class="max-w-2xl w-full">
+            <!-- Main Header -->
+            <div class="text-center mb-8">
+                <h1 class="main-title">Emergency Animal Rescue</h1>
+            </div>
 
-<h2>🚨 Send SOS Alert</h2>
+            <!-- Emergency Notice -->
+            <div class="glass-card emergency-notice">
+                <div class="notice-header">
+                    <i class="fas fa-exclamation-triangle notice-icon"></i>
+                    <h3 class="notice-title">For immediate assistance</h3>
+                </div>
+                <p class="notice-text">
+                    If this is a critical emergency with an injured animal, please call your local animal control or emergency veterinary service first.
+                </p>
+            </div>
 
-<form method="post" enctype="multipart/form-data">
-    <div class="form-group">
-        <label>Type of Emergency:</label>
-        <input name="EmergencyType" class="form-control" placeholder="e.g. Injured, Lost, Trapped" required />
+            <!-- Divider -->
+            <div class="section-divider"></div>
+
+            <!-- Emergency Report Form -->
+            <div class="glass-card emergency-form">
+                <div class="form-section">
+                    <h2 class="section-title">Emergency Report</h2>
+                    <p class="section-subtitle">Please provide as much detail as possible to help us respond quickly</p>
+
+                    <form method="post" enctype="multipart/form-data" id="sosForm">
+                        <!-- Emergency Type and Animal Type -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Type of Emergency *</label>
+                                <select name="EmergencyType" class="glass-input" required>
+                                    <option value="">Select emergency type</option>
+                                    <option value="Injured">Injured Animal</option>
+                                    <option value="Lost">Lost Animal</option>
+                                    <option value="Trapped">Trapped Animal</option>
+                                    <option value="Abused">Animal Abuse</option>
+                                    <option value="Sick">Sick Animal</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Animal Type *</label>
+                                <select name="AnimalType" class="glass-input" required>
+                                    <option value="">Select animal type</option>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                    <option value="Bird">Bird</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Animal Condition -->
+                        <div class="form-group">
+                            <label class="form-label">Animal Condition *</label>
+                            <select name="AnimalCondition" class="glass-input" required>
+                                <option value="">Select condition</option>
+                                <option value="Bleeding">Bleeding</option>
+                                <option value="Weak">Weak/Cannot move</option>
+                                <option value="Hungry">Hungry/Thirsty</option>
+                                <option value="Scared">Scared/Anxious</option>
+                                <option value="Stable">Stable but needs help</option>
+                            </select>
+                        </div>
+
+                        <!-- Emergency Description -->
+                        <div class="form-group">
+                            <label class="form-label">Emergency Description *</label>
+                            <textarea name="Description" class="glass-textarea" placeholder="Please describe the situation in detail..." rows="4" required></textarea>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="form-group">
+                            <label class="form-label">Location Where Found *</label>
+                            <input name="Address" class="glass-input" placeholder="Enter the address or location" required />
+                        </div>
+
+                        <!-- File Upload -->
+                        <div class="form-group">
+                            <label class="form-label">Upload Photos or Videos</label>
+                            <div class="glass-upload">
+                                <input type="file" name="MediaFiles" class="file-input" multiple />
+                                <div class="upload-content">
+                                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                                    <p class="upload-text">Drag & drop or click to upload</p>
+                                    <p class="upload-hint">Maximum file size: 10MB</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Your Name *</label>
+                                <input name="ReporterName" class="glass-input" placeholder="Enter your full name" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label">Your Phone *</label>
+                                <input name="ReporterPhone" class="glass-input" placeholder="Your phone number" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Your Email</label>
+                            <input name="ReporterEmail" type="email" class="glass-input" placeholder="Your email address" />
+                        </div>
+
+                        <!-- Checkbox -->
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="stayWithAnimal" class="glass-checkbox">
+                            <label for="stayWithAnimal" class="checkbox-label">
+                                <i class="fas fa-shield-alt mr-2"></i>
+                                I can assist or stay with the animal until help arrives
+                            </label>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="submit-section">
+                            <button type="submit" class="submit-btn" id="submitBtn">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                <span class="btn-text">Send Emergency Report</span>
+                                <div class="btn-loader hidden">
+                                    <div class="spinner"></div>
+                                    <span class="ml-2">Sending...</span>
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Success Message -->
+            @if (TempData["Success"] != null)
+            {
+                <div class="success-message glass-card">
+                    <i class="fas fa-check-circle mr-2"></i>
+                    @TempData["Success"]
+                </div>
+            }
+
+            <!-- Emergency Contact -->
+            <div class="contact-info">
+                <i class="fas fa-phone-alt mr-2"></i>
+                Emergency Hotline: <strong>+880 1234-567890</strong>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group mt-2">
-        <label>Animal Type:</label>
-        <input name="AnimalType" class="form-control" placeholder="e.g. Dog, Cat, Bird" required />
-    </div>
-
-    <div class="form-group mt-2">
-        <label>Animal Condition:</label>
-        <input name="AnimalCondition" class="form-control" placeholder="e.g. Bleeding, Weak, Cannot move" required />
-    </div>
-
-    <div class="form-group mt-2">
-        <label>Emergency Description:</label>
-        <textarea name="Description" class="form-control" rows="3" placeholder="Describe what happened..." required></textarea>
-    </div>
-
-    <div class="form-group mt-2">
-        <label>Location Found:</label>
-        <input name="Address" class="form-control" placeholder="Exact or nearby address" required />
-    </div>
-
-    <div class="form-group mt-2">
-        <label>Upload Photos/Videos:</label>
-        <input type="file" name="MediaFiles" class="form-control" multiple />
-    </div>
-
-    <hr />
-
-    <div class="form-group mt-2">
-        <label>Your Name:</label>
-        <input name="ReporterName" class="form-control" required />
-    </div>
-
-    <div class="form-group mt-2">
-        <label>Your Phone:</label>
-        <input name="ReporterPhone" class="form-control" required />
-    </div>
-
-    <div class="form-group mt-2">
-        <label>Your Email:</label>
-        <input name="ReporterEmail" type="email" class="form-control" required />
-    </div>
-
-    <button type="submit" class="btn btn-danger mt-3">Send SOS</button>
-</form>
-
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success mt-3">@TempData["Success"]</div>
-}
+    <script src="~/js/Send.js" asp-append-version="true"></script>
+</body>
+</html>

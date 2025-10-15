@@ -5,32 +5,274 @@
     ViewData["Title"] = "Vet Dashboard";
 }
 
-<h2>Vet Dashboard</h2>
-<p>Welcome, @User.Identity.Name!</p>
+<!DOCTYPE html>
+<html lang="en">
 
-<p>Here you can view SOS alerts, accept requests, and manage pet care reports.</p>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ResQPaw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/VetDashboard.css" asp-append-version="true" />
+</head>
 
+<body class="min-h-screen vet-dashboard-bg">
+    <!-- Background Elements -->
+    <div class="background-elements">
+        <div class="floating-medical medical-1"></div>
+        <div class="floating-medical medical-2"></div>
+        <div class="floating-medical medical-3"></div>
+        <div class="floating-medical medical-4"></div>
+    </div>
 
-@if (User.IsInRole("ServiceProvider"))
-{
-   
-        <a class="nav-link " asp-controller="Vet" asp-action="Notifications">SOS status</a>
-    
-}
+    <div class="min-h-screen py-8 px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Main Dashboard Card -->
+            <div class="glass-card main-dashboard">
+                <div class="dashboard-content">
+                    <!-- Welcome Header -->
+                    <div class="welcome-header">
+                        <div class="vet-avatar">
+                            <i class="fas fa-user-md"></i>
+                        </div>
+                        <div class="welcome-text">
+                            <h1 class="dashboard-title">Vet Dashboard</h1>
+                            <p class="welcome-message">Welcome, <span class="vet-name">@User.Identity.Name!</span></p>
+                            <p class="role-badge">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Licensed Veterinarian</span>
+                            </p>
+                        </div>
+                        <div class="status-indicator">
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Ready for Emergencies</span>
+                        </div>
+                    </div>
 
+                    <!-- Introduction Section -->
+                    <div class="intro-section">
+                        <p class="intro-text">
+                            Here you can view SOS alerts, accept requests, and manage pet care reports.
+                        </p>
+                    </div>
 
+                    <!-- Quick Stats -->
+                    <div class="stats-section">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon emergency">
+                                    <i class="fas fa-ambulance"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">8</h3>
+                                    <p class="stat-label">Active Emergencies</p>
+                                    <div class="stat-trend up">
+                                        <i class="fas fa-arrow-up"></i>
+                                        3 new today
+                                    </div>
+                                </div>
+                            </div>
 
-@if (User.IsInRole("Vet"))
-{
-    <li class="nav-item">
-        <a class="nav-link" asp-controller="Vet" asp-action="Notifications">
-            <i class="bi bi-bell"></i> SOS Alerts
-        </a>
-    </li>
-}
+                            <div class="stat-card">
+                                <div class="stat-icon success">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">24</h3>
+                                    <p class="stat-label">Cases Resolved</p>
+                                    <div class="stat-trend up">
+                                        <i class="fas fa-arrow-up"></i>
+                                        12% increase
+                                    </div>
+                                </div>
+                            </div>
 
+                            <div class="stat-card">
+                                <div class="stat-icon warning">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">5</h3>
+                                    <p class="stat-label">Pending Reviews</p>
+                                    <div class="stat-trend steady">
+                                        <i class="fas fa-minus"></i>
+                                        No change
+                                    </div>
+                                </div>
+                            </div>
 
-<p><a asp-controller="SOS" asp-action="VetDashboard" class="btn btn-primary">Go to SOS Dashboard</a></p>
+                            <div class="stat-card">
+                                <div class="stat-icon info">
+                                    <i class="fas fa-stethoscope"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">42</h3>
+                                    <p class="stat-label">Total Patients</p>
+                                    <div class="stat-trend up">
+                                        <i class="fas fa-arrow-up"></i>
+                                        8% growth
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <p>&copy; 2024 PetCare Connect. All rights reserved.</p>
-            
+                    <!-- Role-Based Actions -->
+                    <div class="actions-section">
+                        <div class="role-actions-grid">
+                            <!-- SOS Dashboard Access -->
+                            <div class="action-card primary">
+                                <div class="card-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3 class="card-title">Emergency Dashboard</h3>
+                                    <p class="card-description">Access real-time SOS alerts and emergency cases</p>
+                                    <a asp-controller="SOS" asp-action="VetDashboard" class="action-btn primary">
+                                        <i class="fas fa-arrow-right"></i>
+                                        Go to SOS Dashboard
+                                    </a>
+                                </div>
+                                <div class="card-badge">Priority Access</div>
+                            </div>
+
+                            <!-- Service Provider Section -->
+                            @if (User.IsInRole("ServiceProvider"))
+                            {
+                                <div class="action-card success">
+                                    <div class="card-icon">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    <div class="card-content">
+                                        <h3 class="card-title">SOS Status Monitor</h3>
+                                        <p class="card-description">Track and manage emergency request status</p>
+                                        <a class="action-btn success" asp-controller="Vet" asp-action="Notifications">
+                                            <i class="fas fa-chart-line"></i>
+                                            SOS Status
+                                        </a>
+                                    </div>
+                                    <div class="card-badge">Service Provider</div>
+                                </div>
+                            }
+
+                            <!-- Veterinarian Section -->
+                            @if (User.IsInRole("Vet"))
+                            {
+                                <div class="action-card warning">
+                                    <div class="card-icon">
+                                        <i class="fas fa-bell"></i>
+                                    </div>
+                                    <div class="card-content">
+                                        <h3 class="card-title">SOS Alerts</h3>
+                                        <p class="card-description">Receive and respond to emergency alerts</p>
+                                        <a class="action-btn warning" asp-controller="Vet" asp-action="Notifications">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            SOS Alerts
+                                        </a>
+                                    </div>
+                                    <div class="card-badge urgent">Live Alerts</div>
+                                </div>
+                            }
+
+                            <!-- Additional Vet Tools -->
+                            <div class="action-card info">
+                                <div class="card-icon">
+                                    <i class="fas fa-file-medical"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3 class="card-title">Medical Reports</h3>
+                                    <p class="card-description">Create and manage pet care medical reports</p>
+                                    <button class="action-btn info">
+                                        <i class="fas fa-file-alt"></i>
+                                        Manage Reports
+                                    </button>
+                                </div>
+                                <div class="card-badge">Professional</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Access Tools -->
+                    <div class="tools-section">
+                        <h2 class="section-title">Quick Access Tools</h2>
+                        <div class="tools-grid">
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                                <h3 class="tool-title">Case Search</h3>
+                                <p class="tool-description">Find patient cases and emergency records</p>
+                            </div>
+
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <h3 class="tool-title">Appointments</h3>
+                                <p class="tool-description">Schedule and manage veterinary appointments</p>
+                            </div>
+
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <i class="fas fa-pills"></i>
+                                </div>
+                                <h3 class="tool-title">Medications</h3>
+                                <p class="tool-description">Prescription and medication management</p>
+                            </div>
+
+                            <div class="tool-card">
+                                <div class="tool-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <h3 class="tool-title">Analytics</h3>
+                                <p class="tool-description">View treatment success rates and statistics</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Protocols -->
+                    <div class="protocols-section">
+                        <h2 class="section-title">Emergency Protocols</h2>
+                        <div class="protocols-grid">
+                            <div class="protocol-card">
+                                <h3 class="protocol-title">Critical Care</h3>
+                                <p class="protocol-description">Immediate response procedures for critical cases</p>
+                                <span class="protocol-badge">Level 1</span>
+                            </div>
+
+                            <div class="protocol-card">
+                                <h3 class="protocol-title">Trauma Response</h3>
+                                <p class="protocol-description">Emergency trauma and injury management</p>
+                                <span class="protocol-badge">Level 2</span>
+                            </div>
+
+                            <div class="protocol-card">
+                                <h3 class="protocol-title">Toxicology</h3>
+                                <p class="protocol-description">Poisoning and toxic exposure protocols</p>
+                                <span class="protocol-badge">Level 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Section -->
+            <div class="vet-footer">
+                <div class="footer-content">
+                    <div class="footer-info">
+                        <i class="fas fa-hands-helping"></i>
+                        <span>24/7 Emergency Veterinary Service</span>
+                    </div>
+                    <div class="footer-copyright">
+                        <p>&copy; 2024 PetCare Connect. All rights reserved.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/VetDashboard.js" asp-append-version="true"></script>
+</body>
+
+</html>

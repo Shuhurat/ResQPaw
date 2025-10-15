@@ -5,84 +5,154 @@
 
 @model List<ResQPaw.Models.SOSViewModel>
 
-<h2 class="mb-3">Live SOS Alerts</h2>
+<!DOCTYPE html>
+<html lang="en">
 
-<div id="alert-container"></div> <!-- 🔔 Real-time alert area -->
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ResQPaw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/Notifications.css" asp-append-version="true" />
+</head>
 
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>Customer</th>
-            <th>Reporter Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Animal Type</th>
-            <th>Condition</th>
-            <th>Emergency</th>
-            <th>Location</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Time</th>
-        </tr>
-    </thead>
-    <tbody id="sosTableBody">
-        @foreach (var sos in Model)
-        {
-            <tr>
-                <td>@sos.CustomerName</td>
-                <td>@sos.ReporterName</td>
-                <td>@sos.ReporterPhone</td>
-                <td>@sos.ReporterEmail</td>
-                <td>@sos.AnimalType</td>
-                <td>@sos.AnimalCondition</td>
-                <td>@sos.EmergencyType</td>
-                <td>@sos.Location</td>
-                <td>@sos.Description</td>
-                <td>@sos.Status</td>
-                <td>@sos.CreatedAt.ToString("g")</td>
-            </tr>
-        }
-    </tbody>
-</table>
+<body class="min-h-screen emergency-dashboard-bg">
+    <div class="min-h-screen">
+        <!-- Main Container -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Header Section - Centered -->
+            <div class="mb-8 text-center">
+                <h1 class="dashboard-title">
+                    Emergency SOS Dashboard
+                </h1>
+                <p class="dashboard-subtitle">
+                    Manage and track all animal emergency requests
+                </p>
+            </div>
 
-@section Scripts {
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="stats-card">
+                    <div class="stats-icon pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stats-content">
+                        <div class="stats-number">@Model.Count(s => s.Status == "Pending")</div>
+                        <div class="stats-label">Pending Requests</div>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon contested">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="stats-content">
+                        <div class="stats-number">0</div>
+                        <div class="stats-label">Contested</div>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon completed">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stats-content">
+                        <div class="stats-number">@Model.Count(s => s.Status == "Completed")</div>
+                        <div class="stats-label">Completed</div>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <div class="stats-icon total">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <div class="stats-content">
+                        <div class="stats-number">@Model.Count</div>
+                        <div class="stats-label">Total Emergencies</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alert Container -->
+            <div id="alert-container" class="mb-6"></div>
+
+            <!-- Recent Emergency Requests Section - Full Height Table -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden table-container">
+                <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 text-center">
+                    <h2 class="section-title">
+                        Recent Emergency Requests
+                    </h2>
+                </div>
+
+                <!-- Table Container with Fixed Height and Scroll -->
+                <div class="table-wrapper">
+                    <table class="w-full">
+                        <thead class="bg-gray-50 sticky-top">
+                            <tr>
+                                <th class="table-header">CUSTOMER</th>
+                                <th class="table-header">REPORTER NAME</th>
+                                <th class="table-header">PHONE</th>
+                                <th class="table-header">EMAIL</th>
+                                <th class="table-header">ANIMAL TYPE</th>
+                                <th class="table-header">CONDITION</th>
+                                <th class="table-header">EMERGENCY</th>
+                                <th class="table-header">LOCATION</th>
+                                <th class="table-header">MESSAGE</th>
+                                <th class="table-header">STATUS</th>
+                                <th class="table-header">TIME</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sosTableBody" class="bg-white divide-y divide-gray-200">
+                            @foreach (var sos in Model)
+                            {
+                                <tr class="table-row hover:bg-gray-50 transition-colors duration-200">
+                                    <td class="table-cell">
+                                        <div class="customer-info">
+                                            <div class="customer-email">@sos.CustomerName</div>
+                                        </div>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="reporter-name">@sos.ReporterName</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="phone-number">@sos.ReporterPhone</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="email-address">@sos.ReporterEmail</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="animal-type-badge">@sos.AnimalType</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="condition-text">@sos.AnimalCondition</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="emergency-type-badge">@sos.EmergencyType</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="location-text">@sos.Location</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="message-text" title="@sos.Description">@sos.Description</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="status-badge @(sos.Status?.ToLower() ?? "pending")">@sos.Status</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="timestamp">@sos.CreatedAt.ToString("MM/dd/yyyy h:mm tt")</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
-    <script>
-        // Connect to the SOSHub
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/sosHub")
-            .build();
+    <script src="~/js/Notifications.js" asp-append-version="true"></script>
+</body>
 
-        // When a new SOS is received
-        connection.on("ReceiveSOS", function (customerName, location, description, sosId, reporterName, reporterPhone, reporterEmail, animalType, animalCondition, emergencyType) {
-            // Alert banner
-            const alertBox = document.createElement("div");
-            alertBox.className = "alert alert-danger mt-2";
-            alertBox.innerHTML = `<strong>🚨 New SOS Alert!</strong> <br>
-                                  From: ${customerName}<br>
-                                  Location: ${location}<br>
-                                  Message: ${description}`;
-            document.getElementById("alert-container").prepend(alertBox);
-
-            // Append row to table
-            const newRow = document.createElement("tr");
-            newRow.id = `sos-${sosId}`;
-            newRow.innerHTML = `
-                <td>${customerName}</td>
-                <td>${reporterName}</td>
-                <td>${reporterPhone}</td>
-                <td>${reporterEmail}</td>
-                <td>${animalType}</td>
-                <td>${animalCondition}</td>
-                <td>${emergencyType}</td>
-                <td>${location}</td>
-                <td>${description}</td>
-                <td>Pending</td>
-                <td>${new Date().toLocaleString()}</td>
-            `;
-            document.getElementById("sosTableBody").prepend(newRow);
-        });
-
-        connection.start().catch(err => console.error(err));
-    </script>
-}
+</html>

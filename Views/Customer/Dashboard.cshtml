@@ -2,11 +2,217 @@
     ViewData["Title"] = "My Dashboard";
 }
 
-<h2>My Dashboard</h2>
-<p>Welcome, @User.Identity.Name!</p>
+<!DOCTYPE html>
+<html lang="en">
 
-<p>Here you can view your SOS request status, manage your pets, or request emergency help.</p>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ResQPaw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/CustomerDashboard.css" asp-append-version="true" />
+</head>
 
+<body class="min-h-screen customer-dashboard-bg">
+    <!-- Background Elements -->
+    <div class="background-elements">
+        <div class="floating-paw paw-1"></div>
+        <div class="floating-paw paw-2"></div>
+        <div class="floating-paw paw-3"></div>
+        <div class="floating-paw paw-4"></div>
+    </div>
 
-<a asp-controller="SOS" asp-action="Status">SOS Alert</a>
+    <div class="min-h-screen py-8 px-4">
+        <div class="max-w-6xl mx-auto">
+            <!-- Main Dashboard Card -->
+            <div class="glass-card main-dashboard">
+                <div class="dashboard-content">
+                    <!-- Welcome Header -->
+                    <div class="welcome-header">
+                        <div class="user-avatar">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="welcome-text">
+                            <h1 class="dashboard-title">My Dashboard</h1>
+                            <p class="welcome-message">Welcome back, <span class="user-name">@User.Identity.Name!</span>
+                            </p>
+                        </div>
+                        <div class="status-indicator">
+                            <i class="fas fa-shield-check"></i>
+                            <span>Account Active</span>
+                        </div>
+                    </div>
 
+                    <!-- Introduction Section -->
+                    <div class="intro-section">
+                        <p class="intro-text">
+                            Here you can view your SOS request status, manage your pets, or request emergency help.
+                        </p>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="stats-section">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon primary">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">3</h3>
+                                    <p class="stat-label">Active SOS Requests</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon success">
+                                    <i class="fas fa-paw"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">2</h3>
+                                    <p class="stat-label">Registered Pets</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon warning">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">7</h3>
+                                    <p class="stat-label">Total Requests</p>
+                                </div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-icon info">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3 class="stat-number">5</h3>
+                                    <p class="stat-label">Resolved Cases</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Cards -->
+                    <div class="actions-section">
+                        <div class="action-cards-grid">
+                            <!-- SOS Alert Card -->
+                            <a asp-controller="SOS" asp-action="Status" class="action-card emergency">
+                                <div class="card-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3 class="card-title">SOS Alert</h3>
+                                    <p class="card-description">Send emergency rescue request for animals in distress
+                                    </p>
+                                    <div class="card-badge urgent">Emergency</div>
+                                </div>
+                                <div class="card-arrow">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </a>
+
+                            <!-- Pet Management Card -->
+                            <div class="action-card pets">
+                                <div class="card-icon">
+                                    <i class="fas fa-dog"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3 class="card-title">My Pets</h3>
+                                    <p class="card-description">Manage your registered pets and their profiles</p>
+                                    <div class="card-badge">2 Pets</div>
+                                </div>
+                                <div class="card-arrow">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+
+                            <!-- Request History Card -->
+                            <div class="action-card history">
+                                <div class="card-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3 class="card-title">Request History</h3>
+                                    <p class="card-description">View your previous emergency requests and status</p>
+                                    <div class="card-badge">7 Items</div>
+                                </div>
+                                <div class="card-arrow">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+
+                            <!-- Emergency Contacts Card -->
+                            <div class="action-card contacts">
+                                <div class="card-icon">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div class="card-content">
+                                    <h3 class="card-title">Emergency Contacts</h3>
+                                    <p class="card-description">Quick access to veterinary and rescue services</p>
+                                    <div class="card-badge">24/7</div>
+                                </div>
+                                <div class="card-arrow">
+                                    <i class="fas fa-arrow-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="activity-section">
+                        <h2 class="section-title">Recent Activity</h2>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon success">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <span class="activity-text">SOS request #289 marked as completed</span>
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon warning">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <span class="activity-text">New SOS request submitted for stray dog</span>
+                                    <span class="activity-time">5 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon info">
+                                    <i class="fas fa-user-md"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <span class="activity-text">Veterinarian assigned to your case</span>
+                                    <span class="activity-time">1 day ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Footer -->
+            <div class="support-footer">
+                <div class="support-info">
+                    <i class="fas fa-life-ring"></i>
+                    <span>Need help? Contact our support team 24/7</span>
+                </div>
+                <div class="emergency-contact">
+                    <i class="fas fa-phone"></i>
+                    <span>Emergency Hotline: +880 1234-567890</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/CustomerDashboard.js" asp-append-version="true"></script>
+</body>
+
+</html>

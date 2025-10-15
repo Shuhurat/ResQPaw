@@ -3,112 +3,161 @@
     ViewData["Title"] = "Admin SOS Monitor";
 }
 
-<h2 class="mb-4 text-center text-danger">🚨 Live SOS Monitor (Admin)</h2>
+<!DOCTYPE html>
+<html lang="en">
 
-<table class="table table-bordered table-striped text-center">
-    <thead class="table-dark">
-        <tr>
-            <th>Customer</th>
-            <th>Emergency Type</th>
-            <th>Animal Type</th>
-            <th>Condition</th>
-            <th>Description</th>
-            <th>Location</th>
-            <th>Reporter</th>
-            <th>Status</th>
-            <th>Time</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody id="sosTableBody">
-        @foreach (var sos in Model)
-        {
-            <tr id="sos-@sos.Id">
-                <td>@sos.CustomerName</td>
-                <td>@sos.EmergencyType</td>
-                <td>@sos.AnimalType</td>
-                <td>@sos.AnimalCondition</td>
-                <td>@sos.Description</td>
-                <td>@sos.Location</td>
-                <td>@sos.ReporterName<br>@sos.ReporterPhone<br>@sos.ReporterEmail</td>
-                <td class="status">@sos.Status</td>
-                <td>@sos.CreatedAt.ToLocalTime().ToString("g")</td>
-                <td>
-    @if (sos.Status == "Contacted")
-    {
-        <form method="post" asp-action="MarkDone" asp-controller="SOS">
-            <input type="hidden" name="id" value="@sos.Id" />
-            <button class="btn btn-success btn-sm">Mark as Done</button>
-        </form>
-    }
-    else if (sos.Status == "Pending")
-    {
-        <span class="text-muted">Waiting</span>
-    }
-    else
-    {
-        <span class="text-success">Completed</span>
-    }
-</td>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ResQPaw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/AdminMonitor.css" asp-append-version="true" />
+</head>
 
-            </tr>
-        }
-    </tbody>
-</table>
+<body class="min-h-screen admin-bg">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="flex items-center justify-center mb-4">
+                <div class="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center mr-3 shadow-lg">
+                    <i class="fas fa-exclamation-triangle text-white text-xl"></i>
+                </div>
+                <h1 class="text-3xl font-bold text-gray-800">ResQPaw</h1>
+            </div>
+            <h2 class="text-2xl font-bold text-red-600 mb-2 flex items-center justify-center">
+                <i class="fas fa-heartbeat mr-3"></i>
+                Live SOS Monitor (Admin)
+            </h2>
+            <p class="text-gray-600">Monitor and manage emergency SOS requests in real-time</p>
+        </div>
 
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div class="stats-card bg-white rounded-lg shadow-md p-4 border-l-4 border-red-500">
+                <div class="text-2xl font-bold text-red-600">@Model.Count</div>
+                <div class="text-gray-600">Total SOS</div>
+            </div>
+            <div class="stats-card bg-white rounded-lg shadow-md p-4 border-l-4 border-yellow-500">
+                <div class="text-2xl font-bold text-yellow-600">@Model.Count(s => s.Status == "Pending")</div>
+                <div class="text-gray-600">Pending</div>
+            </div>
+            <div class="stats-card bg-white rounded-lg shadow-md p-4 border-l-4 border-blue-500">
+                <div class="text-2xl font-bold text-blue-600">@Model.Count(s => s.Status == "Contacted")</div>
+                <div class="text-gray-600">Contacted</div>
+            </div>
+            <div class="stats-card bg-white rounded-lg shadow-md p-4 border-l-4 border-green-500">
+                <div class="text-2xl font-bold text-green-600">@Model.Count(s => s.Status == "Done")</div>
+                <div class="text-gray-600">Completed</div>
+            </div>
+        </div>
 
-<!-- Alerts Section -->
-<div id="alerts" class="mt-4"></div>
+        <!-- SOS Table -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-full">
+                    <thead class="bg-gradient-to-r from-red-600 to-red-700 text-white">
+                        <tr>
+                            <th class="px-6 py-4 text-left font-semibold">Customer</th>
+                            <th class="px-6 py-4 text-left font-semibold">Emergency Type</th>
+                            <th class="px-6 py-4 text-left font-semibold">Animal Type</th>
+                            <th class="px-6 py-4 text-left font-semibold">Condition</th>
+                            <th class="px-6 py-4 text-left font-semibold">Description</th>
+                            <th class="px-6 py-4 text-left font-semibold">Location</th>
+                            <th class="px-6 py-4 text-left font-semibold">Reporter</th>
+                            <th class="px-6 py-4 text-left font-semibold">Status</th>
+                            <th class="px-6 py-4 text-left font-semibold">Time</th>
+                            <th class="px-6 py-4 text-left font-semibold">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="sosTableBody" class="divide-y divide-gray-200">
+                        @foreach (var sos in Model)
+                        {
+                            <tr id="sos-@sos.Id" class="hover:bg-gray-50 transition-colors duration-200">
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <div class="font-medium text-gray-900">@sos.CustomerName</div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="emergency-badge">@sos.EmergencyType</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="animal-badge">@sos.AnimalType</span>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="condition-badge">@sos.AnimalCondition</span>
+                                </td>
+                                <td class="px-6 py-4 max-w-xs">
+                                    <div class="text-sm text-gray-600 truncate" title="@sos.Description">@sos.Description
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center text-sm text-gray-600">
+                                        <i class="fas fa-map-marker-alt mr-2 text-red-500"></i>
+                                        @sos.Location
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="text-sm">
+                                        <div class="font-medium text-gray-900">@sos.ReporterName</div>
+                                        <div class="text-gray-500">
+                                            <i class="fas fa-phone mr-1"></i>@sos.ReporterPhone
+                                        </div>
+                                        <div class="text-gray-500">
+                                            <i class="fas fa-envelope mr-1"></i>@sos.ReporterEmail
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <span class="status-badge status-@sos.Status.ToLower()">@sos.Status</span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                    <i class="fas fa-clock mr-2 text-gray-400"></i>
+                                    @sos.CreatedAt.ToLocalTime().ToString("g")
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    @if (sos.Status == "Contacted")
+                                    {
+                                        <form method="post" asp-action="MarkDone" asp-controller="SOS" class="inline">
+                                            <input type="hidden" name="id" value="@sos.Id" />
+                                            <button class="action-btn bg-green-600 hover:bg-green-700 text-white">
+                                                <i class="fas fa-check mr-1"></i>Mark as Done
+                                            </button>
+                                        </form>
+                                    }
+                                    else if (sos.Status == "Pending")
+                                    {
+                                        <span class="text-gray-400 italic">Waiting</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="text-green-600 font-semibold">
+                                            <i class="fas fa-check-circle mr-1"></i>Completed
+                                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-<!-- SignalR script -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-<script>
-    const connection = new signalR.HubConnectionBuilder().withUrl("/sosHub").build();
+        <!-- Alerts Section -->
+        <div id="alerts" class="mt-6 space-y-3"></div>
 
-    connection.on("ReceiveSOS", (userName, address, message, sosId) => {
-        const alertDiv = document.createElement("div");
-        alertDiv.className = "alert alert-danger";
-        alertDiv.innerHTML = `<b>🚨 New SOS!</b><br><strong>${userName}</strong><br>📍 ${address}<br>${message}`;
-        document.getElementById("alerts").prepend(alertDiv);
-        new Audio("/sounds/alert.mp3").play();
+        <!-- Connection Status -->
+        <div class="mt-6 text-center">
+            <div id="connectionStatus"
+                class="inline-flex items-center px-4 py-2 rounded-full bg-green-100 text-green-800">
+                <i class="fas fa-circle text-green-500 mr-2 pulse"></i>
+                Connected to SOS Hub
+            </div>
+        </div>
+    </div>
 
-        const tbody = document.getElementById("sosTableBody");
-        if (!document.getElementById(`sos-${sosId}`)) {
-            const tr = document.createElement("tr");
-            tr.id = `sos-${sosId}`;
-            tr.innerHTML = `
-                <td>${userName}</td>
-                <td>${address}</td>
-                <td>${message}</td>
-                <td class="status">Pending</td>
-                <td>${new Date().toLocaleString()}</td>
-                <td><button class="btn btn-sm btn-danger delete-btn" data-id="${sosId}">🗑 Delete</button></td>
-            `;
-            tbody.prepend(tr);
-        }
-    });
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script src="~/js/AdminMonitor.js" asp-append-version="true"></script>
+</body>
 
-    connection.on("SOSUpdated", (sosId, newStatus) => {
-        const row = document.getElementById(`sos-${sosId}`);
-        if (row) {
-            row.querySelector(".status").innerText = newStatus;
-        }
-    });
-
-    connection.start().catch(err => console.error(err));
-
-    // 🧹 Delete button functionality
-    document.addEventListener("click", async (e) => {
-        if (e.target.classList.contains("delete-btn")) {
-            const sosId = e.target.dataset.id;
-            if (confirm("Are you sure you want to delete this SOS request?")) {
-                const response = await fetch(`/SOS/Delete/${sosId}`, { method: "POST" });
-                if (response.ok) {
-                    document.getElementById(`sos-${sosId}`).remove();
-                } else {
-                    alert("Failed to delete SOS request.");
-                }
-            }
-        }
-    });
-</script>
+</html>

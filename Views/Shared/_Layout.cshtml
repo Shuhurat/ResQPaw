@@ -4,323 +4,469 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ResQPaw</title>
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#f59e0b',
+                        secondary: '#ef4444',
+                        accent: '#10b981',
+                        dark: '#1f2937',
+                        light: '#f8fafc'
+                    },
+                    backgroundImage: {
+                        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+                        'hero-pattern': "url('https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",
+                        'feature-pattern': "url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')",
+                        'pets-pattern': "url('https://images.unsplash.com/photo-1514984879728-be0aff75a6e8?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80')"
+                    },
+                    backdropBlur: {
+                        'xs': '2px',
+                    },
+                    boxShadow: {
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
+                        '3xl': '0 35px 60px -15px rgba(0, 0, 0, 0.3)',
+                    }
+                }
+            }
+        }
+    </script>
 
-    <!-- Font Awesome & Bootstrap Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Site CSS -->
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
-<body>
-    <!-- Header / Navbar -->
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
-                    <img src="~/images/ResQPawLogo.png" alt="ResQPaw Logo" width="50" /> ResQPaw
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Pets" asp-action="Index">Find Pets</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="LostFound" asp-action="Index">Lost & Found</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Vets" asp-action="Index">Veterinarians</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Resources" asp-action="Index">Resources</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="About">About Us</a></li>
-                       <!-- <li class="nav-item"><a class="nav-link" asp-controller="SOS" asp-action="Send">SOS Alert</a></li> -->
-                    </ul>
 
-                    <!-- Role-based dashboard -->
-                    <ul class="navbar-nav ms-auto">
+<body class="bg-gradient-to-br from-amber-50 to-orange-100 min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="glass-nav fixed top-0 w-full z-50 transition-all duration-300 hover:bg-white/90">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="logo flex items-center group">
+                    <div class="relative">
+                        <div
+                            class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center mr-3 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-paw text-white text-xl"></i>
+                        </div>
+                        <div class="sparkle absolute -top-1 -right-1 w-4 h-4 bg-yellow-300 rounded-full"></div>
+                    </div>
+                    <h1 class="text-amber-600 text-2xl font-bold">ResQPaw</h1>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a asp-controller="Home" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-all duration-300 font-semibold hover:scale-105">
+                        Home
+                    </a>
+                    <a asp-controller="Pets" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-all duration-300 font-semibold hover:scale-105">
+                        Find Pets
+                    </a>
+                    <a asp-controller="LostFound" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-all duration-300 font-semibold hover:scale-105">
+                        Lost & Found
+                    </a>
+                    <a asp-controller="Vets" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-all duration-300 font-semibold hover:scale-105">
+                        Veterinarians
+                    </a>
+                    <a asp-controller="Resources" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-all duration-300 font-semibold hover:scale-105">
+                        Resources
+                    </a>
+                    <a asp-controller="Home" asp-action="About"
+                        class="nav-link text-dark hover:text-primary transition-all duration-300 font-semibold hover:scale-105">
+                        About Us
+                    </a>
+                </div>
+
+                <!-- Right Section -->
+                <div class="flex items-center space-x-4">
+                    <!-- Role-based Dashboard -->
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        if (User.IsInRole("Admin"))
+                        {
+                            <a asp-controller="Admin" asp-action="Dashboard"
+                                class="glass-btn-primary px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-shield-alt mr-2"></i>Admin Dashboard
+                            </a>
+                        }
+                        else if (User.IsInRole("ServiceProvider"))
+                        {
+                            <a asp-controller="Vet" asp-action="Dashboard"
+                                class="glass-btn-accent px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-stethoscope mr-2"></i>Service Dashboard
+                            </a>
+                        }
+                        else if (User.IsInRole("Customer"))
+                        {
+                            <a asp-controller="Customer" asp-action="Dashboard"
+                                class="glass-btn-primary px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-user mr-2"></i>My Dashboard
+                            </a>
+                        }
+                    }
+
+                    <!-- Vet Notification -->
+                    <div class="hidden" id="vetNotificationArea">
+                        <div class="relative">
+                            <button id="notificationDropdown"
+                                class="glass-icon p-3 rounded-xl text-dark hover:text-primary transition-all duration-300 hover:scale-110">
+                                <i class="fas fa-bell text-xl"></i>
+                                <span id="notificationCount" class="absolute -top-1 -right-1 bg-secondary text-white text-xs rounded-full 
+                                             h-6 w-6 flex items-center justify-center animate-pulse">0</span>
+                            </button>
+
+                            <!-- Notification Dropdown -->
+                            <div id="notificationList"
+                                class="absolute right-0 mt-2 w-96 glass-card rounded-xl shadow-glass hidden overflow-hidden z-50">
+                                <div class="p-4 text-center text-gray-500">
+                                    No new SOS alerts
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Auth Buttons -->
+                    <div class="flex items-center space-x-3">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            if (User.IsInRole("Admin"))
-                            {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
-                            }
-                            else if (User.IsInRole("ServiceProvider"))
-                            {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Vet" asp-action="Dashboard">Service Dashboard</a></li>
-                            }
-                            else if (User.IsInRole("Customer"))
-                            {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Customer" asp-action="Dashboard">My Dashboard</a></li>
-                            }
+                            <form method="post" asp-area="Identity" asp-page="/Account/Logout"
+                                asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                <button type="submit"
+                                    class="glass-btn-secondary px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
+                                    <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                                </button>
+                            </form>
                         }
-
-                        <!-- Vet Notification -->
-                        <li class="nav-item dropdown" id="vetNotificationArea" style="display:none;">
-                            <a class="nav-link position-relative" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-bell-fill fs-4"></i>
-                                <span id="notificationCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">0</span>
+                        else
+                        {
+                            <a asp-area="Identity" asp-page="/Account/Login"
+                                class="glass-btn-primary px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-sign-in-alt mr-2"></i>Login
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end p-2" aria-labelledby="notificationDropdown" id="notificationList">
-                                <li class="text-center text-muted">No new SOS alerts</li>
-                            </ul>
-                        </li>
+                            <a asp-area="Identity" asp-page="/Account/Register"
+                                class="glass-btn-outline px-6 py-3 rounded-xl font-semibold transition-all duration-300 hover:scale-105">
+                                <i class="fas fa-user-plus mr-2"></i>Register
+                            </a>
+                        }
+                    </div>
+                </div>
 
-                        <!-- Auth buttons -->
-                        
-                       
-<li class="nav-item">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <!--  <span class="navbar-text mx-2">Hello, @User.Identity.Name!</span>  -->
-        <form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" style="display:inline;">
-            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
-        </form>
-    }
-    else
-    {
-        <a class="btn btn-primary btn-sm mx-1" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        <a class="btn btn-outline-light btn-sm mx-1" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    }
-</li>
-                    </ul>
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button type="button" id="mobileMenuButton"
+                        class="glass-icon p-3 rounded-xl text-dark hover:text-primary transition-colors duration-300">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
                 </div>
             </div>
-        </nav>
-    </header>
 
-    <!-- Main content -->
-    <main class="container my-4">
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden py-4 border-t border-white/20">
+                <div class="flex flex-col space-y-4">
+                    <a asp-controller="Home" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-colors py-2">Home</a>
+                    <a asp-controller="Pets" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-colors py-2">Find Pets</a>
+                    <a asp-controller="LostFound" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-colors py-2">Lost & Found</a>
+                    <a asp-controller="Vets" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-colors py-2">Veterinarians</a>
+                    <a asp-controller="Resources" asp-action="Index"
+                        class="nav-link text-dark hover:text-primary transition-colors py-2">Resources</a>
+                    <a asp-controller="Home" asp-action="About"
+                        class="nav-link text-dark hover:text-primary transition-colors py-2">About Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-20">
         @RenderBody()
-        
     </main>
 
-    <!-- Toast container -->
-    <div id="toastContainer" style="position: fixed; top: 1rem; right: 1rem; z-index: 3000;"></div>
+    <!-- SOS Floating Button -->
+    @if (SignInManager.IsSignedIn(User) && User.IsInRole("Customer"))
+    {
+        <a asp-controller="SOS" asp-action="Send" class="sos-btn-round fixed bottom-8 right-8 z-40">
+            <span class="sos-pulse"></span>
+            <span class="sos-text">SOS</span>
+            <i class="fas fa-ambulance sos-icon"></i>
+        </a>
+    }
 
     <!-- Footer -->
-    <footer class="bg-light py-4 mt-auto">
-        <div class="container text-center">
-            <p>&copy; @DateTime.Now.Year ResQPaw. All rights reserved.</p>
+    <footer class="glass-footer relative overflow-hidden">
+        <div class="absolute inset-0 bg-dark/90 backdrop-blur-md"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Brand -->
+                <div class="col-span-1">
+                    <div class="logo flex items-center mb-6">
+                        <div class="relative">
+                            <div
+                                class="w-12 h-12 bg-amber-500 rounded-full flex items-center justify-center mr-3 shadow-lg">
+                                <i class="fas fa-paw text-white text-xl"></i>
+                            </div>
+                            <div class="sparkle absolute -top-1 -right-1 w-4 h-4 bg-yellow-300 rounded-full"></div>
+                        </div>
+                        <h1 class="text-amber-600 text-2xl font-bold">ResQPaw</h1>
+                    </div>
+                    <p class="text-gray-300 mb-6 leading-relaxed">
+                        Connecting rescue pets with loving families across Bangladesh.
+                        Providing emergency services and veterinary care.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="glass-icon p-3 text-gray-300 hover:text-primary transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="glass-icon p-3 text-gray-300 hover:text-primary transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#"
+                            class="glass-icon p-3 text-gray-300 hover:text-primary transition-all duration-300 hover:scale-110">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold text-primary mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a asp-controller="Home" asp-action="Index" class="footer-link">Home</a></li>
+                        <li><a asp-controller="Pets" asp-action="Index" class="footer-link">Adopt a Pet</a></li>
+                        <li><a asp-controller="LostFound" asp-action="Index" class="footer-link">Lost & Found</a></li>
+                        <li><a asp-controller="Vets" asp-action="Index" class="footer-link">Veterinarians</a></li>
+                        <li><a asp-controller="Resources" asp-action="Index" class="footer-link">Resources</a></li>
+                        <li><a asp-controller="Home" asp-action="About" class="footer-link">About Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-semibold text-primary mb-6">Contact Us</h3>
+                    <div class="space-y-3 text-gray-300">
+                        <p class="flex items-center"><i class="fas fa-map-marker-alt mr-3 text-primary"></i>Dhaka,
+                            Bangladesh</p>
+                        <p class="flex items-center"><i class="fas fa-phone mr-3 text-primary"></i>+880 1234-567890</p>
+                        <p class="flex items-center"><i class="fas fa-envelope mr-3 text-primary"></i>info@resqpaw.org
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-lg font-semibold text-primary mb-6">Newsletter</h3>
+                    <p class="text-gray-300 mb-4">Subscribe for updates on pets and rescue stories.</p>
+                    <div class="flex glass-input-group">
+                        <input type="email" placeholder="Your email" class="glass-input">
+                        <button class="glass-btn-primary rounded-l-none">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-600 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; 2025 ResQPaw. All rights reserved. Made with ❤️ for animals in Bangladesh.</p>
+            </div>
         </div>
     </footer>
 
-    
+    <!-- Toast Container -->
+    <div id="toastContainer" class="fixed top-24 right-4 z-50 space-y-2"></div>
 
-    <!-- Scripts (single SignalR include, handlers registered before start) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-    
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
     <script>
-        const isVet = '@User.IsInRole("ServiceProvider")';
-        if (isVet === 'True') {
-            const notificationArea = document.getElementById("vetNotificationArea");
-            if (notificationArea) notificationArea.style.display = "block";
+        // Mobile menu functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
 
-            // build connection
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = mobileMenuButton.querySelector('i');
+                    if (icon.classList.contains('fa-bars')) {
+                        icon.classList.replace('fa-bars', 'fa-times');
+                    } else {
+                        icon.classList.replace('fa-times', 'fa-bars');
+                    }
+                });
+            }
+
+            // Notification dropdown functionality
+            const notificationDropdown = document.getElementById('notificationDropdown');
+            const notificationList = document.getElementById('notificationList');
+
+            if (notificationDropdown && notificationList) {
+                notificationDropdown.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    notificationList.classList.toggle('hidden');
+                });
+
+                // Close dropdown when clicking outside
+                document.addEventListener('click', function () {
+                    notificationList.classList.add('hidden');
+                });
+            }
+
+            // Initialize SignalR for vets - USING PREVIOUS BACKEND LOGIC
+            const isVet = '@(User.IsInRole("ServiceProvider") ? "true" : "false")';
+
+            if (isVet !== 'true') return; // only run for vets
+
+            // show bell area (in case it's hidden)
+            const notificationArea = document.getElementById("vetNotificationArea");
+            if (notificationArea) notificationArea.classList.remove("hidden");
+
+            // prepare connection (exact hub path must match Program.cs)
             const connection = new signalR.HubConnectionBuilder()
                 .withUrl("/sosHub")
                 .withAutomaticReconnect()
                 .build();
 
-            // register handler BEFORE connection start
-            let notificationCount = 0;
+            // ensure badge starts with existing value (if server rendered any)
+            let notificationCount = parseInt(document.getElementById('notificationCount')?.innerText || '0', 10);
+
+            // handler - register BEFORE starting connection
             connection.on("ReceiveSOS", (customerName, address, message) => {
-                console.log("SOS received:", customerName, address, message);
+                try {
+                    console.log("SOS received:", customerName, address, message);
 
-                // Update badge
-                notificationCount++;
-                const badge = document.getElementById("notificationCount");
-                if (badge) badge.innerText = notificationCount;
+                    // increment badge
+                    notificationCount += 1;
+                    const badge = document.getElementById("notificationCount");
+                    if (badge) badge.innerText = notificationCount;
 
-                // Add to dropdown list
-                const list = document.getElementById("notificationList");
-                if (list) {
-                    if (list.children.length === 1 && list.children[0].classList.contains("text-muted")) {
-                        list.innerHTML = "";
+                    // prepend to dropdown
+                    const list = document.getElementById("notificationList");
+                    if (list) {
+                        if (list.children.length === 1 && list.children[0].classList.contains("text-gray-500")) {
+                            list.innerHTML = "";
+                        }
+                        const newItem = document.createElement("div");
+                        newItem.className = "p-4 border-b border-white/10 hover:bg-white/5 transition-colors cursor-pointer";
+                        newItem.innerHTML = `<strong>🚨 ${customerName}</strong><br>${address}<br>${message}`;
+                        list.prepend(newItem);
                     }
-                    const newItem = document.createElement("li");
-                    newItem.classList.add("dropdown-item");
-                    newItem.innerHTML = `<strong>🚨 ${customerName}</strong><br>${address}<br>${message}`;
-                    list.prepend(newItem);
-                }
 
-                // toast
-                const toast = document.createElement("div");
-                toast.className = "toast align-items-center text-bg-danger border-0 position-fixed top-0 end-0 m-3";
-                toast.style.zIndex = "2000";
-                toast.innerHTML = `
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            🚨 <b>${customerName}</b> sent an SOS!<br>${address}: ${message}
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(toast);
-                const bsToast = new bootstrap.Toast(toast, { delay: 4000 });
-                bsToast.show();
-                setTimeout(() => toast.remove(), 5000);
+                    // show toast
+                    showTailwindToast(customerName, address, message);
+                } catch (ex) {
+                    console.error("Error in ReceiveSOS handler:", ex);
+                }
             });
 
-            // start and join group
+            // start connection, join group, then load unseen items
             connection.start()
-                .then(() => {
+                .then(async () => {
                     console.log("Connected to SOSHub");
-                    return connection.invoke("JoinVetGroup");
-                })
-                .then(() => console.log("Joined Vets group"))
-                .catch(err => console.error("SignalR error:", err));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // safer boolean output from Razor
-    const isVet = '@(User.IsInRole("ServiceProvider") ? "true" : "false")';
-
-    (function () {
-        if (isVet !== 'true') return; // only run for vets
-
-        // show bell area (in case it's hidden)
-        const notificationArea = document.getElementById("vetNotificationArea");
-        if (notificationArea) notificationArea.style.display = "block";
-
-        // prepare connection (exact hub path must match Program.cs)
-        const connection = new signalR.HubConnectionBuilder()
-            .withUrl("/sosHub")
-            .withAutomaticReconnect()
-            .build();
-
-        // ensure badge starts with existing value (if server rendered any)
-        let notificationCount = parseInt(document.getElementById('notificationCount')?.innerText || '0', 10);
-
-        // handler - register BEFORE starting connection
-        connection.on("ReceiveSOS", (customerName, address, message) => {
-            try {
-                console.log("SOS received:", customerName, address, message);
-
-                // increment badge
-                notificationCount += 1;
-                const badge = document.getElementById("notificationCount");
-                if (badge) badge.innerText = notificationCount;
-
-                // prepend to dropdown
-                const list = document.getElementById("notificationList");
-                if (list) {
-                    if (list.children.length === 1 && list.children[0].classList.contains("text-muted")) {
-                        list.innerHTML = "";
+                    try {
+                        await connection.invoke("JoinVetGroup");
+                        console.log("Joined 'Vets' group");
+                    } catch (e) {
+                        console.warn("JoinVetGroup failed:", e);
                     }
-                    const newItem = document.createElement("li");
-                    newItem.classList.add("dropdown-item");
-                    newItem.innerHTML = `<strong>🚨 ${customerName}</strong><br>${address}<br>${message}`;
-                    list.prepend(newItem);
-                }
 
-                // show toast
-                const toast = document.createElement("div");
-                toast.className = "toast align-items-center text-bg-danger border-0 position-fixed top-0 end-0 m-3";
-                toast.style.zIndex = "3000";
-                toast.innerHTML = `
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            🚨 <b>${customerName}</b> sent an SOS!<br>${address}: ${message}
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(toast);
-                const bsToast = new bootstrap.Toast(toast, { delay: 4500 });
-                bsToast.show();
-                setTimeout(() => toast.remove(), 5000);
-            } catch (ex) {
-                console.error("Error in ReceiveSOS handler:", ex);
-            }
+                    // fetch unseen alerts that arrived while vet was offline
+                    try {
+                        const res = await fetch('/Vet/UnseenSOS', { method: 'GET', headers: { 'Accept': 'application/json' } });
+                        if (res.ok) {
+                            const arr = await res.json();
+                            if (Array.isArray(arr) && arr.length > 0) {
+                                const list = document.getElementById("notificationList");
+                                if (list) list.innerHTML = ""; // clear placeholder
+                                arr.forEach(item => {
+                                    // add each unseen alert to dropdown
+                                    const div = document.createElement("div");
+                                    div.className = "p-4 border-b border-white/10 hover:bg-white/5 transition-colors cursor-pointer";
+                                    div.innerHTML = `<strong>🚨 ${item.customerName}</strong><br>${item.address}<br>${item.message}`;
+                                    list.prepend(div);
+                                });
+
+                                // increase badge by count of unseen
+                                notificationCount += arr.length;
+                                const badge = document.getElementById("notificationCount");
+                                if (badge) badge.innerText = notificationCount;
+                            }
+                        } else {
+                            // likely 401 if vet not authorized — safe to ignore, but log
+                            console.warn("UnseenSOS fetch returned", res.status);
+                        }
+                    } catch (err) {
+                        console.error("Failed to load unseen SOS:", err);
+                    }
+                })
+                .catch(err => console.error("SignalR start error:", err));
         });
 
-        // start connection, join group, then load unseen items
-        connection.start()
-            .then(async () => {
-                console.log("Connected to SOSHub");
-                try {
-                    await connection.invoke("JoinVetGroup");
-                    console.log("Joined 'Vets' group");
-                } catch (e) {
-                    console.warn("JoinVetGroup failed:", e);
+        function showTailwindToast(customerName, address, message) {
+            const toastContainer = document.getElementById('toastContainer');
+            if (!toastContainer) return;
+
+            const toastId = 'toast-' + Date.now();
+            const toast = document.createElement('div');
+            toast.id = toastId;
+            toast.className = 'glass-card bg-red-500/90 backdrop-blur-md border-l-4 border-red-400 p-4 rounded-xl shadow-glass transform transition-all duration-300 max-w-sm';
+            toast.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <div class="flex-shrink-0">
+                        <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                            <i class="fas fa-ambulance text-red-500 text-sm"></i>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <h4 class="font-bold text-white">Emergency Alert</h4>
+                        <p class="text-white text-sm mt-1"><strong>${customerName}</strong> needs help!</p>
+                        <p class="text-white/80 text-xs mt-1">${address}</p>
+                        <p class="text-white/70 text-xs mt-1">${message}</p>
+                    </div>
+                    <button onclick="document.getElementById('${toastId}').remove()" 
+                            class="flex-shrink-0 text-white/70 hover:text-white transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+
+            toastContainer.appendChild(toast);
+
+            // Auto remove after 8 seconds
+            setTimeout(() => {
+                const existingToast = document.getElementById(toastId);
+                if (existingToast) {
+                    existingToast.style.opacity = '0';
+                    existingToast.style.transform = 'translateX(100%)';
+                    existingToast.style.transition = 'all 0.5s ease';
+                    setTimeout(() => existingToast.remove(), 500);
                 }
-
-                // fetch unseen alerts that arrived while vet was offline
-                try {
-                    const res = await fetch('/Vet/UnseenSOS', { method: 'GET', headers: { 'Accept': 'application/json' } });
-                    if (res.ok) {
-                        const arr = await res.json();
-                        if (Array.isArray(arr) && arr.length > 0) {
-                            const list = document.getElementById("notificationList");
-                            if (list) list.innerHTML = ""; // clear placeholder
-                            arr.forEach(item => {
-                                // add each unseen alert to dropdown
-                                const li = document.createElement("li");
-                                li.classList.add("dropdown-item");
-                                li.innerHTML = `<strong>🚨 ${item.customerName}</strong><br>${item.address}<br>${item.message}`;
-                                list.prepend(li);
-                            });
-
-                            // increase badge by count of unseen
-                            notificationCount += arr.length;
-                            const badge = document.getElementById("notificationCount");
-                            if (badge) badge.innerText = notificationCount;
-                        }
-                    } else {
-                        // likely 401 if vet not authorized — safe to ignore, but log
-                        console.warn("UnseenSOS fetch returned", res.status);
-                    }
-                } catch (err) {
-                    console.error("Failed to load unseen SOS:", err);
-                }
-            })
-            .catch(err => console.error("SignalR start error:", err));
-    })();
-
-
-
-
-
-
-
-
-
-
+            }, 8000);
         }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-
-
-
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>

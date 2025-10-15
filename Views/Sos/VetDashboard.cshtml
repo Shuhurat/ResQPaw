@@ -1,106 +1,193 @@
 @model List<ResQPaw.Models.SOSViewModel>
 
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Customer</th>
-            <th>Reporter Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Animal Type</th>
-            <th>Condition</th>
-            <th>Emergency</th>
-            <th>Location</th>
-            <th>Message</th>
-            <th>Status</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody id="sosTableBody">
-        @foreach (var sos in Model)
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vet Dashboard - ResQPaw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/VetSOSDashboard.css" asp-append-version="true" />
+</head>
+<body class="min-h-screen vet-dashboard-bg">
+    <div class="min-h-screen py-8 px-4">
+        <div class="max-w-10xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="dashboard-title">Emergency SOS Dashboard</h1>
+                <p class="dashboard-subtitle">Manage and track all animal emergency requests</p>
+            </div>
+
+            <!-- Stats Overview -->
+            <div class="stats-grid mb-8">
+                <div class="stat-card">
+                    <div class="stat-icon pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@Model.Count(s => s.Status == "Pending")</h3>
+                        <p class="stat-label">Pending Requests</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon contacted">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@Model.Count(s => s.Status == "Contacted")</h3>
+                        <p class="stat-label">Contacted</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon completed">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@Model.Count(s => s.Status == "Completed")</h3>
+                        <p class="stat-label">Completed</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-ambulance"></i>
+                    </div>
+                    <div class="stat-content">
+                        <h3 class="stat-number">@Model.Count</h3>
+                        <p class="stat-label">Total Emergencies</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOS Table -->
+            <div class="glass-card table-container">
+                <div class="table-wrapper">
+                    <table class="sos-table">
+                        <thead>
+                            <tr>
+                                <th class="table-header">Customer</th>
+                                <th class="table-header">Emergency Type</th>
+                                <th class="table-header">Animal Type</th>
+                                <th class="table-header">Condition</th>
+                                <th class="table-header">Description</th>
+                                <th class="table-header">Location</th>
+                                <th class="table-header">Reporter</th>
+                                <th class="table-header">Status</th>
+                                <th class="table-header">Time</th>
+                                <th class="table-header">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sosTableBody" class="table-body">
+                            @foreach (var sos in Model)
+                            {
+                                <tr class="table-row" id="sos-@sos.Id">
+                                    <td class="table-cell customer-cell">
+                                        <div class="customer-info">
+                                            <div class="customer-email">@sos.ReporterEmail</div>
+                                        </div>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="emergency-type">@sos.EmergencyType</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <div class="animal-info">
+                                            <i class="fas @(sos.AnimalType?.ToLower() == "dog" ? "fa-dog" : sos.AnimalType?.ToLower() == "cat" ? "fa-cat" : sos.AnimalType?.ToLower() == "bird" ? "fa-dove" : "fa-paw") animal-icon"></i>
+                                            <span>@sos.AnimalType</span>
+                                        </div>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="condition-badge">@sos.AnimalCondition</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <div class="description-text">@sos.Description</div>
+                                    </td>
+                                    <td class="table-cell">
+                                        <div class="location-info">
+                                            <i class="fas fa-map-marker-alt location-icon"></i>
+                                            <span>@sos.Location</span>
+                                        </div>
+                                    </td>
+                                    <td class="table-cell">
+                                        <div class="reporter-info">
+                                            <div class="reporter-name">@sos.ReporterName</div>
+                                            <div class="reporter-phone">@sos.ReporterPhone</div>
+                                        </div>
+                                    </td>
+                                    <td class="table-cell">
+                                        <span class="status-badge @GetStatusClass(sos.Status)">@sos.Status</span>
+                                    </td>
+                                    <td class="table-cell">
+                                        <div class="time-info">
+                                            <div class="time-date">@sos.CreatedAt.ToLocalTime().ToString("MM/dd/yyyy h:mm tt")</div>
+                                            @if (sos.Status == "Completed")
+                                            {
+                                                <div class="login-time">© Completed</div>
+                                            }
+                                            else if (sos.Status == "Contacted")
+                                            {
+                                                <div class="login-time">07:17:18 (Login)</div>
+                                            }
+                                            else
+                                            {
+                                                <div class="login-time">Nothing</div>
+                                            }
+                                        </div>
+                                    </td>
+                                    <td class="table-cell">
+                                        @if (sos.Status != "Contacted" && sos.Status != "Completed")
+                                        {
+                                            <form method="post" asp-action="MarkContacted" asp-controller="Vet" class="action-form">
+                                                <input type="hidden" name="id" value="@sos.Id" />
+                                                <button type="submit" class="action-btn contact-btn">
+                                                    <i class="fas fa-phone mr-2"></i>
+                                                    Mark Contacted
+                                                </button>
+                                            </form>
+                                        }
+                                        else if (sos.Status == "Contacted")
+                                        {
+                                            <form method="post" asp-action="MarkCompleted" asp-controller="Vet" class="action-form">
+                                                <input type="hidden" name="id" value="@sos.Id" />
+                                                <button type="submit" class="action-btn complete-btn">
+                                                    <i class="fas fa-check mr-2"></i>
+                                                    Complete
+                                                </button>
+                                            </form>
+                                        }
+                                        else
+                                        {
+                                            <span class="completed-text">
+                                                <i class="fas fa-check-circle mr-1"></i>
+                                                Completed
+                                            </span>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Live Alerts Container -->
+            <div id="alerts" class="fixed top-4 right-4 z-50 space-y-3 max-w-md"></div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+    <script src="~/js/VetSOSDashboard.js" asp-append-version="true"></script>
+</body>
+</html>
+
+@functions {
+    public string GetStatusClass(string status)
+    {
+        return status?.ToLower() switch
         {
-            <tr id="sos-@sos.Id">
-                <td>@sos.CustomerName</td>
-                <td>@sos.ReporterName</td>
-                <td>@sos.ReporterPhone</td>
-                <td>@sos.ReporterEmail</td>
-                <td>@sos.AnimalType</td>
-                <td>@sos.AnimalCondition</td>
-                <td>@sos.EmergencyType</td>
-                <td>@sos.Location</td>
-                <td>@sos.Description</td>
-                <td class="status">@sos.Status</td>
-                <td>
-                    @if (sos.Status != "Contacted")
-                    {
-                        <form method="post" asp-action="MarkContacted" asp-controller="Vet">
-                            <input type="hidden" name="id" value="@sos.Id" />
-                            <button class="btn btn-success btn-sm">Mark as Contacted</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <span class="text-success">Contacted</span>
-                    }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-
-<div id="alerts"></div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
-<script>
-    const connection = new signalR.HubConnectionBuilder().withUrl("/soshub").build();
-
-    // --- Live new SOS alerts ---
-    connection.on("ReceiveSOS", (userName, location, description, sosId, reporterName, reporterPhone, reporterEmail, animalType, animalCondition, emergencyType) => {
-        // Alert toast
-        const div = document.createElement("div");
-        div.classList = "alert alert-danger mt-3";
-        div.innerHTML = `<strong>New SOS from ${userName}</strong><br>📍 ${location}<br>${description}`;
-        document.getElementById("alerts").prepend(div);
-        new Audio("/sounds/alert.mp3").play();
-
-        // Add to table dynamically if not exists
-        if (!document.getElementById(`sos-${sosId}`)) {
-            const tbody = document.getElementById("sosTableBody");
-            const tr = document.createElement("tr");
-            tr.id = `sos-${sosId}`;
-            tr.innerHTML = `
-                <td>${userName}</td>
-                <td>${reporterName}</td>
-                <td>${reporterPhone}</td>
-                <td>${reporterEmail}</td>
-                <td>${animalType}</td>
-                <td>${animalCondition}</td>
-                <td>${emergencyType}</td>
-                <td>${location}</td>
-                <td>${description}</td>
-                <td class="status">Pending</td>
-                <td>
-                    <form method="post" action="/Vet/MarkContacted">
-                        <input type="hidden" name="id" value="${sosId}" />
-                        <button class="btn btn-success btn-sm">Mark as Contacted</button>
-                    </form>
-                </td>
-            `;
-            tbody.prepend(tr);
-        }
-    });
-
-    // --- Live status updates ---
-    connection.on("SOSUpdated", (sosId, newStatus) => {
-        const row = document.getElementById(`sos-${sosId}`);
-        if (row) {
-            row.querySelector(".status").innerText = newStatus;
-
-            if (newStatus === "Contacted") {
-                row.querySelector("td:last-child").innerHTML = '<span class="text-success">Contacted</span>';
-            }
-        }
-    });
-
-    connection.start().catch(err => console.error(err));
-</script>
+            "pending" => "status-pending",
+            "contacted" => "status-contacted",
+            "completed" => "status-completed",
+            _ => "status-default"
+        };
+    }
+}

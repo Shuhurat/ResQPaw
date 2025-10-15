@@ -1,0 +1,413 @@
+/* Status Page Styles */
+.status-bg {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.9)),
+        url('https://images.unsplash.com/photo-1544568100-847a948585b9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+/* Glass Card Effect */
+.glass-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+/* Main Title */
+.main-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #1f2937;
+    text-align: center;
+    margin-bottom: 1rem;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.main-title:hover {
+    transform: scale(1.05);
+    color: #dc2626;
+}
+
+.section-subtitle {
+    font-size: 1.25rem;
+    color: #6b7280;
+    text-align: center;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.section-subtitle:hover {
+    color: #374151;
+    transform: translateY(-2px);
+}
+
+/* SOS Card Styles */
+.sos-card {
+    padding: 1.5rem;
+    height: fit-content;
+    transition: all 0.3s ease;
+}
+
+.sos-card:hover {
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.card-content {
+    space-y: 1rem;
+}
+
+.card-header {
+    display: flex;
+    justify-content: between;
+    align-items: start;
+    margin-bottom: 1rem;
+    gap: 1rem;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+    flex: 1;
+    transition: all 0.3s ease;
+}
+
+.card-title:hover {
+    color: #dc2626;
+    transform: translateX(5px);
+}
+
+/* Status Badges */
+.status-badge {
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+}
+
+.status-badge:hover {
+    transform: scale(1.1);
+}
+
+.status-pending {
+    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    color: white;
+}
+
+.status-accepted {
+    background: linear-gradient(135deg, #60a5fa, #3b82f6);
+    color: white;
+}
+
+.status-contacted {
+    background: linear-gradient(135deg, #34d399, #10b981);
+    color: white;
+}
+
+.status-completed {
+    background: linear-gradient(135deg, #9ca3af, #6b7280);
+    color: white;
+}
+
+.status-default {
+    background: linear-gradient(135deg, #1f2937, #111827);
+    color: white;
+}
+
+/* Reporter Info */
+.reporter-info {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    color: #6b7280;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover {
+    color: #dc2626;
+    transform: translateX(3px);
+}
+
+.info-item i {
+    color: #dc2626;
+    transition: all 0.3s ease;
+}
+
+.info-item:hover i {
+    transform: scale(1.2);
+}
+
+/* Card Description */
+.card-description {
+    color: #4b5563;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.card-description:hover {
+    color: #374151;
+    transform: translateX(3px);
+}
+
+/* Details Grid */
+.details-grid {
+    space-y: 0.75rem;
+    margin-bottom: 1rem;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    color: #6b7280;
+    transition: all 0.3s ease;
+}
+
+.detail-item:hover {
+    color: #374151;
+    transform: translateX(5px);
+}
+
+.detail-item i {
+    color: #dc2626;
+    width: 1rem;
+    margin-right: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.detail-item:hover i {
+    transform: scale(1.2);
+}
+
+.detail-label {
+    font-weight: 600;
+    margin-right: 0.5rem;
+}
+
+.detail-value {
+    font-weight: 500;
+    color: #374151;
+}
+
+/* Media Gallery */
+.media-gallery {
+    margin-top: 1rem;
+}
+
+.media-label {
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.media-label:hover {
+    color: #dc2626;
+}
+
+.media-grid {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.media-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 2px solid #e5e7eb;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.media-image:hover {
+    transform: scale(1.1);
+    border-color: #dc2626;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    margin: 2rem auto;
+    max-width: 400px;
+}
+
+.empty-content {
+    space:y-4;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: #9ca3af;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.empty-state:hover .empty-icon {
+    color: #dc2626;
+    transform: scale(1.1);
+}
+
+.empty-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
+}
+
+.empty-state:hover .empty-title {
+    color: #dc2626;
+}
+
+.empty-text {
+    color: #6b7280;
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.empty-state:hover .empty-text {
+    color: #374151;
+}
+
+/* Action Button */
+.action-btn {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+    color: white;
+}
+
+/* Live Alerts */
+.alert-card {
+    background: rgba(220, 38, 38, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    color: white;
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
+    animation: slideInRight 0.5s ease-out;
+}
+
+.alert-card strong {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.alert-card br {
+    margin: 0.25rem 0;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Success Toast */
+.success-toast {
+    background: rgba(34, 197, 94, 0.95);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 1rem 1.5rem;
+    color: white;
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+    animation: slideInRight 0.5s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2rem;
+    }
+
+    .section-subtitle {
+        font-size: 1.1rem;
+    }
+
+    .card-header {
+        flex-direction: column;
+        align-items: start;
+        gap: 0.5rem;
+    }
+
+    .sos-card {
+        padding: 1rem;
+    }
+
+    .reporter-info {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+/* Hover effects for all interactive elements */
+.glass-card,
+.status-badge,
+.media-image,
+.action-btn,
+.info-item,
+.detail-item {
+    transition: all 0.3s ease;
+}
+
+/* Text brightness enhancement */
+.card-title,
+.card-description,
+.detail-value,
+.empty-title {
+    filter: brightness(1.1);
+}
+
+/* Ensure good contrast */
+.glass-card {
+    color: #1f2937;
+}

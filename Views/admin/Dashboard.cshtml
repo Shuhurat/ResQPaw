@@ -1,12 +1,298 @@
 @{
     ViewData["Title"] = "Admin Dashboard";
 }
-<h2>Welcome Admin!</h2>
-<p>This page is protected and only visible to users with the Admin role.</p>
 
+<!DOCTYPE html>
+<html lang="en">
 
-<a asp-controller="SOS" asp-action="AdminMonitor" class="sos-button" id="sosBtn">SOS monitor</a>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ResQPaw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/AdminDashboard.css" asp-append-version="true" />
+</head>
 
-<a asp-controller="SOS" asp-action="AdminMonitor" class="btn btn-danger btn-lg mt-3">
-    🚨 Open SOS Monitor
-</a>
+<body class="min-h-screen admin-dashboard-bg">
+    <!-- Animated Background Elements -->
+    <div class="background-elements">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
+
+    <div class="min-h-screen py-8 px-4">
+        <div class="max-w-7xl mx-auto">
+            <!-- Header Section -->
+            <div class="header-section text-center mb-12">
+                <div class="admin-badge">
+                    <i class="fas fa-crown admin-crown"></i>
+                </div>
+                <h1 class="dashboard-title">
+                    <span class="title-gradient">Administrator</span>
+                    <span class="title-sub">Dashboard</span>
+                </h1>
+                <div class="security-indicator">
+                    <i class="fas fa-shield-check"></i>
+                    <span>Protected Admin Environment</span>
+                </div>
+            </div>
+
+            <!-- Main Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Left Sidebar - Quick Stats -->
+                <div class="sidebar-stats">
+                    <div class="stat-card primary">
+                        <div class="stat-header">
+                            <i class="fas fa-users"></i>
+                            <h3>Total Users</h3>
+                        </div>
+                        <div class="stat-value">1,247</div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            12% increase
+                        </div>
+                    </div>
+
+                    <div class="stat-card warning">
+                        <div class="stat-header">
+                            <i class="fas fa-ambulance"></i>
+                            <h3>Active SOS</h3>
+                        </div>
+                        <div class="stat-value">23</div>
+                        <div class="stat-trend down">
+                            <i class="fas fa-arrow-down"></i>
+                            5% decrease
+                        </div>
+                    </div>
+
+                    <div class="stat-card success">
+                        <div class="stat-header">
+                            <i class="fas fa-user-md"></i>
+                            <h3>Veterinarians</h3>
+                        </div>
+                        <div class="stat-value">45</div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            8% increase
+                        </div>
+                    </div>
+
+                    <div class="stat-card info">
+                        <div class="stat-header">
+                            <i class="fas fa-check-circle"></i>
+                            <h3>Resolved Cases</h3>
+                        </div>
+                        <div class="stat-value">892</div>
+                        <div class="stat-trend up">
+                            <i class="fas fa-arrow-up"></i>
+                            15% increase
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Main Content Area -->
+                <div class="main-content">
+                    <!-- Welcome Card -->
+                    <div class="welcome-card">
+                        <div class="welcome-header">
+                            <div class="welcome-text">
+                                <h2>Welcome Back, <span class="admin-name">Administrator</span></h2>
+                                <p>You have full access to manage the ResQPaw emergency response system</p>
+                            </div>
+                            <div class="welcome-avatar">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                        </div>
+                        <div class="welcome-stats">
+                            <div class="welcome-stat">
+                                <span class="stat-number">12</span>
+                                <span class="stat-label">New Alerts</span>
+                            </div>
+                            <div class="welcome-stat">
+                                <span class="stat-number">5</span>
+                                <span class="stat-label">Pending Actions</span>
+                            </div>
+                            <div class="welcome-stat">
+                                <span class="stat-number">98%</span>
+                                <span class="stat-label">System Health</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Emergency Actions -->
+                    <div class="emergency-actions">
+                        <h3 class="section-title">
+                            <i class="fas fa-heartbeat"></i>
+                            Emergency Management
+                        </h3>
+                        <div class="action-buttons-grid">
+                            <a asp-controller="SOS" asp-action="AdminMonitor" class="action-btn primary large">
+                                <div class="btn-icon">
+                                    <i class="fas fa-heartbeat"></i>
+                                </div>
+                                <div class="btn-content">
+                                    <span class="btn-title">SOS Monitor</span>
+                                    <span class="btn-description">Real-time emergency tracking</span>
+                                </div>
+                                <div class="btn-badge">Live</div>
+                            </a>
+
+                            <a asp-controller="SOS" asp-action="AdminMonitor" class="action-btn danger large">
+                                <div class="btn-icon">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div class="btn-content">
+                                    <span class="btn-title">Emergency Dashboard</span>
+                                    <span class="btn-description">Critical alerts & responses</span>
+                                </div>
+                                <div class="btn-badge urgent">URGENT</div>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Grid -->
+                    <div class="quick-actions-section">
+                        <h3 class="section-title">
+                            <i class="fas fa-bolt"></i>
+                            Quick Actions
+                        </h3>
+                        <div class="quick-actions-grid">
+                            <button class="quick-action-btn">
+                                <div class="action-icon">
+                                    <i class="fas fa-user-cog"></i>
+                                </div>
+                                <span class="action-text">User Management</span>
+                                <div class="action-badge">24</div>
+                            </button>
+
+                            <button class="quick-action-btn">
+                                <div class="action-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <span class="action-text">Analytics</span>
+                                <div class="action-badge">New</div>
+                            </button>
+
+                            <button class="quick-action-btn">
+                                <div class="action-icon">
+                                    <i class="fas fa-cog"></i>
+                                </div>
+                                <span class="action-text">System Settings</span>
+                            </button>
+
+                            <button class="quick-action-btn">
+                                <div class="action-icon">
+                                    <i class="fas fa-history"></i>
+                                </div>
+                                <span class="action-text">Audit Log</span>
+                                <div class="action-badge">1.2k</div>
+                            </button>
+
+                            <button class="quick-action-btn">
+                                <div class="action-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <span class="action-text">Backup</span>
+                            </button>
+
+                            <button class="quick-action-btn">
+                                <div class="action-icon">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <span class="action-text">Notifications</span>
+                                <div class="action-badge">12</div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Sidebar - System Info -->
+                <div class="system-sidebar">
+                    <div class="system-card">
+                        <h3 class="system-title">
+                            <i class="fas fa-server"></i>
+                            System Status
+                        </h3>
+                        <div class="system-metrics">
+                            <div class="metric">
+                                <span class="metric-label">CPU Usage</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 65%"></div>
+                                </div>
+                                <span class="metric-value">65%</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Memory</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 42%"></div>
+                                </div>
+                                <span class="metric-value">42%</span>
+                            </div>
+                            <div class="metric">
+                                <span class="metric-label">Storage</span>
+                                <div class="metric-bar">
+                                    <div class="metric-fill" style="width: 78%"></div>
+                                </div>
+                                <span class="metric-value">78%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h3 class="activity-title">
+                            <i class="fas fa-clock"></i>
+                            Recent Activity
+                        </h3>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon success">
+                                    <i class="fas fa-check"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <span class="activity-text">Emergency case #289 resolved</span>
+                                    <span class="activity-time">2 min ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon warning">
+                                    <i class="fas fa-exclamation"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <span class="activity-text">New SOS alert received</span>
+                                    <span class="activity-time">5 min ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon info">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="activity-content">
+                                    <span class="activity-text">New veterinarian registered</span>
+                                    <span class="activity-time">12 min ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Footer -->
+            <div class="security-footer">
+                <div class="security-status">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>System Secured • Last Updated: Just now</span>
+                </div>
+                <div class="admin-info">
+                    <span>Administrator Access • Role: Super Admin</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/js/AdminDashboard.js" asp-append-version="true"></script>
+</body>
+
+</html>

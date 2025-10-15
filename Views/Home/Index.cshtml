@@ -1,173 +1,473 @@
-﻿   @{
+﻿@{
     ViewData["Title"] = "Home";
 }
 
 <!-- Hero Section -->
-<section class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <h2>Helping Pets Find Their Forever Homes</h2>
-            <p>ResQPaw connects rescue pets with loving families...</p>
-            <a asp-controller="Pets" asp-action="Index" class="btn btn-primary">Find a Pet</a>
-            <a asp-controller="LostFound" asp-action="Index" class="btn btn-outline">Report Lost Pet</a>
+<section class="bg-hero-pattern min-h-screen flex items-center justify-center relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 bg-black/40 backdrop-blur-sm"></div>
+    <div class="absolute top-20 left-20 w-40 h-40 bg-primary/20 rounded-full blur-xl float-animation"></div>
+    <div class="absolute bottom-20 right-20 w-60 h-60 bg-secondary/20 rounded-full blur-xl float-animation"
+        style="animation-delay: 1s;"></div>
+    <div
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-accent/10 rounded-full blur-2xl">
+    </div>
+
+    <div class="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+        <!-- Main Heading with Hover Effects -->
+        <div class="mb-8">
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 text-hover-glow">
+                <span class="gradient-text">Helping Pets</span>
+                <br>
+                <span class="text-white">Find Their Forever Homes</span>
+            </h1>
+
+            <!-- Subtitle with Hover Effect -->
+            <p class="text-2xl md:text-3xl text-amber-100 mb-8 leading-relaxed max-w-4xl mx-auto text-hover-glow">
+                ResQPaw connects rescue pets with loving families and provides emergency services
+                for animals in need across Bangladesh.
+            </p>
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row gap-6 justify-center items-center mt-8">
+            <a asp-controller="Pets" asp-action="Index" class="hero-btn-primary flex items-center">
+                <i class="fas fa-paw mr-3 text-2xl"></i>Find a Pet
+            </a>
+
+            <a asp-controller="LostFound" asp-action="Index" class="hero-btn-outline flex items-center">
+                <i class="fas fa-search mr-3 text-2xl"></i>Report Lost Pet
+            </a>
+        </div>
+
+        <!-- Stats with Hover Effects -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">
+            <div class="stats-card rounded-2xl p-6 text-center hover-lift">
+                <div class="text-4xl font-bold text-primary mb-2 text-hover-glow">500+</div>
+                <div class="text-amber-100 font-semibold text-hover-glow">Pets Rescued</div>
+            </div>
+            <div class="stats-card rounded-2xl p-6 text-center hover-lift">
+                <div class="text-4xl font-bold text-accent mb-2 text-hover-glow">300+</div>
+                <div class="text-amber-100 font-semibold text-hover-glow">Happy Adoptions</div>
+            </div>
+            <div class="stats-card rounded-2xl p-6 text-center hover-lift">
+                <div class="text-4xl font-bold text-secondary mb-2 text-hover-glow">24/7</div>
+                <div class="text-amber-100 font-semibold text-hover-glow">Emergency Service</div>
+            </div>
+            <div class="stats-card rounded-2xl p-6 text-center hover-lift">
+                <div class="text-4xl font-bold text-primary mb-2 text-hover-glow">50+</div>
+                <div class="text-amber-100 font-semibold text-hover-glow">Vet Partners</div>
+            </div>
         </div>
     </div>
 </section>
 
+<!-- Features Section -->
+<section class="bg-feature-pattern py-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-white/90 backdrop-blur-sm"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+            <h2 class="text-5xl md:text-6xl font-bold text-gray-800 mb-6 text-hover-glow">
+                How <span class="gradient-text">ResQPaw</span> Helps
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-hover-glow">
+                We provide comprehensive services for pet rescue, care, and adoption with a dedicated
+                network of professionals and volunteers across Bangladesh.
+            </p>
+        </div>
 
-  <!-- SOS Button -->
-<a asp-controller="SOS" asp-action="Send" class="sos-button" id="sosBtn">SOS</a>
+        <!-- Features Grid - Larger Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Pet Adoption -->
+            <div class="feature-card feature-card-lg rounded-3xl p-6 hover-lift group">
+                <div class="relative overflow-hidden rounded-2xl mb-6">
+                    <img src="https://images.unsplash.com/photo-1535930749574-1399327ce78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Pet Adoption"
+                        class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <div
+                            class="w-12 h-12 bg-primary rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-home text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-content">
+                    <h3
+                        class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-primary transition-colors duration-300">
+                        Pet Adoption</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Find your perfect companion from our network of shelters across Dhaka, Chittagong, and Sylhet.
+                        Local breeds and rescued pets available.
+                    </p>
+                    <a href="#"
+                        class="inline-flex items-center text-primary font-semibold group-hover:translate-x-2 transition-all duration-300 mt-auto">
+                        Learn More
+                        <i class="fas fa-arrow-right ml-2 group-hover:ml-3 transition-all duration-300"></i>
+                    </a>
+                </div>
+            </div>
 
+            <!-- Lost & Found -->
+            <div class="feature-card feature-card-lg rounded-3xl p-6 hover-lift group">
+                <div class="relative overflow-hidden rounded-2xl mb-6">
+                    <img src="https://images.unsplash.com/photo-1596272875729-ed2ff7d6d9c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Lost & Found"
+                        class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <div
+                            class="w-12 h-12 bg-accent rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-search text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-content">
+                    <h3
+                        class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-accent transition-colors duration-300">
+                        Lost & Found</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Our community network helps reunite lost pets with their families across all major cities
+                        in Bangladesh with real-time alerts.
+                    </p>
+                    <a href="#"
+                        class="inline-flex items-center text-accent font-semibold group-hover:translate-x-2 transition-all duration-300 mt-auto">
+                        Learn More
+                        <i class="fas fa-arrow-right ml-2 group-hover:ml-3 transition-all duration-300"></i>
+                    </a>
+                </div>
+            </div>
 
-<!-- SOS Modal -->
-<div class="modal" id="sosModal">
-    <div class="modal-content">
-        <h3><i class="fas fa-exclamation-triangle"></i> Emergency Assistance</h3>
-        <p>Help is on the way! We've notified nearby rescuers and veterinarians about your emergency.</p>
-        <p>Please stay on the line while we connect you with emergency services.</p>
-        <div class="modal-buttons">
-            <button class="btn btn-primary" id="cancelSos">Cancel</button>
-            <a class="btn" style="background: #cc0000; color: white;" asp-controller="SOS" asp-action="Send" id="callEmergency">Send SOS Alert</a>
+            <!-- Veterinary Care -->
+            <div class="feature-card feature-card-lg rounded-3xl p-6 hover-lift group">
+                <div class="relative overflow-hidden rounded-2xl mb-6">
+                    <img src="https://images.unsplash.com/photo-1579168765462-2b7b9d1e24c6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Veterinary Care"
+                        class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <div
+                            class="w-12 h-12 bg-secondary rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-stethoscope text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-content">
+                    <h3
+                        class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-secondary transition-colors duration-300">
+                        Veterinary Care</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Partnered with certified veterinarians across Bangladesh providing affordable care
+                        for your pets with emergency services available.
+                    </p>
+                    <a href="#"
+                        class="inline-flex items-center text-secondary font-semibold group-hover:translate-x-2 transition-all duration-300 mt-auto">
+                        Learn More
+                        <i class="fas fa-arrow-right ml-2 group-hover:ml-3 transition-all duration-300"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Emergency Rescue -->
+            <div class="feature-card feature-card-lg rounded-3xl p-6 hover-lift group">
+                <div class="relative overflow-hidden rounded-2xl mb-6">
+                    <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Emergency Rescue"
+                        class="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <div class="absolute bottom-4 left-4">
+                        <div
+                            class="w-12 h-12 bg-red-500 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                            <i class="fas fa-ambulance text-white text-xl"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-content">
+                    <h3
+                        class="text-2xl font-bold text-gray-800 mb-3 group-hover:text-red-500 transition-colors duration-300">
+                        Emergency Rescue</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        24/7 emergency response team ready to rescue injured or distressed animals across
+                        Bangladesh with immediate medical attention.
+                    </p>
+                    <a href="#"
+                        class="inline-flex items-center text-red-500 font-semibold group-hover:translate-x-2 transition-all duration-300 mt-auto">
+                        Learn More
+                        <i class="fas fa-arrow-right ml-2 group-hover:ml-3 transition-all duration-300"></i>
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
+<!-- Pets Section -->
+<section class="bg-pets-pattern py-20 relative overflow-hidden">
+    <div class="absolute inset-0 bg-amber-50/90 backdrop-blur-sm"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-16">
+            <h2 class="text-5xl md:text-6xl font-bold text-gray-800 mb-6 text-hover-glow">
+                Pets Looking for <span class="gradient-text">Homes</span>
+            </h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed text-hover-glow">
+                These adorable local pets are waiting to meet their forever families and start a new chapter in their
+                lives.
+            </p>
+        </div>
 
-
-    <!-- Features Section -->
-    <section class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>How ResQPaw Helps</h2>
-                <p>We provide comprehensive services for pet rescue, care, and adoption</p>
+        <!-- Pets Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+            <!-- Pet 1 - Tiger -->
+            <div class="glass-card rounded-3xl overflow-hidden hover-lift group">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Tiger"
+                        class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 right-4">
+                        <span class="glass-btn-primary px-3 py-1 rounded-full text-sm font-semibold">
+                            Available
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3
+                        class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-primary transition-colors duration-300">
+                        Tiger</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Local Deshi Kutta from Dhaka, very loyal and protective. Great for families and good with
+                        children.
+                        Rescued from streets of Mirpur.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-amber-800">3
+                            years</span>
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-blue-800">Male</span>
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-green-800">Medium</span>
+                    </div>
+                    <button class="card-btn-primary">
+                        Adopt Tiger
+                    </button>
+                </div>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-img">
-                        <img src="https://images.unsplash.com/photo-1535930749574-1399327ce78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pet Adoption">
-                    </div>
-                    <div class="feature-content">
-                        <h3>Pet Adoption</h3>
-                        <p>Browse through hundreds of pets looking for their forever homes. Filter by breed, age, and location.</p>
-                        <a href="#" class="btn btn-outline">Learn More</a>
-                    </div>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-img">
-                        <img src="https://images.unsplash.com/photo-1596272875729-ed2ff7d6d9c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Lost & Found">
-                    </div>
-                    <div class="feature-content">
-                        <h3>Lost & Found</h3>
-                        <p>Report lost pets or help reunite found animals with their owners through our network.</p>
-                        <a href="#" class="btn btn-outline">Learn More</a>
+
+            <!-- Pet 2 - Maya -->
+            <div class="glass-card rounded-3xl overflow-hidden hover-lift group">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Maya"
+                        class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 right-4">
+                        <span class="glass-btn-primary px-3 py-1 rounded-full text-sm font-semibold">
+                            Available
+                        </span>
                     </div>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-img">
-                        <img src="https://images.unsplash.com/photo-1577982787983-e07c8490b261?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Veterinary Care">
+                <div class="p-6">
+                    <h3
+                        class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-primary transition-colors duration-300">
+                        Maya</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Beautiful local Birman from Chittagong. Very affectionate and loves attention.
+                        Good with other pets and children.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-amber-800">1.5
+                            years</span>
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-pink-800">Female</span>
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-green-800">Small</span>
                     </div>
-                    <div class="feature-content">
-                        <h3>Veterinary Care</h3>
-                        <p>Find trusted veterinarians in your area and access emergency pet care resources.</p>
-                        <a href="#" class="btn btn-outline">Learn More</a>
+                    <button class="card-btn-primary">
+                        Adopt Maya
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pet 3 - Chiku -->
+            <div class="glass-card rounded-3xl overflow-hidden hover-lift group">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Chiku"
+                        class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 right-4">
+                        <span class="glass-btn-primary px-3 py-1 rounded-full text-sm font-semibold">
+                            Available
+                        </span>
                     </div>
+                </div>
+                <div class="p-6">
+                    <h3
+                        class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-primary transition-colors duration-300">
+                        Chiku</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Playful mixed breed puppy from Sylhet. Very energetic and curious.
+                        Loves playing and learning new tricks. Vaccinated.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-amber-800">6
+                            months</span>
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-blue-800">Male</span>
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-green-800">Small</span>
+                    </div>
+                    <button class="card-btn-primary">
+                        Adopt Chiku
+                    </button>
+                </div>
+            </div>
+
+            <!-- Pet 4 - Rani -->
+            <div class="glass-card rounded-3xl overflow-hidden hover-lift group">
+                <div class="relative overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Rani"
+                        class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute top-4 right-4">
+                        <span class="glass-btn-primary px-3 py-1 rounded-full text-sm font-semibold">
+                            Available
+                        </span>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <h3
+                        class="text-2xl font-bold text-gray-800 mb-2 group-hover:text-primary transition-colors duration-300">
+                        Rani</h3>
+                    <p class="text-gray-600 mb-4 leading-relaxed">
+                        Sweet local kitten from Rajshahi. Very calm and gentle. Loves cuddles and quiet environments.
+                        Litter trained.
+                    </p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-amber-800">8
+                            months</span>
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-pink-800">Female</span>
+                        <span class="glass-icon px-3 py-1 rounded-full text-sm font-medium text-green-800">Small</span>
+                    </div>
+                    <button class="card-btn-primary">
+                        Adopt Rani
+                    </button>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- Pets Section -->
-    <section class="section" style="background-color: #f8f4eb;">
-        <div class="container">
-            <div class="section-title">
-                <h2>Pets Looking for Homes</h2>
-                <p>These adorable pets are waiting to meet their forever families</p>
+        <!-- View All Button -->
+        <div class="text-center">
+            <a href="#"
+                class="glass-btn-primary px-10 py-4 rounded-2xl text-lg font-semibold transition-all duration-300 hover:scale-105 inline-flex items-center">
+                View All Bangladeshi Pets
+                <i class="fas fa-arrow-right ml-3 group-hover:ml-4 transition-all duration-300"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-gradient-to-br from-primary to-orange-600 relative overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div
+        class="absolute top-0 left-0 w-72 h-72 bg-white/10 rounded-full -translate-x-1/2 -translate-y-1/2 float-animation">
+    </div>
+    <div class="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full translate-x-1/2 translate-y-1/2 float-animation"
+        style="animation-delay: 1s;"></div>
+    <div
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-amber-400/20 rounded-full blur-2xl">
+    </div>
+
+    <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <!-- Glass Card Container -->
+        <div class="glass-card rounded-3xl p-12 backdrop-blur-lg border-white/20">
+            <h2 class="text-5xl md:text-6xl font-bold text-white mb-6 text-hover-glow">
+                Make a Difference in <span class="text-amber-200">Bangladesh</span>
+            </h2>
+            <p class="text-xl text-amber-100 mb-8 leading-relaxed text-hover-glow">
+                Whether you're looking to adopt, foster, volunteer, or donate, your support helps save lives
+                and create happy endings for pets in need across Bangladesh.
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="#"
+                    class="glass-btn-outline px-10 py-5 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center text-white border-white/50">
+                    <i class="fas fa-hands-helping mr-3 text-2xl"></i>Get Involved
+                </a>
+
+                <a href="#"
+                    class="glass-btn-primary px-10 py-5 rounded-2xl text-xl font-semibold transition-all duration-300 hover:scale-105 flex items-center bg-amber-500 border-amber-400">
+                    <i class="fas fa-heart mr-3 text-2xl"></i>Donate Now
+                </a>
             </div>
-            <div class="pets-grid">
-                <div class="pet-card">
-                    <div class="pet-img">
-                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Max">
+
+            <!-- Additional Info -->
+            <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8 text-amber-100">
+                <div class="text-center group">
+                    <div
+                        class="glass-icon p-4 rounded-2xl inline-block mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-home text-3xl text-amber-200"></i>
                     </div>
-                    <div class="pet-info">
-                        <h3>Max</h3>
-                        <p>Friendly and energetic Golden Retriever mix. Loves playing fetch and long walks.</p>
-                        <div class="pet-meta">
-                            <span>2 years</span>
-                            <span>Male</span>
-                            <span>Medium</span>
-                        </div>
-                    </div>
+                    <h4 class="font-semibold mb-2 text-lg text-hover-glow">Adopt</h4>
+                    <p class="text-sm text-hover-glow">Give a pet a loving forever home</p>
                 </div>
-                <div class="pet-card">
-                    <div class="pet-img">
-                        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Luna">
+                <div class="text-center group">
+                    <div
+                        class="glass-icon p-4 rounded-2xl inline-block mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-hand-holding-heart text-3xl text-amber-200"></i>
                     </div>
-                    <div class="pet-info">
-                        <h3>Luna</h3>
-                        <p>Gentle and affectionate tabby cat. Enjoys napping in sunny spots and gentle pets.</p>
-                        <div class="pet-meta">
-                            <span>3 years</span>
-                            <span>Female</span>
-                            <span>Small</span>
-                        </div>
-                    </div>
+                    <h4 class="font-semibold mb-2 text-lg text-hover-glow">Foster</h4>
+                    <p class="text-sm text-hover-glow">Provide temporary care for pets in need</p>
                 </div>
-                <div class="pet-card">
-                    <div class="pet-img">
-                        <img src="https://images.unsplash.com/photo-1560809454-892b55bce5f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rocky">
+                <div class="text-center group">
+                    <div
+                        class="glass-icon p-4 rounded-2xl inline-block mb-4 group-hover:scale-110 transition-transform duration-300">
+                        <i class="fas fa-users text-3xl text-amber-200"></i>
                     </div>
-                    <div class="pet-info">
-                        <h3>Rocky</h3>
-                        <p>Playful and curious Beagle mix. Great with kids and other dogs. House trained.</p>
-                        <div class="pet-meta">
-                            <span>1 year</span>
-                            <span>Male</span>
-                            <span>Medium</span>
-                        </div>
-                    </div>
+                    <h4 class="font-semibold mb-2 text-lg text-hover-glow">Volunteer</h4>
+                    <p class="text-sm text-hover-glow">Join our community of animal lovers</p>
                 </div>
-            </div>
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="#" class="btn btn-primary">View All Pets</a>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Make a Difference Today</h2>
-            <p>Whether you're looking to adopt, foster, volunteer, or donate, your support helps save lives and create happy endings.</p>
-            <a href="#" class="btn btn-outline" style="background: white; color: #e6aa1e;">Get Involved</a>
-            <a href="#" class="btn btn-primary" style="background: transparent; border: 2px solid white;">Donate</a>
-        </div>
-    </section>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const sosBtn = document.getElementById('sosBtn');
-        const sosModal = document.getElementById('sosModal');
-        const cancelSos = document.getElementById('cancelSos');
-        
-        if (sosBtn && sosModal) {
-            // Show modal when SOS button is clicked
-            sosBtn.addEventListener('click', function(e) {
-                e.preventDefault();
-                sosModal.style.display = 'block';
-            });
-            
-            // Hide modal when cancel is clicked
-            if (cancelSos) {
-                cancelSos.addEventListener('click', function() {
-                    sosModal.style.display = 'none';
-                });
-            }
-            
-            // Hide modal when clicking outside
-            window.addEventListener('click', function(e) {
-                if (e.target === sosModal) {
-                    sosModal.style.display = 'none';
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize custom animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+
+                    // Add staggered animation for cards
+                    if (entry.target.classList.contains('feature-card') ||
+                        entry.target.classList.contains('glass-card')) {
+                        const cards = Array.from(entry.target.parentNode.children);
+                        const index = cards.indexOf(entry.target);
+                        entry.target.style.transitionDelay = `${index * 0.1}s`;
+                    }
                 }
             });
-        }
+        }, observerOptions);
+
+        // Observe all animatable elements
+        document.querySelectorAll('.feature-card, .glass-card, .hover-lift, .stats-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Add hover effects to navigation
+        const navLinks = document.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-2px)';
+            });
+            link.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0)';
+            });
+        });
     });
 </script>
