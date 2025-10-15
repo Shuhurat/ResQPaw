@@ -1,6 +1,12 @@
 @model List<ResQPaw.Models.SOSViewModel>
 
 <h2 class="mb-3">My SOS Requests</h2>
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success mt-3" id="statusSuccessMessage">
+        @TempData["Success"]
+    </div>
+}
 
 <div id="sosContainer" class="row g-3">
     @foreach (var sos in Model)

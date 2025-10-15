@@ -52,10 +52,10 @@
         <input name="ReporterEmail" type="email" class="form-control" required />
     </div>
 
-    <button type="submit" class="btn btn-danger mt-3">Send SOS</button>
+    <button type="submit" id="submitBtn" class="btn btn-danger mt-3">Send SOS</button>
 </form>
 
 @if (TempData["Success"] != null)
 {
-    <div class="alert alert-success mt-3">@TempData["Success"]</div>
+    <div class="alert alert-success mt-3" id="successMessage">@TempData["Success"]</div>
 }

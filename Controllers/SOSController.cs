@@ -94,7 +94,7 @@ namespace ResQPaw.Controllers
                 Description ?? "No message provided"
             );
 
-            TempData["Success"] = "🚨 SOS alert sent successfully!";
+            TempData["Success"] = "SOS alert sent successfully!";
             return RedirectToAction("Status");
         }
        [Authorize(Roles = "Customer")]
