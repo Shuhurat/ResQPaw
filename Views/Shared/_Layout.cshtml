@@ -130,8 +130,8 @@
 
             // register handler BEFORE connection start
             let notificationCount = 0;
-            connection.on("ReceiveSOS", (customerName, address, message) => {
-                console.log("SOS received:", customerName, address, message);
+            connection.on("ReceiveSOS", (customerName, Location, Description) => {
+                console.log("SOS received:", customerName, Location, Description);
 
                 // Update badge
                 notificationCount++;
@@ -146,7 +146,7 @@
                     }
                     const newItem = document.createElement("li");
                     newItem.classList.add("dropdown-item");
-                    newItem.innerHTML = `<strong>🚨 ${customerName}</strong><br>${address}<br>${message}`;
+                    newItem.innerHTML = `<strong> ${customerName}</strong><br>${Location}<br>${Description}`;
                     list.prepend(newItem);
                 }
 
@@ -157,7 +157,7 @@
                 toast.innerHTML = `
                     <div class="d-flex">
                         <div class="toast-body">
-                            🚨 <b>${customerName}</b> sent an SOS!<br>${address}: ${message}
+                            🚨 <b>${customerName}</b> sent an SOS!<br>${Location}: ${Description}
                         </div>
                     </div>
                 `;
@@ -221,9 +221,9 @@
         let notificationCount = parseInt(document.getElementById('notificationCount')?.innerText || '0', 10);
 
         // handler - register BEFORE starting connection
-        connection.on("ReceiveSOS", (customerName, address, message) => {
+        connection.on("ReceiveSOS", (customerName, Location, Description) => {
             try {
-                console.log("SOS received:", customerName, address, message);
+                console.log("SOS received:", customerName, Location, Description);
 
                 // increment badge
                 notificationCount += 1;
@@ -238,7 +238,7 @@
                     }
                     const newItem = document.createElement("li");
                     newItem.classList.add("dropdown-item");
-                    newItem.innerHTML = `<strong>🚨 ${customerName}</strong><br>${address}<br>${message}`;
+                    newItem.innerHTML = `<strong> ${customerName}</strong><br>${Location}<br>${Description}`;
                     list.prepend(newItem);
                 }
 
@@ -249,7 +249,7 @@
                 toast.innerHTML = `
                     <div class="d-flex">
                         <div class="toast-body">
-                            🚨 <b>${customerName}</b> sent an SOS!<br>${address}: ${message}
+                            🚨 <b>${customerName}</b> sent an SOS!<br>${Location}: ${Description}
                         </div>
                     </div>
                 `;
@@ -285,7 +285,7 @@
                                 // add each unseen alert to dropdown
                                 const li = document.createElement("li");
                                 li.classList.add("dropdown-item");
-                                li.innerHTML = `<strong>🚨 ${item.customerName}</strong><br>${item.address}<br>${item.message}`;
+                                li.innerHTML = `<strong> ${item.customerName}</strong>sent an SOS!`;
                                 list.prepend(li);
                             });
 

@@ -44,7 +44,7 @@ namespace ResQPaw.Models
 
         [Required]
         [Display(Name = "Location Found")]
-        public string Location { get; set; }
+        public string  Location { get; set; }
 
         // 📸 Photos/Videos (store file paths)
         [Display(Name = "Uploaded Media")]

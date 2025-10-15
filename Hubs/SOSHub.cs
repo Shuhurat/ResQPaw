@@ -13,9 +13,9 @@ namespace ResQPaw.Hubs
 
 
         // Server-side helper if you ever want to call hub method directly
-        public async Task SendSOSAlert(string customerName, string address, string message)
+        public async Task SendSOSAlert(string customerName, string Location, string Description)
         {
-            await Clients.Group("Vets").SendAsync("ReceiveSOS", customerName, address, message);
+            await Clients.Group("Vets").SendAsync("ReceiveSOS", customerName, Location, Description);
         }
     }
 }

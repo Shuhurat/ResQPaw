@@ -34,7 +34,7 @@ namespace ResQPaw.Controllers
     string AnimalType,
     string AnimalCondition,
     string Description,
-    string Address,
+    string Location,
     string ReporterName,
     string ReporterPhone,
     string ReporterEmail,
@@ -57,7 +57,7 @@ namespace ResQPaw.Controllers
                 ReporterPhone = ReporterPhone,
                 ReporterEmail = ReporterEmail,
                 Description = Description,
-                Location = Address
+                Location = Location
 
             };
 
@@ -90,8 +90,8 @@ namespace ResQPaw.Controllers
             await _hubContext.Clients.Group("Vets").SendAsync(
                 "ReceiveSOS",
                 ReporterName ?? user.UserName ?? "Unknown",
-                Address ?? "No address provided",
-                Description ?? "No message provided"
+                 sos.Location,
+                sos.Description
             );
 
             TempData["Success"] = "SOS alert sent successfully!";
