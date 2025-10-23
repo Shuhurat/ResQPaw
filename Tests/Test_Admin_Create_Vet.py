@@ -58,6 +58,7 @@ def test_admin_create_vet(driver: WebDriver):
         time.sleep(5)
 
         # --- Submit form ---
+       
         driver.find_element(By.ID, "saveButton").click()
         
         time.sleep(5)
