@@ -44,6 +44,7 @@ async Task CreateDefaultAdminAsync(IServiceProvider services)
         if (!await roleManager.RoleExistsAsync(role))
             await roleManager.CreateAsync(new IdentityRole(role));
     }
+    
 
     var adminEmail = "admin@resqpaw.com";
     var adminPassword = "Admin@123";

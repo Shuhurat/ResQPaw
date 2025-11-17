@@ -12,6 +12,9 @@ namespace ResQPaw.Data
         }
 
         public DbSet<SOSRequest> SOSRequests { get; set; }
+
+        public DbSet<Appointment> Appointments { get; set; }
+
         
 
         public DbSet<Vet> Vets { get; set; }

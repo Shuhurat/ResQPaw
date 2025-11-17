@@ -1,0 +1,76 @@
+@model ResQPaw.Models.Appointment
+@{
+    ViewData["Title"] = "Book Appointment";
+    bool lockVet = (ViewBag.LockVet is bool b && b);
+    var chosenVet = ViewBag.SelectedVet as ResQPaw.Models.Vet;
+}
+
+<h2>Book an Appointment</h2>
+<div asp-validation-summary="All" class="text-danger mb-3"></div>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div class="mb-3">
+        <label class="form-label">Choose Vet *</label>
+
+        @if (lockVet && chosenVet != null)
+        {
+            <div class="card border-0 shadow-sm mb-3" style="max-width: 600px;">
+                <div class="card-body d-flex align-items-center">
+                    <!-- Circle with first letter of vet name -->
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3"
+                        style="width:70px; height:70px; font-size:28px; font-weight:600;">
+                        @chosenVet.Name.Substring(0,1).ToUpper()
+                    </div>
+
+                    <div>
+                        <h5 class="card-title mb-1 text-primary fw-semibold">@chosenVet.Name</h5>
+                        <p class="mb-1 text-muted small">
+                            <i class="bi bi-briefcase-fill me-1"></i> @chosenVet.Specialty • @chosenVet.Species
+                        </p>
+                        <p class="mb-1 text-muted small">
+                            <i class="bi bi-geo-alt-fill me-1"></i> @chosenVet.VetClinic, @chosenVet.Location
+                        </p>
+                        <p class="mb-0 text-muted small">
+                            <i class="bi bi-telephone-fill me-1"></i> @chosenVet.Phone
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" asp-for="VetId" value="@chosenVet.Id" />
+        }
+        else
+        {
+            <select asp-for="VetId" class="form-select" asp-items="ViewBag.Vets" required>
+                <option value="">-- Select a Vet --</option>
+            </select>
+            <span asp-validation-for="VetId" class="text-danger"></span>
+        }
+    </div>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label">Date *</label>
+            <input asp-for="Date" class="form-control" type="date" required />
+            <span asp-validation-for="Date" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label class="form-label">Time *</label>
+            <input asp-for="Time" class="form-control" type="time" step="60" required />
+            <span asp-validation-for="Time" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <label class="form-label">Reason *</label>
+        <textarea asp-for="Reason" class="form-control" rows="4" maxlength="500" required></textarea>
+        <span asp-validation-for="Reason" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-3">Book</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Cancel</a>
+</form>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

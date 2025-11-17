@@ -47,11 +47,11 @@
                         {
                             if (User.IsInRole("Admin"))
                             {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link" id="adminDashboardLink" asp-controller="Admin" asp-action="Dashboard">Admin Dashboard</a></li>
                             }
                             else if (User.IsInRole("ServiceProvider"))
                             {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Vet" asp-action="Dashboard">Service Dashboard</a></li>
+                                <li class="nav-item"><a class="nav-link" id="vetDashboardLink" asp-controller="Vet" asp-action="Dashboard">Service Dashboard</a></li>
                             }
                             else if (User.IsInRole("Customer"))
                             {
@@ -84,7 +84,7 @@
     else
     {
         <a class="btn btn-primary btn-sm mx-1" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        <a class="btn btn-outline-light btn-sm mx-1" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        <a class="btn btn-primary btn-sm mx-1" asp-area="Identity" asp-page="/Account/Register">Register</a>
     }
 </li>
                     </ul>
@@ -285,7 +285,7 @@
                                 // add each unseen alert to dropdown
                                 const li = document.createElement("li");
                                 li.classList.add("dropdown-item");
-                                li.innerHTML = `<strong> ${item.customerName}</strong>sent an SOS!`;
+                                li.innerHTML = `<strong> ${item.customerName}</strong> sent an SOS!`;
                                 list.prepend(li);
                             });
 

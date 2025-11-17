@@ -1,0 +1,50 @@
+@model IEnumerable<ResQPaw.Models.Appointment>
+
+@{
+    ViewData["Title"] = "My Appointments";
+}
+
+<h2>My Appointments</h2>
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Vet</th>
+            <th>Clinic</th>
+            <th>Specialty</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Reason</th>
+            <th>Status</th>
+            <th>Booked</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.Vet?.Name</td>
+                <td>@a.Vet?.VetClinic</td>
+                <td>@a.Vet?.Specialty</td>
+                <td>@a.Date.ToString("yyyy-MM-dd")</td>
+                <td>@a.Time.ToString(@"hh\:mm")</td>
+                <td>@a.Reason</td>
+                <td>
+                    <span class="badge @(a.Status == "Cancelled" ? "bg-secondary" : a.Status == "Confirmed" ? "bg-success" : "bg-warning text-dark")">
+                        @a.Status
+                    </span>
+                </td>
+                <td>@a.CreatedAt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                <td class="text-nowrap">
+                    @if (a.Status != "Cancelled")
+                    {
+                        <form asp-action="Cancel" method="post" class="d-inline">
+                            <input type="hidden" name="id" value="@a.Id" />
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Cancel</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

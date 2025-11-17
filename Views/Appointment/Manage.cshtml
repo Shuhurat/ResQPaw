@@ -1,0 +1,162 @@
+@model IEnumerable<ResQPaw.Models.Appointment>
+@{
+    ViewData["Title"] = "Manage Appointments";
+}
+
+<div class="bg-light rounded-3 p-4 p-md-5 mb-4 border">
+    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3">
+        <div>
+            <h2 class="mb-1">Manage Appointments</h2>
+            <p class="text-muted mb-0">Review, filter, and update client bookings.</p>
+        </div>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-outline-secondary" asp-controller="Vet" asp-action="Dashboard">
+                <i class="bi bi-arrow-left"></i> Back to Vet Dashboard
+            </a>
+        </div>
+    </div>
+</div>
+
+@if (TempData["Flash"] != null)
+{
+    <div class="alert alert-success">@TempData["Flash"]</div>
+}
+
+<!-- Filters -->
+<form method="get" class="card shadow-sm border-0 mb-3">
+    <div class="card-body">
+        <div class="row g-3 align-items-end">
+            <div class="col-12 col-md-4">
+                <label class="form-label">Vet</label>
+                <select name="vetId" class="form-select" asp-items="ViewBag.Vets">
+                    <option value="">All Vets</option>
+                </select>
+            </div>
+
+            <div class="col-12 col-md-3">
+                <label class="form-label">Status</label>
+                <select name="status" class="form-select">
+                    @{
+                        string s = (string)(ViewBag.CurrentStatus ?? "All");
+                        string[] statuses = new[] { "All", "Pending", "Confirmed", "Cancelled", "Completed" };
+                    }
+                    @foreach (var st in statuses)
+                    {
+                        <option value="@st" selected="@(s == st ? "selected" : null)">@st</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-6 col-md-2">
+                <label class="form-label">From</label>
+                <input name="dateFrom" type="date" value="@ViewBag.DateFrom" class="form-control" />
+            </div>
+
+            <div class="col-6 col-md-2">
+                <label class="form-label">To</label>
+                <input name="dateTo" type="date" value="@ViewBag.DateTo" class="form-control" />
+            </div>
+
+            <div class="col-12 col-md-4">
+                <label class="form-label">Search (Reason / Customer)</label>
+                <input name="q" type="text" value="@ViewBag.Q" class="form-control" placeholder="e.g. vaccination, John…" />
+            </div>
+
+            <div class="col-12 col-md-8 d-flex gap-2 justify-content-md-end">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-funnel"></i> Apply Filters
+                </button>
+                <a asp-action="Manage" class="btn btn-outline-secondary">
+                    Clear
+                </a>
+            </div>
+        </div>
+    </div>
+</form>
+
+<!-- Table -->
+<div class="table-responsive" style="max-width: 1200px; margin: 0 auto; overflow-x:auto;">
+    <table class="table table-bordered table-striped mb-0" style="min-width: 980px;">
+        <thead class="table-dark">
+            <tr>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Vet</th>
+                <th>Customer</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th style="width:260px;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @if (!Model.Any())
+        {
+            <tr>
+                <td colspan="7" class="text-center text-muted">No appointments match your filters.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var a in Model)
+            {
+                <tr>
+                    <td>@a.Date.ToString("yyyy-MM-dd")</td>
+                    <td>@a.Time.ToString(@"hh\:mm")</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-2"
+                                 style="width:32px;height:32px;font-size:14px;font-weight:600;">
+                                @a.Vet?.Name?.Substring(0,1).ToUpper()
+                            </div>
+                            <div>
+                                <strong>@a.Vet?.Name</strong><br />
+                                <small class="text-muted">@a.Vet?.VetClinic</small>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <strong>@(a.Customer?.FullName ?? a.Customer?.UserName ?? "—")</strong><br />
+                        <small class="text-muted">@a.CustomerId</small>
+                    </td>
+                    <td>@a.Reason</td>
+                    <td>
+                        @{
+                            var badge = "bg-secondary";
+                            if (a.Status == "Pending") badge = "bg-warning text-dark";
+                            else if (a.Status == "Confirmed") badge = "bg-success";
+                            else if (a.Status == "Cancelled") badge = "bg-secondary";
+                            else if (a.Status == "Completed") badge = "bg-info text-dark";
+                        }
+                        <span class="badge @badge">@a.Status</span>
+                    </td>
+                    <td class="text-nowrap">
+                        <form asp-action="SetStatus" method="post" class="d-inline">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="id" value="@a.Id" />
+                            <input type="hidden" name="vetId" value="@a.VetId" />
+                            <input type="hidden" name="returnStatus" value="@ViewBag.CurrentStatus" />
+                            <input type="hidden" name="dateFrom" value="@ViewBag.DateFrom" />
+                            <input type="hidden" name="dateTo" value="@ViewBag.DateTo" />
+                            <input type="hidden" name="q" value="@ViewBag.Q" />
+                            <button type="submit" name="status" value="Confirmed" class="btn btn-sm btn-success me-1" @(a.Status=="Confirmed" ? "disabled" : null)>
+                                <i class="bi bi-check2-circle"></i> Confirm
+                            </button>
+                            <button type="submit" name="status" value="Cancelled" class="btn btn-sm btn-outline-secondary me-1" @(a.Status=="Cancelled" ? "disabled" : null)>
+                                <i class="bi bi-x-circle"></i> Cancel
+                            </button>
+                            <button type="submit" name="status" value="Completed" class="btn btn-sm btn-info text-white" @(a.Status=="Completed" ? "disabled" : null)>
+                                <i class="bi bi-clipboard2-check"></i> Complete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
+    </table>
+</div>
+
+<!-- Small footer -->
+<div class="text-center text-muted small mt-3">
+    Showing @Model.Count() appointment(s).
+</div>

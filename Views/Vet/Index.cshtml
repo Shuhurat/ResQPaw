@@ -6,7 +6,7 @@
 
 <h2>Vet Directory</h2>
 
-<!-- Search & Filter Form -->
+<!-- 🔍 Search & Filter Form -->
 <form asp-action="Index" method="get" class="row g-3 mb-4">
     <div class="col-md-3">
         <input type="text" name="searchName" value="@ViewContext.HttpContext.Request.Query["searchName"]" class="form-control" placeholder="Search by Name" required />
@@ -28,82 +28,100 @@
     </div>
 </form>
 
-<!-- Admin: Add New Vet -->
+<!-- 🩺 Admin: Add New Vet -->
 @if (User.IsInRole("Admin"))
 {
     <a asp-action="Create" class="btn btn-primary mb-3">Add New Vet</a>
 }
 
-<!-- Vet Table -->
-<table class="table table-bordered table-striped" id="vetTable">
-    <thead class="table-dark">
-        <tr>
-            <th>Name *</th>
-            <th>Specialty *</th>
-            <th>Species *</th>
-            <th>Clinic *</th>
-            <th>Location *</th>
-            <th>Availability *</th>
-            <th>Phone *</th>
-            <th>Email *</th>
-            <th>Experience (Years)</th>
-            <th>Services</th>
-            <th>Rating</th>
-            <th>Profile Photo</th>
-            <th>Emergency Service</th>
-            <th>Website</th>
-            <th>Languages Spoken</th>
-            @if (User.IsInRole("Admin"))
-            {
-                <th>Actions</th>
-            }
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var vet in Model)
-        {
+<!-- 🧾 Vet Table (Scrollable & Centered) -->
+<div class="table-responsive" style="max-width: 1200px; margin: 0 auto; overflow-x: auto;">
+    <table class="table table-bordered table-striped" id="vetTable" style="min-width: 1000px;">
+        <thead class="table-dark">
             <tr>
-                <td>@vet.Name</td>
-                <td>@vet.Specialty</td>
-                <td>@vet.Species</td>
-                <td>@vet.VetClinic</td>
-                <td>@vet.Location</td>
-                <td>@vet.Availability</td>
-                <td>@vet.Phone</td>
-                <td>@vet.Email</td>
-                <td>@vet.ExperienceYears</td>
-                <td>@vet.Services</td>
-                <td>@(vet.Rating?.ToString("0.0") ?? "N/A")</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(vet.ProfilePhotoUrl))
-                    {
-                        <img src="@vet.ProfilePhotoUrl" alt="Profile Photo" width="50" height="50" />
-                    }
-                </td>
-                <td>@(vet.EmergencyService ? "Yes" : "No")</td>
-                <td>
-                    @if (!string.IsNullOrEmpty(vet.Website))
-                    {
-                        <a href="@vet.Website" target="_blank">@vet.Website</a>
-                    }
-                </td>
-                <td>@vet.LanguagesSpoken</td>
-                <td>
-                 @if (User.IsInRole("Customer"))
-                    {
-                        <a asp-action="BookAppointment" asp-route-id="@vet.Id" class="btn btn-sm btn-primary">
-                            Book Appointment
-                        </a>
-                    }
-                </td>
+                <th>Name *</th>
+                <th>Specialty *</th>
+                <th>Species *</th>
+                <th>Clinic *</th>
+                <th>Location *</th>
+                <th>Availability *</th>
+                <th>Phone *</th>
+                <th>Email *</th>
+                <th>Experience (Years)</th>
+                <th>Services</th>
+                <th>Rating</th>
+                <th>Profile Photo</th>
+                <th>Emergency Service</th>
+                <th>Website</th>
+                <th>Languages Spoken</th>
+
+                @if (User.IsInRole("Customer"))
+                {
+                    <th>Book</th>
+                }
+
                 @if (User.IsInRole("Admin"))
                 {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@vet.Id" class="btn btn-sm btn-warning">Edit</a>
-                        <a asp-action="Delete" asp-route-id="@vet.Id" class="btn btn-sm btn-danger">Delete</a>
-                    </td>
+                    <th>Actions</th>
                 }
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var vet in Model)
+            {
+                <tr>
+                    <td>@vet.Name</td>
+                    <td>@vet.Specialty</td>
+                    <td>@vet.Species</td>
+                    <td>@vet.VetClinic</td>
+                    <td>@vet.Location</td>
+                    <td>@vet.Availability</td>
+                    <td>@vet.Phone</td>
+                    <td>@vet.Email</td>
+                    <td>@vet.ExperienceYears</td>
+                    <td>@vet.Services</td>
+                    <td>@(vet.Rating?.ToString("0.0") ?? "N/A")</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(vet.ProfilePhotoUrl))
+                        {
+                            <img src="@vet.ProfilePhotoUrl" alt="Profile Photo" width="50" height="50" class="rounded-circle" />
+                        }
+                    </td>
+                    <td>@(vet.EmergencyService ? "Yes" : "No")</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(vet.Website))
+                        {
+                            <a href="@vet.Website" target="_blank">@vet.Website</a>
+                        }
+                    </td>
+                    <td>@vet.LanguagesSpoken</td>
+
+                    @if (User.IsInRole("Customer"))
+                    {
+                        <td class="text-nowrap">
+                            <a class="btn btn-sm btn-primary"
+                               asp-controller="Appointment"
+                               asp-action="Create"
+                               asp-route-vetId="@vet.Id">
+                                Book
+                            </a>
+                            <a class="btn btn-sm btn-outline-secondary ms-1"
+                               asp-controller="Appointment"
+                               asp-action="Index">
+                                My Appointments
+                            </a>
+                        </td>
+                    }
+
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@vet.Id" class="btn btn-sm btn-warning">Edit</a>
+                            <a asp-action="Delete" asp-route-id="@vet.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ResQPaw.Controllers
 {
-   // [Authorize(Roles = "ServiceProvider")]
+    // [Authorize(Roles = "ServiceProvider")]
     public class VetController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -62,25 +62,25 @@ namespace ResQPaw.Controllers
             return View(vetList);
         }
 
-            public async Task<IActionResult> AddTestVet()
-{
-    var testVet = new Vet
-    {
-        Name = "Test Vet",
-        Specialty = "General",
-        Location = "Dhaka",
-        VetClinic = "Test Clinic",
-        Availability = "9am-5pm",
-        Species = "Dog, Cat",
-        Phone = "0123456789",
-        Email = "test@example.com"
-    };
+        public async Task<IActionResult> AddTestVet()
+        {
+            var testVet = new Vet
+            {
+                Name = "Test Vet",
+                Specialty = "General",
+                Location = "Dhaka",
+                VetClinic = "Test Clinic",
+                Availability = "9am-5pm",
+                Species = "Dog, Cat",
+                Phone = "0123456789",
+                Email = "test@example.com"
+            };
 
-    _context.Vets.Add(testVet);
-    await _context.SaveChangesAsync();
+            _context.Vets.Add(testVet);
+            await _context.SaveChangesAsync();
 
-    return Content("Test vet saved!");
-}
+            return Content("Test vet saved!");
+        }
 
         // Details   might delete
         [Authorize] // allow any logged-in user
@@ -90,54 +90,54 @@ namespace ResQPaw.Controllers
             if (vet == null) return NotFound();
             return View(vet);
         }
-    // Create (Admin only)
-    [Authorize(Roles = "Admin")]
-    public IActionResult Create() => View();
+        // Create (Admin only)
+        [Authorize(Roles = "Admin")]
+        public IActionResult Create() => View();
 
 
-        
+
         [HttpPost]
-[Authorize(Roles = "Admin")]
-public async Task<IActionResult> Create(Vet vet)
-{
-    if (!ModelState.IsValid)
-    {
-        var errors = string.Join(", ", ModelState.Values
-                                      .SelectMany(v => v.Errors)
-                                      .Select(e => e.ErrorMessage));
-        Console.WriteLine("ModelState errors: " + errors);
-        return BadRequest(errors);
-    }
-
-    _context.Vets.Add(vet);
-    await _context.SaveChangesAsync();
-
-            return RedirectToAction(nameof(Index));
-
-    
-}
-
-    // Edit (Admin only)
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Edit(int id)
-    {
-        var vet = await _context.Vets.FindAsync(id);
-        if (vet == null) return NotFound();
-        return View(vet);
-    }
-
-    [HttpPost]
-    [Authorize(Roles = "Admin")]
-    public async Task<IActionResult> Edit(Vet vet)
-    {
-        if (ModelState.IsValid)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Create(Vet vet)
         {
-            _context.Vets.Update(vet);
+            if (!ModelState.IsValid)
+            {
+                var errors = string.Join(", ", ModelState.Values
+                                              .SelectMany(v => v.Errors)
+                                              .Select(e => e.ErrorMessage));
+                Console.WriteLine("ModelState errors: " + errors);
+                return BadRequest(errors);
+            }
+
+            _context.Vets.Add(vet);
             await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
+
+
         }
-        return View(vet);
-    }
+
+        // Edit (Admin only)
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var vet = await _context.Vets.FindAsync(id);
+            if (vet == null) return NotFound();
+            return View(vet);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Edit(Vet vet)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Vets.Update(vet);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(vet);
+        }
 
         // Delete (Admin only)
         [Authorize(Roles = "Admin")]
@@ -151,18 +151,18 @@ public async Task<IActionResult> Create(Vet vet)
             }
             return RedirectToAction(nameof(Index));
         }
-    [HttpPost, ActionName("Delete")]
-[Authorize(Roles = "Admin")]
-public async Task<IActionResult> DeleteConfirmed(int id)
-{
-    var vet = await _context.Vets.FindAsync(id);
-    if (vet != null)
-    {
-        _context.Vets.Remove(vet);
-        await _context.SaveChangesAsync();
-    }
-    return RedirectToAction(nameof(Index));
-}
+        [HttpPost, ActionName("Delete")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var vet = await _context.Vets.FindAsync(id);
+            if (vet != null)
+            {
+                _context.Vets.Remove(vet);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction(nameof(Index));
+        }
 
         public IActionResult Notifications()
         {
@@ -289,7 +289,7 @@ public async Task<IActionResult> DeleteConfirmed(int id)
 
 
     }
-    
+
 
 
 }

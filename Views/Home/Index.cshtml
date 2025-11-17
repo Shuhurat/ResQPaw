@@ -1,4 +1,4 @@
-﻿   @{
+﻿@{
     ViewData["Title"] = "Home";
 }
 
@@ -15,7 +15,7 @@
 </section>
 
 
-  <!-- SOS Button -->
+<!-- SOS Button -->
 <a asp-controller="SOS" asp-action="Send" class="sos-button" id="sosBtn">SOS</a>
 
 
@@ -27,143 +27,151 @@
         <p>Please stay on the line while we connect you with emergency services.</p>
         <div class="modal-buttons">
             <button class="btn btn-primary" id="cancelSos">Cancel</button>
-            <a class="btn" style="background: #cc0000; color: white;" asp-controller="SOS" asp-action="Send" id="callEmergency">Send SOS Alert</a>
+            <a class="btn" style="background: #cc0000; color: white;" asp-controller="SOS" asp-action="Send"
+                id="callEmergency">Send SOS Alert</a>
         </div>
     </div>
 </div>
 
 
 
-    <!-- Features Section -->
-    <section class="section">
-        <div class="container">
-            <div class="section-title">
-                <h2>How ResQPaw Helps</h2>
-                <p>We provide comprehensive services for pet rescue, care, and adoption</p>
+<!-- Features Section -->
+<section class="section">
+    <div class="container">
+        <div class="section-title">
+            <h2>How ResQPaw Helps</h2>
+            <p>We provide comprehensive services for pet rescue, care, and adoption</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="https://images.unsplash.com/photo-1535930749574-1399327ce78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Pet Adoption">
+                </div>
+                <div class="feature-content">
+                    <h3>Pet Adoption</h3>
+                    <p>Browse through hundreds of pets looking for their forever homes. Filter by breed, age, and
+                        location.</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
+                </div>
             </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-img">
-                        <img src="https://images.unsplash.com/photo-1535930749574-1399327ce78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Pet Adoption">
-                    </div>
-                    <div class="feature-content">
-                        <h3>Pet Adoption</h3>
-                        <p>Browse through hundreds of pets looking for their forever homes. Filter by breed, age, and location.</p>
-                        <a href="#" class="btn btn-outline">Learn More</a>
-                    </div>
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="https://images.unsplash.com/photo-1596272875729-ed2ff7d6d9c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Lost & Found">
                 </div>
-                <div class="feature-card">
-                    <div class="feature-img">
-                        <img src="https://images.unsplash.com/photo-1596272875729-ed2ff7d6d9c5?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Lost & Found">
-                    </div>
-                    <div class="feature-content">
-                        <h3>Lost & Found</h3>
-                        <p>Report lost pets or help reunite found animals with their owners through our network.</p>
-                        <a href="#" class="btn btn-outline">Learn More</a>
-                    </div>
+                <div class="feature-content">
+                    <h3>Lost & Found</h3>
+                    <p>Report lost pets or help reunite found animals with their owners through our network.</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-img">
-                        <img src="https://images.unsplash.com/photo-1577982787983-e07c8490b261?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Veterinary Care">
-                    </div>
-                    <div class="feature-content">
-                        <h3>Veterinary Care</h3>
-                        <p>Find trusted veterinarians in your area and access emergency pet care resources.</p>
-                        <a href="#" class="btn btn-outline">Learn More</a>
-                    </div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="/images/veterinary_care.jpg" alt="Veterinary Care">
+                </div>
+                <div class="feature-content">
+                    <h3>Veterinary Care</h3>
+                    <p>Find trusted veterinarians in your area and access emergency pet care resources.</p>
+                    <a href="#" class="btn btn-outline">Learn More</a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Pets Section -->
-    <section class="section" style="background-color: #f8f4eb;">
-        <div class="container">
-            <div class="section-title">
-                <h2>Pets Looking for Homes</h2>
-                <p>These adorable pets are waiting to meet their forever families</p>
-            </div>
-            <div class="pets-grid">
-                <div class="pet-card">
-                    <div class="pet-img">
-                        <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Max">
-                    </div>
-                    <div class="pet-info">
-                        <h3>Max</h3>
-                        <p>Friendly and energetic Golden Retriever mix. Loves playing fetch and long walks.</p>
-                        <div class="pet-meta">
-                            <span>2 years</span>
-                            <span>Male</span>
-                            <span>Medium</span>
-                        </div>
-                    </div>
+<!-- Pets Section -->
+<section class="section" style="background-color: #f8f4eb;">
+    <div class="container">
+        <div class="section-title">
+            <h2>Pets Looking for Homes</h2>
+            <p>These adorable pets are waiting to meet their forever families</p>
+        </div>
+        <div class="pets-grid">
+            <div class="pet-card">
+                <div class="pet-img">
+                    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Max">
                 </div>
-                <div class="pet-card">
-                    <div class="pet-img">
-                        <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Luna">
-                    </div>
-                    <div class="pet-info">
-                        <h3>Luna</h3>
-                        <p>Gentle and affectionate tabby cat. Enjoys napping in sunny spots and gentle pets.</p>
-                        <div class="pet-meta">
-                            <span>3 years</span>
-                            <span>Female</span>
-                            <span>Small</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="pet-card">
-                    <div class="pet-img">
-                        <img src="https://images.unsplash.com/photo-1560809454-892b55bce5f0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rocky">
-                    </div>
-                    <div class="pet-info">
-                        <h3>Rocky</h3>
-                        <p>Playful and curious Beagle mix. Great with kids and other dogs. House trained.</p>
-                        <div class="pet-meta">
-                            <span>1 year</span>
-                            <span>Male</span>
-                            <span>Medium</span>
-                        </div>
+                <div class="pet-info">
+                    <h3>Max</h3>
+                    <p>Friendly and energetic Golden Retriever mix. Loves playing fetch and long walks.</p>
+                    <div class="pet-meta">
+                        <span>2 years</span>
+                        <span>Male</span>
+                        <span>Medium</span>
                     </div>
                 </div>
             </div>
-            <div style="text-align: center; margin-top: 40px;">
-                <a href="#" class="btn btn-primary">View All Pets</a>
+            <div class="pet-card">
+                <div class="pet-img">
+                    <img src="https://images.unsplash.com/photo-1592194996308-7b43878e84a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Luna">
+                </div>
+                <div class="pet-info">
+                    <h3>Luna</h3>
+                    <p>Gentle and affectionate tabby cat. Enjoys napping in sunny spots and gentle pets.</p>
+                    <div class="pet-meta">
+                        <span>3 years</span>
+                        <span>Female</span>
+                        <span>Small</span>
+                    </div>
+                </div>
+            </div>
+            <div class="pet-card">
+                <div class="pet-img">
+                    <img src="/images/rabbit.jpg"
+                        alt="Rocky">
+                </div>
+                <div class="pet-info">
+                    <h3>Rocky</h3>
+                    <p>Playful and curious Beagle mix. Great with kids and other dogs. House trained.</p>
+                    <div class="pet-meta">
+                        <span>1 year</span>
+                        <span>Male</span>
+                        <span>Medium</span>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="#" class="btn btn-primary">View All Pets</a>
+        </div>
+    </div>
+</section>
 
-    <!-- CTA Section -->
-    <section class="cta">
-        <div class="container">
-            <h2>Make a Difference Today</h2>
-            <p>Whether you're looking to adopt, foster, volunteer, or donate, your support helps save lives and create happy endings.</p>
-            <a href="#" class="btn btn-outline" style="background: white; color: #e6aa1e;">Get Involved</a>
-            <a href="#" class="btn btn-primary" style="background: transparent; border: 2px solid white;">Donate</a>
-        </div>
-    </section>
-    <script>
-    document.addEventListener('DOMContentLoaded', function() {
+<!-- CTA Section -->
+<section class="cta">
+    <div class="container">
+        <h2>Make a Difference Today</h2>
+        <p>Whether you're looking to adopt, foster, volunteer, or donate, your support helps save lives and create happy
+            endings.</p>
+        <a href="#" class="btn btn-outline" style="background: white; color: #e6aa1e;">Get Involved</a>
+        <a href="#" class="btn btn-primary" style="background: transparent; border: 2px solid white;">Donate</a>
+    </div>
+</section>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
         const sosBtn = document.getElementById('sosBtn');
         const sosModal = document.getElementById('sosModal');
         const cancelSos = document.getElementById('cancelSos');
-        
+
         if (sosBtn && sosModal) {
             // Show modal when SOS button is clicked
-            sosBtn.addEventListener('click', function(e) {
+            sosBtn.addEventListener('click', function (e) {
                 e.preventDefault();
                 sosModal.style.display = 'block';
             });
-            
+
             // Hide modal when cancel is clicked
             if (cancelSos) {
-                cancelSos.addEventListener('click', function() {
+                cancelSos.addEventListener('click', function () {
                     sosModal.style.display = 'none';
                 });
             }
-            
+
             // Hide modal when clicking outside
-            window.addEventListener('click', function(e) {
+            window.addEventListener('click', function (e) {
                 if (e.target === sosModal) {
                     sosModal.style.display = 'none';
                 }
